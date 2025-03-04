@@ -41,6 +41,10 @@ namespace MakeEveryDay
             // Gameplay-state content intitialization
 
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
+            GameplayState.testObject = new GameObject(
+                Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)"),
+                Vector2.One * 50,
+                new Point(100, 100));
 
             // Note: requires content to be loaded, cannot be done in Initialize()
             

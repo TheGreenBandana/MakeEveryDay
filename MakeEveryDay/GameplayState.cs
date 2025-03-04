@@ -19,6 +19,9 @@ namespace MakeEveryDay
         private static float playerSpeed = 10f;
 
 
+        internal static GameObject testObject;
+
+
         public GameplayState()
         {
             playerPosition = defaultPlayerPosition;
@@ -54,6 +57,8 @@ namespace MakeEveryDay
                 "Me when I play the videogame\npress tab to go back\nwasd to move",
                 playerPosition,
                 Color.White);
+
+            testObject.Draw(sb);
         }
 
         /// <summary>
