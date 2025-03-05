@@ -47,7 +47,7 @@ namespace MakeEveryDay
                 new Point(100, 100));
 
             // Note: requires content to be loaded, cannot be done in Initialize()
-            
+
         }
 
         protected override void Update(GameTime gameTime)
