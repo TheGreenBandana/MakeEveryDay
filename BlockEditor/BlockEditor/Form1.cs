@@ -6,5 +6,25 @@ namespace BlockEditor
         {
             InitializeComponent();
         }
+
+        public void LoadFromFile(string file)
+        {
+
+        }
+
+        public void SaveToFile(string file)
+        {
+
+        }
+
+        public bool IsBlockSelected()
+        {
+            return true;
+        }
+
+        public void ChangeSelection()
+        {
+
+        }
     }
 }
