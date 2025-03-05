@@ -15,7 +15,7 @@ namespace MakeEveryDay
     {
 
         // Fields - static
-        internal static int presetHeight = 40; // Arbitrary number, controls how tall the blocks are
+        internal static int presetHeight = 80; // Arbitrary number, controls how tall the blocks are
         internal static Texture2D baseBlockTexture = default;
         internal static Texture2D arrrowTexture = default;
 
@@ -30,6 +30,8 @@ namespace MakeEveryDay
 
         internal static Rectangle blockSpawnArea = new Rectangle(100, 50, 500, 300);
 
+        internal static Point iconSize = new Point(15, 15);
+
         // Fields - non-static
         private string name;
 
@@ -37,6 +39,11 @@ namespace MakeEveryDay
         private int educationMod;
         private int happyMod;
         private int wealthMod;
+
+        private int healthArrows;
+        private int educationArrows;
+        private int happyArrows;
+        private int wealthArrows;
 
         private CustomRange healthRange;
         private CustomRange educationRange;
@@ -88,6 +95,7 @@ namespace MakeEveryDay
             this.happyRange = happyRange;
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
+
         }
 
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
@@ -102,11 +110,45 @@ namespace MakeEveryDay
 
         internal override void Draw(SpriteBatch sb)
         {
+            
+            // Draw the box
             base.Draw(sb);
+
+            // Draw the name
             sb.DrawString(
                 nameFont,
                 name,
                 base.Position + Microsoft.Xna.Framework.Vector2.One * 5,
+                Microsoft.Xna.Framework.Color.White);
+
+            // Draw the icons
+
+            float nextX = 0;
+
+            sb.Draw(
+                healthIcon,
+                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                Microsoft.Xna.Framework.Color.White);
+
+            nextX += iconSize.X; 
+
+            sb.Draw(
+                educationIcon,
+                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                Microsoft.Xna.Framework.Color.White);
+
+            nextX += iconSize.X;
+
+            sb.Draw(
+                happyIcon,
+                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                Microsoft.Xna.Framework.Color.White);
+
+            nextX += iconSize.X;
+
+            sb.Draw(
+                wealthIcon,
+                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                 Microsoft.Xna.Framework.Color.White);
         }
 
