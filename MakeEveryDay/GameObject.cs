@@ -157,7 +157,10 @@ namespace MakeEveryDay
         /// <param name="size">Point size to give the GameObject</param>
         /// <param name="presetColor">color preset to give the GameObject</param>
         public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Point size, Microsoft.Xna.Framework.Color? presetColor, float? presetDrawLayer)
-            : this(sprite, position, presetColor, presetDrawLayer) { }
+            : this(sprite, position, presetColor, presetDrawLayer) 
+        {
+            this.size = size;
+        }
 
         /// <summary>
         /// Constructor that takes a rectangle. Because you're sick. Disgusting integer lover. 

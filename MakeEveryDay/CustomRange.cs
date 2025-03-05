@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,8 @@ namespace MakeEveryDay
         // Properties
         public int Min { get => min; set => min = value < 0 || value > max ? 0 : value; }
         public int Max { get => max; set => max = value < 0 || value < min ? int.MaxValue : max; }
+
+        public static CustomRange Infinite => new CustomRange(-1, -1);
 
         /// <summary>
         /// Creates a range between 2 values.

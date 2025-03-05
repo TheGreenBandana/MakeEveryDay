@@ -34,9 +34,15 @@ namespace MakeEveryDay
 
             // TODO: use this.Content to load your game content here
 
+            // Block class content initialization
+            Block.baseBlockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            Block.nameFont = Content.Load<SpriteFont>("Times24");
+
             // Menu-State content initialization
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
+
+            MenuState.testBlock = new Block("Test", new Vector2(300, 300), 100);
 
             // Gameplay-state content intitialization
 
@@ -46,8 +52,10 @@ namespace MakeEveryDay
                 Vector2.One * 50,
                 new Point(100, 100));
 
-            // Note: requires content to be loaded, cannot be done in Initialize()
 
+
+            // Note: requires content to be loaded, cannot be done in Initialize()
+            
         }
 
         protected override void Update(GameTime gameTime)
