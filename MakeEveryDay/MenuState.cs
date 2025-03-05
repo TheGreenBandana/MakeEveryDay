@@ -14,6 +14,8 @@ namespace MakeEveryDay
     {
         internal static SpriteFont titleFont = default;
         internal static SpriteFont subtitleFont = default;
+
+        internal static Block testBlock;
         
         public MenuState() { }
 
@@ -40,6 +42,8 @@ namespace MakeEveryDay
                 "This is a title\nleft click to start",
                 Vector2.One * 10,
                 Color.White);
+
+            testBlock.Draw(sb);
         }
 
 

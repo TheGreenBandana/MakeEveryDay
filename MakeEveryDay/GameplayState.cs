@@ -21,6 +21,8 @@ namespace MakeEveryDay
 
         internal static GameObject testObject;
 
+        private List<Block> loadedBlocks;
+
 
         public GameplayState()
         {
@@ -29,7 +31,7 @@ namespace MakeEveryDay
 
         public override void Enter()
         {
-            base.Enter();
+            // load up blocks here
         }
         public override void Exit()
         {
