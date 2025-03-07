@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -53,6 +54,7 @@ namespace MakeEveryDay
 
         // Properties
 
+        //Modifiers
         public int HealthMod
         {
             get { return healthMod; }
@@ -64,7 +66,74 @@ namespace MakeEveryDay
             get { return educationMod; }
             set { educationMod = value; }
         }
-        // I'm too lazy to do the rest of this rn
+
+        public int HappyMod
+        {
+            get { return happyMod; }
+            set { happyMod = value; }
+        }
+
+        public int WealthMod
+        {
+            get { return wealthMod; }
+            set { wealthMod = value; }
+        }
+
+        //Arrows
+        public int HealthArrows
+        {
+            get { return healthArrows;}
+            set { healthArrows = value; }
+        }
+
+        public int EducationArrows
+        {
+            get { return educationArrows; }
+            set { educationArrows = value; }
+        }
+
+        public int HappyArrows 
+        {
+            get { return happyArrows; }
+            set { happyArrows = value; }
+        }
+
+        public int WealthArrows
+        {
+            get { return wealthArrows; }
+            set { wealthArrows = value; }
+        }
+
+        //Custom Ranges
+        public CustomRange HealthRange
+        {
+            get { return HealthRange; }
+            set { HealthRange = value; }
+        }
+
+        public CustomRange EducationRange 
+        {
+            get { return educationRange; }
+            set { educationRange = value; }
+        }
+
+        public CustomRange HappyRange
+        {
+            get { return happyRange; }
+            set { happyRange = value; }
+        }
+
+        public CustomRange WealthRange
+        {
+            get { return wealthRange; }
+            set { wealthRange = value; }
+        }
+
+        public CustomRange AgeRange 
+        {
+            get { return ageRange; }
+            set { ageRange = value; }
+        }
 
         // Constructors
         public Block(
