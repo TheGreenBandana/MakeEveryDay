@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -53,6 +56,7 @@ namespace MakeEveryDay
 
         // Properties
 
+        //Modifiers
         public int HealthMod
         {
             get { return healthMod; }
@@ -64,9 +68,78 @@ namespace MakeEveryDay
             get { return educationMod; }
             set { educationMod = value; }
         }
-        // I'm too lazy to do the rest of this rn
+
+        public int HappyMod
+        {
+            get { return happyMod; }
+            set { happyMod = value; }
+        }
+
+        public int WealthMod
+        {
+            get { return wealthMod; }
+            set { wealthMod = value; }
+        }
+
+        //Arrows
+        public int HealthArrows
+        {
+            get { return healthArrows;}
+            set { healthArrows = value; }
+        }
+
+        public int EducationArrows
+        {
+            get { return educationArrows; }
+            set { educationArrows = value; }
+        }
+
+        public int HappyArrows 
+        {
+            get { return happyArrows; }
+            set { happyArrows = value; }
+        }
+
+        public int WealthArrows
+        {
+            get { return wealthArrows; }
+            set { wealthArrows = value; }
+        }
+
+        //Custom Ranges
+        public CustomRange HealthRange
+        {
+            get { return HealthRange; }
+            set { HealthRange = value; }
+        }
+
+        public CustomRange EducationRange 
+        {
+            get { return educationRange; }
+            set { educationRange = value; }
+        }
+
+        public CustomRange HappyRange
+        {
+            get { return happyRange; }
+            set { happyRange = value; }
+        }
+
+        public CustomRange WealthRange
+        {
+            get { return wealthRange; }
+            set { wealthRange = value; }
+        }
+
+        public CustomRange AgeRange 
+        {
+            get { return ageRange; }
+            set { ageRange = value; }
+        }
 
         // Constructors
+
+        // Constructor that takes everything
         public Block(
             string name,
             Microsoft.Xna.Framework.Vector2 position,
@@ -97,12 +170,44 @@ namespace MakeEveryDay
             this.ageRange = ageRange;
 
         }
-
+        //Default Constructor
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
             : this(name, position, width, Microsoft.Xna.Framework.Color.White, 
                   0, 0, 0, 0, 
                   CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite){}
+        
+        //Constructor that takes only mods and no ranges
+        public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
+            : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
+        {
+            this.name = name;
+            this.healthMod = healthMod;
+            this.educationMod = educationMod;
+            this.happyMod = happyMod;
+            this.wealthMod = wealthMod;
+            healthRange = CustomRange.Infinite;
+            educationRange = CustomRange.Infinite;
+            happyRange = CustomRange.Infinite;
+            wealthRange = CustomRange.Infinite;
+            ageRange = CustomRange.Infinite;
+        }
 
+        //Constructor that takes ONLY an Age Range
+        //Figured we'd use age exclusively more than the others
+        public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
+            : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
+        {
+            this.name = name;
+            this.healthMod = healthMod;
+            this.educationMod = educationMod;
+            this.happyMod = happyMod;
+            this.wealthMod = wealthMod;
+            healthRange = CustomRange.Infinite;
+            educationRange = CustomRange.Infinite;
+            happyRange = CustomRange.Infinite;
+            wealthRange = CustomRange.Infinite;
+            this.ageRange = ageRange;
+        }
 
 
         // Methods
