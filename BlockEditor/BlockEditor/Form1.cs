@@ -28,29 +28,13 @@ namespace BlockEditor
                 textBox_educationMin,
                 textBox_educationMax,
                 textBox_wealthMin,
-                textBox_wealthMax
+                textBox_wealthMax,
+                textBox_ageMin,
+                textBox_ageMax
             };
             // Make empty block list and make width bar value reflect visual bar
             blocks = new List<Block>();
             ResetValues();
-        }
-
-        /// <summary>
-        /// Load blocks from a file and choose to replace or add blocks from that file to the current list
-        /// </summary>
-        /// <param name="file">The file to read from</param>
-        public void LoadFromFile(string file)
-        {
-
-        }
-
-        /// <summary>
-        /// Save the current local list to an external file
-        /// </summary>
-        /// <param name="file">The file to contain the blocks</param>
-        public void SaveToFile(string file)
-        {
-
         }
 
         /// <summary>
@@ -101,7 +85,8 @@ namespace BlockEditor
                 new CustomRange(data[4], data[5]),
                 new CustomRange(data[6], data[7]),
                 new CustomRange(data[8], data[9]),
-                new CustomRange(data[10], data[11]));
+                new CustomRange(data[10], data[11]),
+                new CustomRange(data[12], data[13]));
         }
 
         /// <summary>
@@ -167,6 +152,8 @@ namespace BlockEditor
                 textBox_happyMax.Text = block.HappyRange.Max.ToString();
                 textBox_wealthMin.Text = block.WealthRange.Min.ToString();
                 textBox_wealthMax.Text = block.WealthRange.Max.ToString();
+                textBox_ageMin.Text = block.AgeRange.Min.ToString();
+                textBox_ageMax.Text = block.AgeRange.Max.ToString();
             }
         }
 
@@ -208,6 +195,112 @@ namespace BlockEditor
             textBox_name.Text = "";
             pictureBox_colorPreview.BackColor = Color.Green;
             trackBar_width.Value = (trackBar_width.Maximum + trackBar_width.Minimum) / 2;
+        }
+
+        /// <summary>
+        /// Save the current local list to an external file
+        /// </summary>
+        private void SaveFile(object sender, EventArgs e)
+        {
+            // If a file is correctly saved
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = null;
+                // Save blocks to the file using the blocks' ToString method
+                try
+                {
+                    writer = new(saveFileDialog.FileName);
+                    foreach (Block block in blocks)
+                        writer.WriteLine(block.ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to save data to file.", "Error saving blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (writer != null)
+                    {
+                        writer.Close();
+                        MessageBox.Show("Saved blocks to file!", "Blocks saved!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Load blocks from a file and choose to replace or add blocks from that file to the current list
+        /// </summary>
+        private void LoadFile(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamReader reader = null;
+                List<Block> loadedBlocks = new List<Block>();
+                bool success = false;
+                try
+                {
+                    reader = new(openFileDialog.FileName);
+                    while (!reader.EndOfStream)
+                    {
+                        string[] blockData = reader.ReadLine().Split('|');
+                        // Splitting line into data that fits the block's constructor
+                        loadedBlocks.Add(new Block(
+                            blockData[0],
+                            int.Parse(blockData[1]),
+                            Color.FromArgb(int.Parse(blockData[2])),
+                            int.Parse(blockData[3]),
+                            int.Parse(blockData[4]),
+                            int.Parse(blockData[5]),
+                            int.Parse(blockData[6]),
+                            new CustomRange(int.Parse(blockData[7].Split(',')[0]), int.Parse(blockData[7].Split(',')[1])),
+                            new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
+                            new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
+                            new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
+                            new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
+                        ));
+                    }
+                    success = true;
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to load data from file.", "Error loading blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    if (success)
+                    {
+                        // If no list existed, just load the blocks into the list
+                        if (blocks.Count == 0)
+                        {
+                            blocks = loadedBlocks;
+                            UpdateList();
+                            MessageBox.Show("Loaded blocks from file!", "Blocks loaded!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        // If a list already existed, check if the user wants to replace the existing list, add to it or cancel loading entirely
+                        else
+                        {
+                            DialogResult userInput = MessageBox.Show("Loaded blocks from file!\nDo you want to add the loaded blocks to the current list?",
+                                "Blocks loaded!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                            if (userInput == DialogResult.No)
+                            {
+                                blocks = loadedBlocks;
+                                UpdateList();
+                            }
+                            else if (userInput == DialogResult.Yes)
+                            {
+                                foreach (Block block in loadedBlocks)
+                                    blocks.Add(block);
+                                UpdateList();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

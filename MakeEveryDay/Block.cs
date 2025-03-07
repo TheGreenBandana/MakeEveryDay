@@ -298,5 +298,14 @@ namespace MakeEveryDay
                 Microsoft.Xna.Framework.Color.White);
         }
 
+        /// <summary>
+        /// Turns the block into something storable.
+        /// </summary>
+        /// <returns>The string of the block.</returns>
+        public override string ToString()
+        {
+            return $"{name}|{Size.X}|{PresetColor.GetHashCode}|{healthMod}|{educationMod}|{happyMod}|{wealthMod}|" +
+                $"{healthRange.ToString()}|{educationRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}";
+        }
     }
 }
