@@ -78,6 +78,10 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
+            label17 = new Label();
+            textBox_ageMax = new TextBox();
+            label18 = new Label();
+            textBox_ageMin = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -96,9 +100,15 @@
             button_load.TabIndex = 0;
             button_load.Text = "Load File";
             button_load.UseVisualStyleBackColor = true;
+            button_load.Click += LoadFile;
+            // 
+            // saveFileDialog
+            // 
+            saveFileDialog.DefaultExt = "blocks";
             // 
             // openFileDialog
             // 
+            openFileDialog.DefaultExt = "blocks";
             openFileDialog.FileName = "openFileDialog";
             // 
             // groupBox1
@@ -120,12 +130,13 @@
             button_save.TabIndex = 1;
             button_save.Text = "Save File";
             button_save.UseVisualStyleBackColor = true;
+            button_save.Click += SaveFile;
             // 
             // listBox_blockList
             // 
             listBox_blockList.FormattingEnabled = true;
             listBox_blockList.ItemHeight = 15;
-            listBox_blockList.Location = new Point(6, 138);
+            listBox_blockList.Location = new Point(6, 132);
             listBox_blockList.Name = "listBox_blockList";
             listBox_blockList.ScrollAlwaysVisible = true;
             listBox_blockList.SelectionMode = SelectionMode.MultiExtended;
@@ -148,7 +159,7 @@
             // 
             // button_overwriteBlock
             // 
-            button_overwriteBlock.Location = new Point(125, 78);
+            button_overwriteBlock.Location = new Point(125, 76);
             button_overwriteBlock.Name = "button_overwriteBlock";
             button_overwriteBlock.Size = new Size(113, 50);
             button_overwriteBlock.TabIndex = 7;
@@ -200,6 +211,10 @@
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(label17);
+            groupBox6.Controls.Add(textBox_ageMax);
+            groupBox6.Controls.Add(label18);
+            groupBox6.Controls.Add(textBox_ageMin);
             groupBox6.Controls.Add(button_reset);
             groupBox6.Controls.Add(label13);
             groupBox6.Controls.Add(textBox_wealthMax);
@@ -237,15 +252,15 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(253, 191);
+            label13.Location = new Point(253, 150);
             label13.Name = "label13";
-            label13.Size = new Size(69, 15);
+            label13.Size = new Size(70, 15);
             label13.TabIndex = 29;
             label13.Text = "Wealth Max";
             // 
             // textBox_wealthMax
             // 
-            textBox_wealthMax.Location = new Point(324, 187);
+            textBox_wealthMax.Location = new Point(324, 146);
             textBox_wealthMax.Name = "textBox_wealthMax";
             textBox_wealthMax.PlaceholderText = "Enter maximum wealth...";
             textBox_wealthMax.Size = new Size(169, 23);
@@ -255,15 +270,15 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(254, 139);
+            label14.Location = new Point(254, 114);
             label14.Name = "label14";
-            label14.Size = new Size(67, 15);
+            label14.Size = new Size(68, 15);
             label14.TabIndex = 27;
             label14.Text = "Happy Max";
             // 
             // textBox_happyMax
             // 
-            textBox_happyMax.Location = new Point(324, 135);
+            textBox_happyMax.Location = new Point(324, 110);
             textBox_happyMax.Name = "textBox_happyMax";
             textBox_happyMax.PlaceholderText = "Enter maximum happiness...";
             textBox_happyMax.Size = new Size(169, 23);
@@ -273,7 +288,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(10, 191);
+            label15.Location = new Point(10, 150);
             label15.Name = "label15";
             label15.Size = new Size(68, 15);
             label15.TabIndex = 25;
@@ -281,7 +296,7 @@
             // 
             // textBox_wealthMin
             // 
-            textBox_wealthMin.Location = new Point(79, 187);
+            textBox_wealthMin.Location = new Point(79, 146);
             textBox_wealthMin.Name = "textBox_wealthMin";
             textBox_wealthMin.PlaceholderText = "Enter minimum wealth...";
             textBox_wealthMin.Size = new Size(169, 23);
@@ -291,7 +306,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(10, 139);
+            label16.Location = new Point(10, 114);
             label16.Name = "label16";
             label16.Size = new Size(66, 15);
             label16.TabIndex = 23;
@@ -299,7 +314,7 @@
             // 
             // textBox_happyMin
             // 
-            textBox_happyMin.Location = new Point(79, 135);
+            textBox_happyMin.Location = new Point(79, 110);
             textBox_happyMin.Name = "textBox_happyMin";
             textBox_happyMin.PlaceholderText = "Enter minimum happiness...";
             textBox_happyMin.Size = new Size(169, 23);
@@ -309,15 +324,15 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(261, 84);
+            label9.Location = new Point(261, 76);
             label9.Name = "label9";
-            label9.Size = new Size(52, 15);
+            label9.Size = new Size(53, 15);
             label9.TabIndex = 21;
             label9.Text = "Edu Max";
             // 
             // textBox_educationMax
             // 
-            textBox_educationMax.Location = new Point(324, 80);
+            textBox_educationMax.Location = new Point(324, 72);
             textBox_educationMax.Name = "textBox_educationMax";
             textBox_educationMax.PlaceholderText = "Enter maximum education...";
             textBox_educationMax.Size = new Size(169, 23);
@@ -327,15 +342,15 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(254, 32);
+            label10.Location = new Point(254, 38);
             label10.Name = "label10";
-            label10.Size = new Size(67, 15);
+            label10.Size = new Size(68, 15);
             label10.TabIndex = 19;
             label10.Text = "Health Max";
             // 
             // textBox_healthMax
             // 
-            textBox_healthMax.Location = new Point(324, 28);
+            textBox_healthMax.Location = new Point(324, 34);
             textBox_healthMax.Name = "textBox_healthMax";
             textBox_healthMax.PlaceholderText = "Enter maximum health...";
             textBox_healthMax.Size = new Size(169, 23);
@@ -345,7 +360,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(18, 84);
+            label11.Location = new Point(18, 76);
             label11.Name = "label11";
             label11.Size = new Size(51, 15);
             label11.TabIndex = 17;
@@ -353,7 +368,7 @@
             // 
             // textBox_educationMin
             // 
-            textBox_educationMin.Location = new Point(79, 80);
+            textBox_educationMin.Location = new Point(79, 72);
             textBox_educationMin.Name = "textBox_educationMin";
             textBox_educationMin.PlaceholderText = "Enter minimum education...";
             textBox_educationMin.Size = new Size(169, 23);
@@ -363,7 +378,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(10, 32);
+            label12.Location = new Point(10, 38);
             label12.Name = "label12";
             label12.Size = new Size(66, 15);
             label12.TabIndex = 15;
@@ -371,7 +386,7 @@
             // 
             // textBox_healthMin
             // 
-            textBox_healthMin.Location = new Point(79, 28);
+            textBox_healthMin.Location = new Point(79, 34);
             textBox_healthMin.Name = "textBox_healthMin";
             textBox_healthMin.PlaceholderText = "Enter minimum health...";
             textBox_healthMin.Size = new Size(169, 23);
@@ -580,6 +595,42 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(261, 186);
+            label17.Name = "label17";
+            label17.Size = new Size(54, 15);
+            label17.TabIndex = 33;
+            label17.Text = "Age Max";
+            // 
+            // textBox_ageMax
+            // 
+            textBox_ageMax.Location = new Point(324, 182);
+            textBox_ageMax.Name = "textBox_ageMax";
+            textBox_ageMax.PlaceholderText = "Enter maximum age...";
+            textBox_ageMax.Size = new Size(169, 23);
+            textBox_ageMax.TabIndex = 32;
+            textBox_ageMax.Tag = "Age maximum spawn value";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(17, 186);
+            label18.Name = "label18";
+            label18.Size = new Size(52, 15);
+            label18.TabIndex = 31;
+            label18.Text = "Age Min";
+            // 
+            // textBox_ageMin
+            // 
+            textBox_ageMin.Location = new Point(79, 182);
+            textBox_ageMin.Name = "textBox_ageMin";
+            textBox_ageMin.PlaceholderText = "Enter minimum age...";
+            textBox_ageMin.Size = new Size(169, 23);
+            textBox_ageMin.TabIndex = 30;
+            textBox_ageMin.Tag = "Age minimum spawn value";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -656,5 +707,9 @@
         private Button button_overwriteBlock;
         private Button button_editBlock;
         private Button button_reset;
+        private Label label17;
+        private TextBox textBox_ageMax;
+        private Label label18;
+        private TextBox textBox_ageMin;
     }
 }
