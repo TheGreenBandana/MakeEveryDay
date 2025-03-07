@@ -191,6 +191,7 @@ namespace MakeEveryDay
             wealthRange = CustomRange.Infinite;
             ageRange = CustomRange.Infinite;
         }
+
         //Constructor that takes ONLY an Age Range
         //Figured we'd use age exclusively more than the others
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
