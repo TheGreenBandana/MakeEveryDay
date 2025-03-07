@@ -139,7 +139,22 @@ namespace MakeEveryDay
 
         // Constructors
 
-        // Constructor that takes everything
+        /// <summary>
+        /// Constructor that takes everything
+        /// </summary>
+        /// <param name="name">Name of the block</param>
+        /// <param name="position">Position of the block on the screen</param>
+        /// <param name="width">Width of the block</param>
+        /// <param name="color">Color of the block</param>
+        /// <param name="healthMod">Amount block changes the "Health" stat</param>
+        /// <param name="educationMod">Amount block changes the "Education" stat</param>
+        /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
+        /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
+        /// <param name="healthRange">Range of the "Health" stat required for the block to appear</param>
+        /// <param name="educationRange">Range of the "Education" stat required for the block to appear</param>
+        /// <param name="happyRange">Range of the "Happiness" stat required for the block to appear</param>
+        /// <param name="wealthRange">Range of the "Wealth" stat required for the block to appear</param>
+        /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
         public Block(
             string name,
             Microsoft.Xna.Framework.Vector2 position,
@@ -169,14 +184,29 @@ namespace MakeEveryDay
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
 
-        }
-        //Default Constructor
+        }/// <summary>
+         /// Default Constructor
+         /// </summary>
+         /// <param name="name">Name of the Block</param>
+         /// <param name="position">Position of the block on the screen</param>
+         /// <param name="width">Width of the block</param>
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
             : this(name, position, width, Microsoft.Xna.Framework.Color.White, 
                   0, 0, 0, 0, 
                   CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite){}
-        
-        //Constructor that takes only mods and no ranges
+
+
+        /// <summary>
+        /// Constructor for block that takes only mods and no ranges
+        /// </summary>
+        /// <param name="name">Name of the block</param>
+        /// <param name="position">Position of the block on the screen</param>
+        /// <param name="width">Width of the block</param>
+        /// <param name="color">Color of the block</param>
+        /// <param name="healthMod">Amount block changes the "Health" stat</param>
+        /// <param name="educationMod">Amount block changes the "Education" stat</param>
+        /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
+        /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
         {
@@ -192,8 +222,19 @@ namespace MakeEveryDay
             ageRange = CustomRange.Infinite;
         }
 
-        //Constructor that takes ONLY an Age Range
-        //Figured we'd use age exclusively more than the others
+        /// <summary>
+        /// Constructor that takes ONLY an Age Range
+        /// Figured we'd use age exclusively more than the others
+        /// </summary>
+        /// <param name="name">Name of the block</param>
+        /// <param name="position">Position of the block on the screen</param>
+        /// <param name="width">Width of the block</param>
+        /// <param name="color">Color of the block</param>
+        /// <param name="healthMod">Amount block changes the "Health" stat</param>
+        /// <param name="educationMod">Amount block changes the "Education" stat</param>
+        /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
+        /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
+        /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
         {
