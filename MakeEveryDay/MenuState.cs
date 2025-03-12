@@ -15,16 +15,34 @@ namespace MakeEveryDay
         internal static SpriteFont titleFont = default;
         internal static SpriteFont subtitleFont = default;
 
-        internal static Block testBlock;
+        internal static Texture2D blockTexture;
+
+        private Block testBlock;
         
         public MenuState() { }
 
+        public override void Enter()
+        {
+            testBlock = new Block(
+                "test",
+                new Vector2(300, 200),
+                100);
+        }
+
         public override State CustomUpdate(GameTime gameTime)
         {
-
+            /*
             MouseState ms = Mouse.GetState();
             
             if (ms.LeftButton == ButtonState.Pressed)
+            {
+                return new GameplayState();
+            }
+            */
+
+            testBlock.Update(gameTime);
+
+            if (MouseUtils.IsJustPressed() && testBlock.AsRectangle.Contains(MouseUtils.CurrentState.Position.ToVector2()))
             {
                 return new GameplayState();
             }
@@ -37,11 +55,13 @@ namespace MakeEveryDay
 
         public override void Draw(SpriteBatch sb)
         {
+            
             sb.DrawString(
                 titleFont,
                 "This is a title\nleft click to start",
                 Vector2.One * 10,
                 Color.White);
+            
 
             testBlock.Draw(sb);
         }

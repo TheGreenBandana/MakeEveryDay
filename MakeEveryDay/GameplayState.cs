@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Accessibility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -18,21 +19,44 @@ namespace MakeEveryDay
 
         private static float playerSpeed = 10f;
 
+        private static Texture2D defaultImage;
 
-        internal static GameObject testObject;
+        private static Rectangle spawnableArea = new Rectangle(100, 50, 400, 250);
+
+        private static float lineSpeed = 5f;
+
+
+        private List<Block> activeBlocks;
+        private List<Block> theLine;
+
+        private Block testBlock1;
 
         private List<Block> loadedBlocks;
 
 
-        public GameplayState()
+        private Block LastBlockOnLine
         {
-            playerPosition = defaultPlayerPosition;
+            get { return theLine[theLine.Count - 1]; }
         }
 
-        public override void Enter()
+        public GameplayState()
         {
-            // load up blocks here
+            
         }
+
+        public override void Enter() // Reading in blocks should happen here
+        {
+
+            playerPosition = defaultPlayerPosition;
+            theLine = new List<Block>();
+            activeBlocks = new List<Block>();
+
+            theLine.Add(new Block(
+                "start",
+                new Vector2(0, 350),
+                100));
+        }
+
         public override void Exit()
         {
             base.Exit();
@@ -42,11 +66,47 @@ namespace MakeEveryDay
         {
             KeyboardState kb = Keyboard.GetState();
 
-            UpdatePlayer(kb);
+            //UpdatePlayer(kb);
 
             if (kb.IsKeyDown(Keys.Tab))
             {
                 return new MenuState();
+            }
+
+            Random rand = new Random();
+
+            if (MouseUtils.KeyJustPressed(Keys.Enter))
+            {
+                activeBlocks.Add(new Block(
+                    "test",
+                    new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom)),
+                    100));
+            }
+
+            for(int i = 0; i < activeBlocks.Count; i++)
+            {
+                activeBlocks[i].Update(gameTime);
+
+                if (LastBlockOnLine.Right > activeBlocks[i].Left &&
+                    LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
+                    LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom &&
+                    activeBlocks[i].IsClicked == false)
+                {
+                    theLine.Add(activeBlocks[i]);
+                    activeBlocks.RemoveAt(i);
+                    i--;
+                    theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
+                }
+            }
+
+
+            Vector2 adjustVector = new Vector2(-lineSpeed, 0);
+            for(int i = 0; i < theLine.Count; i++)
+            {
+                if (kb.IsKeyDown(Keys.A))
+                {
+                    theLine[i].Position += adjustVector;
+                }
             }
 
             return null;
@@ -54,13 +114,23 @@ namespace MakeEveryDay
 
         public override void Draw(SpriteBatch sb)
         {
+            /*
             sb.DrawString(
                 defaultText,
                 "Me when I play the videogame\npress tab to go back\nwasd to move",
                 playerPosition,
                 Color.White);
+            */
 
-            testObject.Draw(sb);
+            for(int i = 0; i < theLine.Count; i++)
+            {
+                theLine[i].Draw(sb);
+            }
+
+            for(int i = 0; i < activeBlocks.Count; i++)
+            {
+                activeBlocks[i].Draw(sb);
+            }
         }
 
         /// <summary>

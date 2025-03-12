@@ -25,6 +25,10 @@ namespace MakeEveryDay
 
             currentState = new MenuState();
 
+            //This is intentional, don't want to have any errors on frame one when mouseUtils tries to reference this variable
+            MouseUtils.PreviousState = new MouseState();
+            MouseUtils.PreviousKBState = new KeyboardState();
+
             base.Initialize();
         }
 
@@ -48,26 +52,23 @@ namespace MakeEveryDay
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
 
-            MenuState.testBlock = new Block("Test", new Vector2(300, 300), 100);
-
             // Gameplay-state content intitialization
 
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
-            GameplayState.testObject = new GameObject(
-                Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)"),
-                Vector2.One * 50,
-                new Point(100, 100));
-
-
+            
 
             // Note: requires content to be loaded, cannot be done in Initialize()
-            
+            currentState.Enter();
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            MouseUtils.CurrentState = Mouse.GetState();
+            MouseUtils.CurrentKBState = Keyboard.GetState();
 
             // TODO: Add your update logic here
 
@@ -77,6 +78,10 @@ namespace MakeEveryDay
             {
                 ChangeState(newState: newState);
             }
+
+
+            MouseUtils.PreviousState = MouseUtils.CurrentState;
+            MouseUtils.PreviousKBState = MouseUtils.CurrentKBState;
 
             base.Update(gameTime);
         }

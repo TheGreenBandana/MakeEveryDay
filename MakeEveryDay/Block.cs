@@ -54,6 +54,8 @@ namespace MakeEveryDay
         private CustomRange wealthRange;
         private CustomRange ageRange;
 
+        private Microsoft.Xna.Framework.Vector2 positionToClick;
+
         // Properties
 
         //Modifiers
@@ -135,6 +137,12 @@ namespace MakeEveryDay
         {
             get { return ageRange; }
             set { ageRange = value; }
+        }
+
+        // Misc.
+        public bool IsClicked
+        {
+            get { return positionToClick != - Microsoft.Xna.Framework.Vector2.One; }
         }
 
         // Constructors
@@ -253,6 +261,24 @@ namespace MakeEveryDay
 
         // Methods
 
+        internal override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (MouseUtils.IsJustPressed() && AsRectangle.Contains(MouseUtils.CurrentState.Position))
+            {
+                positionToClick = Position - MouseUtils.CurrentState.Position.ToVector2();
+            }
+
+            if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && positionToClick != -Microsoft.Xna.Framework.Vector2.One) {
+                Position = MouseUtils.CurrentState.Position.ToVector2() + positionToClick;
+            }
+
+            if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
+            {
+                positionToClick = -Microsoft.Xna.Framework.Vector2.One;
+            }
+        }
 
         internal override void Draw(SpriteBatch sb)
         {
