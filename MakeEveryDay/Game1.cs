@@ -52,6 +52,8 @@ namespace MakeEveryDay
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
 
+            MenuState.blockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+
             // Gameplay-state content intitialization
 
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
