@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -54,14 +55,14 @@ namespace MakeEveryDay
             StreamReader reader = null;
             try
             {
-                reader = new("gameBlocks.blocks");
+                reader = new("Content\\gameBlocks.blocks");
                 while (!reader.EndOfStream)
                 {
                     string[] blockData = reader.ReadLine().Split('|');
 
                     // Color needs to be read seperately
-                    Color color = new();
-                    color.PackedValue = uint.Parse(blockData[2]);
+                    Color color = Color.White;
+                    color.PackedValue = (uint)int.Parse(blockData[2]);
 
                     // Splitting line into data that fits the block's constructor
                     allBlocks.Add(new Block(
