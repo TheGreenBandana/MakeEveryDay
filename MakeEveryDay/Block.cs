@@ -360,5 +360,28 @@ namespace MakeEveryDay
             }
             
         }
+
+        /// <summary>
+        /// Returns a clone of a block.
+        /// </summary>
+        /// <param name="block">The block to clone.</param>
+        /// <returns>The clone of the given block.</returns>
+        public static Block CloneBlock(Block block)
+        {
+            return new Block(
+                block.name, 
+                block.Position, 
+                block.Width, 
+                (Color)block.PresetColor,
+                block.HealthMod, 
+                block.EducationMod, 
+                block.HappyMod, 
+                block.WealthMod, 
+                block.healthRange, 
+                block.educationRange, 
+                block.happyRange, 
+                block.wealthRange, 
+                block.ageRange);
+        }
     }
 }
