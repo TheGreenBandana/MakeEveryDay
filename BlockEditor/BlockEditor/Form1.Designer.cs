@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             button_load = new Button();
-            saveFileDialog = new SaveFileDialog();
-            openFileDialog = new OpenFileDialog();
             groupBox1 = new GroupBox();
             button_save = new Button();
             listBox_blockList = new ListBox();
@@ -41,6 +39,10 @@
             button_deleteBlock = new Button();
             groupBox3 = new GroupBox();
             groupBox6 = new GroupBox();
+            label17 = new Label();
+            textBox_ageMax = new TextBox();
+            label18 = new Label();
+            textBox_ageMin = new TextBox();
             button_reset = new Button();
             label13 = new Label();
             textBox_wealthMax = new TextBox();
@@ -78,10 +80,6 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
-            label17 = new Label();
-            textBox_ageMax = new TextBox();
-            label18 = new Label();
-            textBox_ageMin = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -101,15 +99,6 @@
             button_load.Text = "Load File";
             button_load.UseVisualStyleBackColor = true;
             button_load.Click += LoadFile;
-            // 
-            // saveFileDialog
-            // 
-            saveFileDialog.DefaultExt = "blocks";
-            // 
-            // openFileDialog
-            // 
-            openFileDialog.DefaultExt = "blocks";
-            openFileDialog.FileName = "openFileDialog";
             // 
             // groupBox1
             // 
@@ -238,6 +227,42 @@
             groupBox6.TabIndex = 22;
             groupBox6.TabStop = false;
             groupBox6.Text = "Stat Spawn Prerequisites";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(261, 186);
+            label17.Name = "label17";
+            label17.Size = new Size(54, 15);
+            label17.TabIndex = 33;
+            label17.Text = "Age Max";
+            // 
+            // textBox_ageMax
+            // 
+            textBox_ageMax.Location = new Point(324, 182);
+            textBox_ageMax.Name = "textBox_ageMax";
+            textBox_ageMax.PlaceholderText = "Enter maximum age...";
+            textBox_ageMax.Size = new Size(169, 23);
+            textBox_ageMax.TabIndex = 32;
+            textBox_ageMax.Tag = "Age maximum spawn value";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(17, 186);
+            label18.Name = "label18";
+            label18.Size = new Size(52, 15);
+            label18.TabIndex = 31;
+            label18.Text = "Age Min";
+            // 
+            // textBox_ageMin
+            // 
+            textBox_ageMin.Location = new Point(79, 182);
+            textBox_ageMin.Name = "textBox_ageMin";
+            textBox_ageMin.PlaceholderText = "Enter minimum age...";
+            textBox_ageMin.Size = new Size(169, 23);
+            textBox_ageMin.TabIndex = 30;
+            textBox_ageMin.Tag = "Age minimum spawn value";
             // 
             // button_reset
             // 
@@ -595,42 +620,6 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(261, 186);
-            label17.Name = "label17";
-            label17.Size = new Size(54, 15);
-            label17.TabIndex = 33;
-            label17.Text = "Age Max";
-            // 
-            // textBox_ageMax
-            // 
-            textBox_ageMax.Location = new Point(324, 182);
-            textBox_ageMax.Name = "textBox_ageMax";
-            textBox_ageMax.PlaceholderText = "Enter maximum age...";
-            textBox_ageMax.Size = new Size(169, 23);
-            textBox_ageMax.TabIndex = 32;
-            textBox_ageMax.Tag = "Age maximum spawn value";
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Location = new Point(17, 186);
-            label18.Name = "label18";
-            label18.Size = new Size(52, 15);
-            label18.TabIndex = 31;
-            label18.Text = "Age Min";
-            // 
-            // textBox_ageMin
-            // 
-            textBox_ageMin.Location = new Point(79, 182);
-            textBox_ageMin.Name = "textBox_ageMin";
-            textBox_ageMin.PlaceholderText = "Enter minimum age...";
-            textBox_ageMin.Size = new Size(169, 23);
-            textBox_ageMin.TabIndex = 30;
-            textBox_ageMin.Tag = "Age minimum spawn value";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -658,8 +647,6 @@
         #endregion
 
         private Button button_load;
-        private SaveFileDialog saveFileDialog;
-        private OpenFileDialog openFileDialog;
         private GroupBox groupBox1;
         private Button button_save;
         private ListBox listBox_blockList;
