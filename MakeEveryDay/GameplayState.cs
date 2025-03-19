@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,6 @@ namespace MakeEveryDay
         internal static SpriteFont defaultText = default;
 
         private static Vector2 defaultPlayerPosition = new Vector2(100, 100);
-        private Vector2 playerPosition;
-
-        private static float playerSpeed = 10f;
 
         private static Texture2D defaultImage;
 
@@ -25,11 +23,13 @@ namespace MakeEveryDay
 
         private static float lineSpeed = 5f;
 
-
+        private List<Block> allBlocks;
         private List<Block> activeBlocks;
         private List<Block> theLine;
 
         private Block testBlock1;
+        private Block prevBlock;
+        private Player player;
 
         private List<Block> loadedBlocks;
 
@@ -46,10 +46,25 @@ namespace MakeEveryDay
 
         public override void Enter() // Reading in blocks should happen here
         {
-
-            playerPosition = defaultPlayerPosition;
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
+
+            // Reading in blocks
+            allBlocks = new List<Block>();
+            StreamReader reader = null;
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
 
             theLine.Add(new Block(
                 "start",
@@ -114,14 +129,6 @@ namespace MakeEveryDay
 
         public override void Draw(SpriteBatch sb)
         {
-            /*
-            sb.DrawString(
-                defaultText,
-                "Me when I play the videogame\npress tab to go back\nwasd to move",
-                playerPosition,
-                Color.White);
-            */
-
             for(int i = 0; i < theLine.Count; i++)
             {
                 theLine[i].Draw(sb);
@@ -133,27 +140,22 @@ namespace MakeEveryDay
             }
         }
 
-        /// <summary>
-        /// Modifies the player's position according to keyboard input
-        /// </summary>
-        /// <param name="kb">current keyboard state</param>
         private void UpdatePlayer(KeyboardState kb)
         {
-            if (kb.IsKeyDown(Keys.W))
+            foreach(Block block in theLine)
             {
-                playerPosition.Y -= playerSpeed;
+                if(block.Left == 0 && block != prevBlock)
+                {
+                    player.Health += block.HealthMod;
+                    player.Wealth += block.WealthMod;
+                    player.Happiness += block.HappyMod;
+                    player.Education += block.EducationMod;
+                    prevBlock = block;
+                }
             }
-            if (kb.IsKeyDown(Keys.S))
+            if (LastBlockOnLine.Right == 0)
             {
-                playerPosition.Y += playerSpeed;
-            }
-            if (kb.IsKeyDown(Keys.A))
-            {
-                playerPosition.X -= playerSpeed;
-            }
-            if (kb.IsKeyDown(Keys.D))
-            {
-                playerPosition.X += playerSpeed;
+                //A man has fallen into the river in lego city!
             }
         }
     }
