@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,17 +50,42 @@ namespace MakeEveryDay
         {
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
+            allBlocks = new List<Block>();
 
             // Reading in blocks
-            allBlocks = new List<Block>();
             StreamReader reader = null;
             try
             {
+                reader = new("Content\\gameBlocks.blocks");
+                while (!reader.EndOfStream)
+                {
+                    string[] blockData = reader.ReadLine().Split('|');
 
+                    // Color needs to be read seperately
+                    Color color = Color.White;
+                    color.PackedValue = (uint)int.Parse(blockData[2]);
+
+                    // Splitting line into data that fits the block's constructor
+                    allBlocks.Add(new Block(
+                        blockData[0],
+                        Vector2.Zero,
+                        int.Parse(blockData[1]),
+                        color,
+                        int.Parse(blockData[3]),
+                        int.Parse(blockData[4]),
+                        int.Parse(blockData[5]),
+                        int.Parse(blockData[6]),
+                        new CustomRange(int.Parse(blockData[7].Split(',')[0]), int.Parse(blockData[7].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
+                    ));
+                }
             }
             catch
             {
-
+                throw new Exception("gameBlocks.blocks couldn't be read!");
             }
             finally
             {
