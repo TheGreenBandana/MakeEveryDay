@@ -542,7 +542,7 @@
             label4.Name = "label4";
             label4.Size = new Size(25, 15);
             label4.TabIndex = 13;
-            label4.Text = "100";
+            label4.Text = "400";
             label4.TextAlign = ContentAlignment.TopRight;
             // 
             // label3
@@ -587,7 +587,7 @@
             trackBar_width.AutoSize = false;
             trackBar_width.Cursor = Cursors.SizeWE;
             trackBar_width.Location = new Point(57, 73);
-            trackBar_width.Maximum = 100;
+            trackBar_width.Maximum = 400;
             trackBar_width.Minimum = 10;
             trackBar_width.Name = "trackBar_width";
             trackBar_width.Size = new Size(350, 45);
