@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin gameBlocks.blocks
+/copy:gameBlocks.blocks
+
 #begin Icons/HappyStatBig.png
 /importer:TextureImporter
 /processor:TextureProcessor

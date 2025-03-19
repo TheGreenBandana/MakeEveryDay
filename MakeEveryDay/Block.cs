@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
@@ -291,7 +292,12 @@ namespace MakeEveryDay
                 nameFont,
                 name,
                 base.Position + Microsoft.Xna.Framework.Vector2.One * 5,
-                Microsoft.Xna.Framework.Color.White);
+                Color.White,
+                0,
+                Microsoft.Xna.Framework.Vector2.Zero,
+                Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height - 10) / nameFont.MeasureString(name).Y), 
+                SpriteEffects.None, 
+                1);
 
             // Draw the icons
 
