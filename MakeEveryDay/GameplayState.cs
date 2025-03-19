@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace MakeEveryDay
 
         private static float lineSpeed = 5f;
 
-
+        private List<Block> allBlocks;
         private List<Block> activeBlocks;
         private List<Block> theLine;
 
@@ -47,6 +48,23 @@ namespace MakeEveryDay
         {
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
+
+            // Reading in blocks
+            allBlocks = new List<Block>();
+            StreamReader reader = null;
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
 
             theLine.Add(new Block(
                 "start",

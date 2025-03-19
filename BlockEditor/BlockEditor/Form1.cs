@@ -202,28 +202,24 @@ namespace BlockEditor
         /// </summary>
         private void SaveFile(object sender, EventArgs e)
         {
-            // If a file is correctly saved
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            StreamWriter writer = null;
+            // Save blocks to the file using the blocks' ToString method
+            try
             {
-                StreamWriter writer = null;
-                // Save blocks to the file using the blocks' ToString method
-                try
+                writer = new("..\\..\\..\\..\\..\\MakeEveryDay\\Content\\gameBlocks.blocks");
+                foreach (Block block in blocks)
+                    writer.WriteLine(block.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("Failed to save data to file.", "Error saving blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (writer != null)
                 {
-                    writer = new(saveFileDialog.FileName);
-                    foreach (Block block in blocks)
-                        writer.WriteLine(block.ToString());
-                }
-                catch
-                {
-                    MessageBox.Show("Failed to save data to file.", "Error saving blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (writer != null)
-                    {
-                        writer.Close();
-                        MessageBox.Show("Saved blocks to file!", "Blocks saved!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    writer.Close();
+                    MessageBox.Show("Saved blocks to file!", "Blocks saved!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -233,70 +229,67 @@ namespace BlockEditor
         /// </summary>
         private void LoadFile(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            StreamReader reader = null;
+            List<Block> loadedBlocks = new List<Block>();
+            bool success = false;
+            try
             {
-                StreamReader reader = null;
-                List<Block> loadedBlocks = new List<Block>();
-                bool success = false;
-                try
+                reader = new("..\\..\\..\\..\\..\\MakeEveryDay\\Content\\gameBlocks.blocks");
+                while (!reader.EndOfStream)
                 {
-                    reader = new(openFileDialog.FileName);
-                    while (!reader.EndOfStream)
-                    {
-                        string[] blockData = reader.ReadLine().Split('|');
-                        // Splitting line into data that fits the block's constructor
-                        loadedBlocks.Add(new Block(
-                            blockData[0],
-                            int.Parse(blockData[1]),
-                            Color.FromArgb(int.Parse(blockData[2])),
-                            int.Parse(blockData[3]),
-                            int.Parse(blockData[4]),
-                            int.Parse(blockData[5]),
-                            int.Parse(blockData[6]),
-                            new CustomRange(int.Parse(blockData[7].Split(',')[0]), int.Parse(blockData[7].Split(',')[1])),
-                            new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
-                            new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
-                            new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
-                            new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
-                        ));
-                    }
-                    success = true;
+                    string[] blockData = reader.ReadLine().Split('|');
+                    // Splitting line into data that fits the block's constructor
+                    loadedBlocks.Add(new Block(
+                        blockData[0],
+                        int.Parse(blockData[1]),
+                        Color.FromArgb(int.Parse(blockData[2])),
+                        int.Parse(blockData[3]),
+                        int.Parse(blockData[4]),
+                        int.Parse(blockData[5]),
+                        int.Parse(blockData[6]),
+                        new CustomRange(int.Parse(blockData[7].Split(',')[0]), int.Parse(blockData[7].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
+                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
+                    ));
                 }
-                catch
+                success = true;
+            }
+            catch
+            {
+                MessageBox.Show("Failed to load data from file.", "Error loading blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (reader != null)
                 {
-                    MessageBox.Show("Failed to load data from file.", "Error loading blocks!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    reader.Close();
                 }
-                finally
+                if (success)
                 {
-                    if (reader != null)
+                    // If no list existed, just load the blocks into the list
+                    if (blocks.Count == 0)
                     {
-                        reader.Close();
+                        blocks = loadedBlocks;
+                        UpdateList();
+                        MessageBox.Show("Loaded blocks from file!", "Blocks loaded!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    if (success)
+                    // If a list already existed, check if the user wants to replace the existing list, add to it or cancel loading entirely
+                    else
                     {
-                        // If no list existed, just load the blocks into the list
-                        if (blocks.Count == 0)
+                        DialogResult userInput = MessageBox.Show("Loaded blocks from file!\nDo you want to add the loaded blocks to the current list?",
+                            "Blocks loaded!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                        if (userInput == DialogResult.No)
                         {
                             blocks = loadedBlocks;
                             UpdateList();
-                            MessageBox.Show("Loaded blocks from file!", "Blocks loaded!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        // If a list already existed, check if the user wants to replace the existing list, add to it or cancel loading entirely
-                        else
+                        else if (userInput == DialogResult.Yes)
                         {
-                            DialogResult userInput = MessageBox.Show("Loaded blocks from file!\nDo you want to add the loaded blocks to the current list?",
-                                "Blocks loaded!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
-                            if (userInput == DialogResult.No)
-                            {
-                                blocks = loadedBlocks;
-                                UpdateList();
-                            }
-                            else if (userInput == DialogResult.Yes)
-                            {
-                                foreach (Block block in loadedBlocks)
-                                    blocks.Add(block);
-                                UpdateList();
-                            }
+                            foreach (Block block in loadedBlocks)
+                                blocks.Add(block);
+                            UpdateList();
                         }
                     }
                 }
