@@ -27,10 +27,18 @@ namespace MakeEveryDay
         }
 
         // This whole class checks to see if the mouse has been previously pressed or released
+        /// <summary>
+        /// Determines if the left button specifically was just pressed this frame
+        /// </summary>
+        /// <returns>bool representing if the left button was just pressed</returns>
         public static bool IsJustPressed() 
         {
             return (previousState.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed); 
         }
+        /// <summary>
+        /// Determines if the left button specifically was just released this frame
+        /// </summary>
+        /// <returns>bool representing if the left button was just released</returns>
         public static bool IsJustReleased()
         {
             MouseState ms = Mouse.GetState();
@@ -52,12 +60,22 @@ namespace MakeEveryDay
             get { return currentKBState; }
             set { currentKBState = value; }
         }
-
+        
+        /// <summary>
+        /// detects if a key started being pressed this frame
+        /// </summary>
+        /// <param name="key">which key you're testing for</param>
+        /// <returns>bool representing if the key was just pressed</returns>
         public static bool KeyJustPressed(Keys key)
         {
             return (previousKBState.IsKeyUp(key) && currentKBState.IsKeyDown(key));
         }
 
+        /// <summary>
+        /// detects if a key was just released this frame
+        /// </summary>
+        /// <param name="key">which key you're testing for</param>
+        /// <returns>bool representing if the key was just released</returns>
         public static bool KeyJustReleased(Keys key)
         {
             return (previousKBState.IsKeyDown(key) && currentKBState.IsKeyUp(key));

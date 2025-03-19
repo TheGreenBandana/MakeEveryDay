@@ -12,6 +12,7 @@ namespace MakeEveryDay
         // Game state-related
         private GameState currentState;
 
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -53,9 +54,10 @@ namespace MakeEveryDay
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
 
             // Gameplay-state content intitialization
-
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
-            
+
+            // Player class content initialization
+            Player.sprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
@@ -67,10 +69,10 @@ namespace MakeEveryDay
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // DON'T DELETE THESE DON'T DELETE THESE
             MouseUtils.CurrentState = Mouse.GetState();
             MouseUtils.CurrentKBState = Keyboard.GetState();
-
-            // TODO: Add your update logic here
+            // DON'T DELETE THESE DON'T DELETE THESE
 
             GameState newState = (GameState) currentState.CustomUpdate(gameTime: gameTime);
 
@@ -79,9 +81,10 @@ namespace MakeEveryDay
                 ChangeState(newState: newState);
             }
 
-
+            // DON'T DELETE THESE DON'T DELETE THESE
             MouseUtils.PreviousState = MouseUtils.CurrentState;
             MouseUtils.PreviousKBState = MouseUtils.CurrentKBState;
+            // DON'T DELETE THESE DON'T DELETE THESE
 
             base.Update(gameTime);
         }
