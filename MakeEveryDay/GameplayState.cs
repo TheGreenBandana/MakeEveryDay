@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -96,6 +97,7 @@ namespace MakeEveryDay
                 "start",
                 new Vector2(0, 350),
                 100));
+            player = new Player();
         }
 
         public override void Exit()
@@ -106,8 +108,6 @@ namespace MakeEveryDay
         public override State CustomUpdate(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
-
-            //UpdatePlayer(kb);
 
             if (kb.IsKeyDown(Keys.Tab))
             {
@@ -164,6 +164,8 @@ namespace MakeEveryDay
             {
                 activeBlocks[i].Draw(sb);
             }
+
+            player.Draw(sb);
         }
 
         private void UpdatePlayer(KeyboardState kb)
@@ -182,6 +184,7 @@ namespace MakeEveryDay
             if (LastBlockOnLine.Right == 0)
             {
                 //A man has fallen into the river in lego city!
+                //player.Animation = new AnimationState(defaultImage, 1, true, 1);
             }
         }
     }

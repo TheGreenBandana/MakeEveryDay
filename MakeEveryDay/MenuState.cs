@@ -19,18 +19,28 @@ namespace MakeEveryDay
 
         private Block testBlock;
         
+        private Button playButton;
         public MenuState() { }
 
         public override void Enter()
         {
+            playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
+            
             testBlock = new Block(
                 "test",
                 new Vector2(300, 200),
                 100);
+            
         }
 
         public override State CustomUpdate(GameTime gameTime)
         {
+            if (playButton.IsPressed())
+            {
+                return new GameplayState();
+            }
+                return null;
+            
             /*
             MouseState ms = Mouse.GetState();
             
@@ -40,8 +50,9 @@ namespace MakeEveryDay
             }
             */
 
-            testBlock.Update(gameTime);
+            //testBlock.Update(gameTime);
 
+            /*
             if (MouseUtils.IsJustPressed() && testBlock.AsRectangle.Contains(MouseUtils.CurrentState.Position.ToVector2()))
             {
                 return new GameplayState();
@@ -51,11 +62,12 @@ namespace MakeEveryDay
             // Unless there is a change in state that should happen,
             // it will always return this.
             return null;
+            */
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            
+            playButton.Draw(sb);
             sb.DrawString(
                 titleFont,
                 "This is a title\nleft click to start",
@@ -63,7 +75,7 @@ namespace MakeEveryDay
                 Color.White);
             
 
-            testBlock.Draw(sb);
+            //testBlock.Draw(sb);
         }
 
 
