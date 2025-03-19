@@ -12,6 +12,7 @@ namespace MakeEveryDay
         // Game state-related
         private GameState currentState;
 
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -53,9 +54,10 @@ namespace MakeEveryDay
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
 
             // Gameplay-state content intitialization
-
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
-            
+
+            // Player class content initialization
+            Player.sprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
