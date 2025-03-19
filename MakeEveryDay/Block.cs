@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MakeEveryDay
 {
@@ -23,10 +24,7 @@ namespace MakeEveryDay
         internal static Texture2D baseBlockTexture = default;
         internal static Texture2D arrowTexture = default;
 
-        internal static Texture2D healthIcon;
-        internal static Texture2D educationIcon;
-        internal static Texture2D happyIcon;
-        internal static Texture2D wealthIcon;
+        internal static Texture2D[] statIcons = new Texture2D[4];
 
         internal static SpriteFont nameFont;
 
@@ -38,16 +36,10 @@ namespace MakeEveryDay
 
         // Fields - non-static
         private string name;
+        
+        private int[] statMods;
 
-        private int healthMod;
-        private int educationMod;
-        private int happyMod;
-        private int wealthMod;
-
-        private int healthArrows;
-        private int educationArrows;
-        private int happyArrows;
-        private int wealthArrows;
+        private int[] statArrows;
 
         private CustomRange healthRange;
         private CustomRange educationRange;
@@ -62,51 +54,51 @@ namespace MakeEveryDay
         //Modifiers
         public int HealthMod
         {
-            get { return healthMod; }
-            set { healthMod = value; }
+            get { return statMods[0]; }
+            set { statMods[0] = value; }
         }
 
         public int EducationMod
         {
-            get { return educationMod; }
-            set { educationMod = value; }
+            get { return statMods[1]; }
+            set { statMods[1] = value; }
         }
 
         public int HappyMod
         {
-            get { return happyMod; }
-            set { happyMod = value; }
+            get { return statMods[2]; }
+            set { statMods[2] = value; }
         }
 
         public int WealthMod
         {
-            get { return wealthMod; }
-            set { wealthMod = value; }
+            get { return statMods[3]; }
+            set { statMods[3] = value; }
         }
 
         //Arrows
         public int HealthArrows
         {
-            get { return healthArrows;}
-            set { healthArrows = value; }
+            get { return statArrows[0];}
+            set { statArrows[0] = value; }
         }
 
         public int EducationArrows
         {
-            get { return educationArrows; }
-            set { educationArrows = value; }
+            get { return statArrows[1]; }
+            set { statArrows[1] = value; }
         }
 
         public int HappyArrows 
         {
-            get { return happyArrows; }
-            set { happyArrows = value; }
+            get { return statArrows[2]; }
+            set { statArrows[2] = value; }
         }
 
         public int WealthArrows
         {
-            get { return wealthArrows; }
-            set { wealthArrows = value; }
+            get { return statArrows[3]; }
+            set { statArrows[3] = value; }
         }
 
         //Custom Ranges
@@ -182,10 +174,11 @@ namespace MakeEveryDay
         {
             this.name = name;
 
-            this.healthMod = healthMod;
-            this.educationMod = educationMod;
-            this.happyMod = happyMod;
-            this.wealthMod = wealthMod;
+            statMods = new int[4];
+            statMods[0] = healthMod;
+            statMods[1] = educationMod;
+            statMods[2] = happyMod;
+            statMods[3] = wealthMod;
 
             this.healthRange = healthRange;
             this.educationRange = educationRange;
@@ -193,15 +186,15 @@ namespace MakeEveryDay
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
 
-
+            statArrows = new int[4];
+            for(int i = 0; i < statArrows.Length; i++)
+            {
+                statArrows[i] = ArrowFromModHelper(statMods[i]);
+            }
             
-            this.healthArrows = (int)(Math.Round(healthMod / 25.0));
-            this.educationArrows = (int)(educationMod / 25.0 + 1);
-            this.happyArrows = (int)(happyMod / 25.0 + 1);
-            this.wealthArrows = (int)(wealthMod / 25.0 + 1);
-            
 
-        }/// <summary>
+        }
+        /// <summary>
          /// Default Constructor
          /// </summary>
          /// <param name="name">Name of the Block</param>
@@ -271,7 +264,6 @@ namespace MakeEveryDay
 
         internal override void Draw(SpriteBatch sb)
         {
-            
             // Draw the box
             base.Draw(sb);
 
@@ -291,70 +283,18 @@ namespace MakeEveryDay
 
             float nextX = 0;
 
-            sb.Draw(
-                healthIcon,
-                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                Microsoft.Xna.Framework.Color.White);
-
-            for(int i = 0; i< healthArrows; i++)
+            for (int i = 0; i < statIcons.Length; i++)
             {
-                nextX += iconSize.X;
-                
                 sb.Draw(
-                    arrowTexture,
+                    statIcons[i],
                     new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                     Microsoft.Xna.Framework.Color.White);
-            }
 
-            nextX += iconSize.X; 
-
-            sb.Draw(
-                educationIcon,
-                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                Microsoft.Xna.Framework.Color.White);
-
-            for (int i = 0; i < educationArrows; i++)
-            {
                 nextX += iconSize.X;
 
-                sb.Draw(
-                    arrowTexture,
-                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                    Microsoft.Xna.Framework.Color.White);
-            }
+                DrawArrowsHelper(sb, statArrows[i], ref nextX);
 
-            nextX += iconSize.X;
-
-            sb.Draw(
-                happyIcon,
-                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                Microsoft.Xna.Framework.Color.White);
-
-            for (int i = 0; i < happyArrows; i++)
-            {
-                nextX += iconSize.X;
-
-                sb.Draw(
-                    arrowTexture,
-                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                    Microsoft.Xna.Framework.Color.White);
-            }
-
-            nextX += iconSize.X;
-
-            sb.Draw(
-                wealthIcon,
-                new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                Microsoft.Xna.Framework.Color.White);
-
-            for (int i = 0; i < wealthArrows; i++)
-            {
-                nextX += iconSize.X;
-
-                sb.Draw(
-                    arrowTexture,
-                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                    Microsoft.Xna.Framework.Color.White);
+                nextX += iconSize.X * Math.Abs(statArrows[i]);
             }
         }
 
@@ -364,8 +304,61 @@ namespace MakeEveryDay
         /// <returns>The string of the block.</returns>
         public override string ToString()
         {
-            return $"{name}|{Size.X}|{PresetColor.GetHashCode}|{healthMod}|{educationMod}|{happyMod}|{wealthMod}|" +
+            return $"{name}|{Size.X}|{PresetColor.GetHashCode}|{statMods[0]}|{statMods[1]}|{statMods[2]}|{statMods[3]}|" +
                 $"{healthRange.ToString()}|{educationRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}";
+        }
+
+        // Helper Methods
+        private int ArrowFromModHelper(int mod)
+        {
+            
+
+            if (mod == 0)
+            {
+                return 0;
+            }
+            else if (mod> 0)
+            {
+                return mod / 25 + 1;
+            } else if (mod < 0)
+            {
+                return mod / 25 - 1;
+            }
+            else
+            {
+                throw new Exception("Oopsie Kyle fucked it.");
+            }
+
+
+        }
+
+        private void DrawArrowsHelper(SpriteBatch sb, int arrows, ref float nextX)
+        {
+            if (arrows == 0) return;
+            int arrowsNormal = arrows / Math.Abs(arrows);
+
+            switch (arrowsNormal)
+            {
+                case 1:
+                    for (int i = 0; i < arrows; i++)
+                    {
+                        sb.Draw(
+                        arrowTexture,
+                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                            Microsoft.Xna.Framework.Color.White);
+                    }
+                    break;
+                case -1:
+                    for (int i = 0; i < Math.Abs(arrows); i++)
+                    {
+                        sb.Draw(
+                        arrowTexture,
+                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                            Microsoft.Xna.Framework.Color.White);
+                    }
+                    break;
+            }
+            
         }
     }
 }

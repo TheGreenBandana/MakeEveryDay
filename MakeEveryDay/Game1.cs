@@ -44,10 +44,10 @@ namespace MakeEveryDay
             Block.nameFont = Content.Load<SpriteFont>("Times24");
 
             Block.arrowTexture = Content.Load<Texture2D>("Icons/StatChangeArrow");
-            Block.healthIcon = Content.Load<Texture2D>("Icons/HealthStatSmall");
-            Block.happyIcon = Content.Load<Texture2D>("Icons/HappyStatSmall");
-            Block.educationIcon = Content.Load<Texture2D>("Icons/SmartStatSmall");
-            Block.wealthIcon = Content.Load<Texture2D>("Icons/MoneyStatSmall");
+            Block.statIcons[0] = Content.Load<Texture2D>("Icons/HealthStatSmall");
+            Block.statIcons[1] = Content.Load<Texture2D>("Icons/HappyStatSmall");
+            Block.statIcons[2] = Content.Load<Texture2D>("Icons/SmartStatSmall");
+            Block.statIcons[3] = Content.Load<Texture2D>("Icons/MoneyStatSmall");
 
             // Menu-State content initialization
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
