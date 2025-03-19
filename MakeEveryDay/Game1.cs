@@ -43,7 +43,7 @@ namespace MakeEveryDay
             Block.baseBlockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
             Block.nameFont = Content.Load<SpriteFont>("Times24");
 
-            Block.arrrowTexture = Content.Load<Texture2D>("Icons/StatChangeArrow");
+            Block.arrowTexture = Content.Load<Texture2D>("Icons/StatChangeArrow");
             Block.healthIcon = Content.Load<Texture2D>("Icons/HealthStatSmall");
             Block.happyIcon = Content.Load<Texture2D>("Icons/HappyStatSmall");
             Block.educationIcon = Content.Load<Texture2D>("Icons/SmartStatSmall");

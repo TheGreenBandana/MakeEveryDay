@@ -41,7 +41,6 @@ namespace MakeEveryDay
         /// <returns>bool representing if the left button was just released</returns>
         public static bool IsJustReleased()
         {
-            MouseState ms = Mouse.GetState();
             return (previousState.LeftButton == ButtonState.Pressed && currentState.LeftButton == ButtonState.Released);
         }
 

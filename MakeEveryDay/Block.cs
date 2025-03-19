@@ -21,7 +21,7 @@ namespace MakeEveryDay
         // Fields - static
         internal static int presetHeight = 80; // Arbitrary number, controls how tall the blocks are
         internal static Texture2D baseBlockTexture = default;
-        internal static Texture2D arrrowTexture = default;
+        internal static Texture2D arrowTexture = default;
 
         internal static Texture2D healthIcon;
         internal static Texture2D educationIcon;
@@ -193,6 +193,14 @@ namespace MakeEveryDay
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
 
+
+            
+            this.healthArrows = (int)(Math.Round(healthMod / 25.0));
+            this.educationArrows = (int)(educationMod / 25.0 + 1);
+            this.happyArrows = (int)(happyMod / 25.0 + 1);
+            this.wealthArrows = (int)(wealthMod / 25.0 + 1);
+            
+
         }/// <summary>
          /// Default Constructor
          /// </summary>
@@ -217,19 +225,9 @@ namespace MakeEveryDay
         /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
         /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
-            : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
-        {
-            this.name = name;
-            this.healthMod = healthMod;
-            this.educationMod = educationMod;
-            this.happyMod = happyMod;
-            this.wealthMod = wealthMod;
-            healthRange = CustomRange.Infinite;
-            educationRange = CustomRange.Infinite;
-            happyRange = CustomRange.Infinite;
-            wealthRange = CustomRange.Infinite;
-            ageRange = CustomRange.Infinite;
-        }
+            : this(name, position, width, color,
+                  healthMod, educationMod, happyMod, wealthMod,
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite) {}
 
         /// <summary>
         /// Constructor that takes ONLY an Age Range
@@ -245,19 +243,9 @@ namespace MakeEveryDay
         /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
         /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
-            : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width, presetHeight), color, blockDrawLayer)
-        {
-            this.name = name;
-            this.healthMod = healthMod;
-            this.educationMod = educationMod;
-            this.happyMod = happyMod;
-            this.wealthMod = wealthMod;
-            healthRange = CustomRange.Infinite;
-            educationRange = CustomRange.Infinite;
-            happyRange = CustomRange.Infinite;
-            wealthRange = CustomRange.Infinite;
-            this.ageRange = ageRange;
-        }
+            : this(name, position, width, color,
+                  healthMod, educationMod, happyMod, wealthMod,
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange) { }
 
 
         // Methods
@@ -308,12 +296,32 @@ namespace MakeEveryDay
                 new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                 Microsoft.Xna.Framework.Color.White);
 
+            for(int i = 0; i< healthArrows; i++)
+            {
+                nextX += iconSize.X;
+                
+                sb.Draw(
+                    arrowTexture,
+                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                    Microsoft.Xna.Framework.Color.White);
+            }
+
             nextX += iconSize.X; 
 
             sb.Draw(
                 educationIcon,
                 new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                 Microsoft.Xna.Framework.Color.White);
+
+            for (int i = 0; i < educationArrows; i++)
+            {
+                nextX += iconSize.X;
+
+                sb.Draw(
+                    arrowTexture,
+                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                    Microsoft.Xna.Framework.Color.White);
+            }
 
             nextX += iconSize.X;
 
@@ -322,12 +330,32 @@ namespace MakeEveryDay
                 new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                 Microsoft.Xna.Framework.Color.White);
 
+            for (int i = 0; i < happyArrows; i++)
+            {
+                nextX += iconSize.X;
+
+                sb.Draw(
+                    arrowTexture,
+                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                    Microsoft.Xna.Framework.Color.White);
+            }
+
             nextX += iconSize.X;
 
             sb.Draw(
                 wealthIcon,
                 new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
                 Microsoft.Xna.Framework.Color.White);
+
+            for (int i = 0; i < wealthArrows; i++)
+            {
+                nextX += iconSize.X;
+
+                sb.Draw(
+                    arrowTexture,
+                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                    Microsoft.Xna.Framework.Color.White);
+            }
         }
 
         /// <summary>
