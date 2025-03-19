@@ -67,10 +67,10 @@ namespace MakeEveryDay
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // DON'T DELETE THESE DON'T DELETE THESE
             MouseUtils.CurrentState = Mouse.GetState();
             MouseUtils.CurrentKBState = Keyboard.GetState();
-
-            // TODO: Add your update logic here
+            // DON'T DELETE THESE DON'T DELETE THESE
 
             GameState newState = (GameState) currentState.CustomUpdate(gameTime: gameTime);
 
@@ -79,9 +79,10 @@ namespace MakeEveryDay
                 ChangeState(newState: newState);
             }
 
-
+            // DON'T DELETE THESE DON'T DELETE THESE
             MouseUtils.PreviousState = MouseUtils.CurrentState;
             MouseUtils.PreviousKBState = MouseUtils.CurrentKBState;
+            // DON'T DELETE THESE DON'T DELETE THESE
 
             base.Update(gameTime);
         }
