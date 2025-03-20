@@ -13,7 +13,6 @@ namespace MakeEveryDay
         private int wealth;
         private int happiness;
         private int education;
-        private Color color;
         //private AnimationState animation;
 
         public int Health { get { return health; } set { health = value; } }
@@ -28,14 +27,13 @@ namespace MakeEveryDay
             wealth = 0;
             happiness = 0;
             education = 0;
-            color = Color.White;
             //animation = new AnimationState(sprite, 1, true, 1);
         }
 
         
         public void StartFalling()
         {
-            color = Color.Red;
+            base.PresetColor = Color.Red;
             //will eventually switch the animation being used to the falling animation
         }
 
@@ -47,7 +45,7 @@ namespace MakeEveryDay
 
         internal override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb, color, 1, new Vector2(0, 0), 1, SpriteEffects.None, 1)
+            base.Draw(sb);
             //animation.Draw(sb, base.Position, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
         }
     }

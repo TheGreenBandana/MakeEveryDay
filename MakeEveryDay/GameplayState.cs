@@ -30,7 +30,6 @@ namespace MakeEveryDay
         private List<Block> theLine;
 
         private Block testBlock1;
-        private Block prevBlock;
         private Player player;
 
         private List<Block> loadedBlocks;
@@ -184,6 +183,8 @@ namespace MakeEveryDay
                 }
             }
 
+            UpdatePlayer();
+
             return null;
         }
 
@@ -207,18 +208,14 @@ namespace MakeEveryDay
         /// </summary>
         private void UpdatePlayer()
         {
-            foreach(Block block in theLine)
+            if(LastBlockOnLine.Left == 0)
             {
-                if(block.Left == 0 && block != prevBlock)
-                {
-                    player.Health += block.HealthMod;
-                    player.Wealth += block.WealthMod;
-                    player.Happiness += block.HappyMod;
-                    player.Education += block.EducationMod;
-                    prevBlock = block;
-                }
+                player.Health += LastBlockOnLine.HealthMod;
+                player.Wealth += LastBlockOnLine.WealthMod;
+                player.Happiness += LastBlockOnLine.HappyMod;
+                player.Education += LastBlockOnLine.EducationMod;
             }
-            if (LastBlockOnLine.Right == 0)
+            else if (LastBlockOnLine.Right <= 0)
             {
                 //A man has fallen into the river in lego city!
                 //player.Animation = new AnimationState(defaultImage, 1, true, 1);
