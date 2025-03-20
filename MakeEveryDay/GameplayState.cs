@@ -120,6 +120,11 @@ namespace MakeEveryDay
             {
                 Random rng = new();
                 activeBlocks.Add(Block.CloneBlock(allBlocks[rng.Next(0, allBlocks.Count)]));
+                activeBlocks[activeBlocks.Count - 1].Position = new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom));
+                //activeBlocks.Add(new Block(
+                //    "test",
+                //    new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom)),
+                //    100));
             }
 
             for(int i = 0; i < activeBlocks.Count; i++)
