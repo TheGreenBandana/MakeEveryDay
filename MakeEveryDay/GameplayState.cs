@@ -202,7 +202,10 @@ namespace MakeEveryDay
             player.Draw(sb);
         }
 
-        private void UpdatePlayer(KeyboardState kb)
+        /// <summary>
+        /// Updates the player's stats based on the block beneath their feet
+        /// </summary>
+        private void UpdatePlayer()
         {
             foreach(Block block in theLine)
             {
@@ -219,6 +222,7 @@ namespace MakeEveryDay
             {
                 //A man has fallen into the river in lego city!
                 //player.Animation = new AnimationState(defaultImage, 1, true, 1);
+                player.StartFalling();
             }
         }
 
