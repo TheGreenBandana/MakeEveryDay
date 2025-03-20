@@ -25,7 +25,7 @@ namespace MakeEveryDay
 
         private static float lineSpeed = 5f;
 
-        private List<Block> allBlocks;
+        private List<List<Block>> allBlocks;
         private List<Block> activeBlocks;
         private List<Block> theLine;
 
@@ -50,7 +50,7 @@ namespace MakeEveryDay
         {
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
-            allBlocks = new List<Block>();
+            allBlocks = new List<List<Block>>();
 
             // Reading in blocks
             StreamReader reader = null;
@@ -66,7 +66,8 @@ namespace MakeEveryDay
                     color.PackedValue = (uint)int.Parse(blockData[2]);
 
                     // Splitting line into data that fits the block's constructor
-                    allBlocks.Add(new Block(
+                    allBlocks.Add(new List<Block> {
+                        new Block(
                         blockData[0],
                         Vector2.Zero,
                         int.Parse(blockData[1]),
@@ -80,8 +81,17 @@ namespace MakeEveryDay
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
-                    ));
+                    ) } );
                 }
+
+                // Creates a group of the 1st 3 blocks, can be removed once done testing
+                allBlocks.Add(new List<Block>
+                {
+                    allBlocks[0][0],
+                    allBlocks[1][0],
+                    allBlocks[2][0]
+                });
+
             }
             catch
             {
@@ -114,13 +124,34 @@ namespace MakeEveryDay
                 return new MenuState();
             }
 
+            if (MouseUtils.KeyJustPressed(Keys.Up))
+            {
+                player.Health += 5;
+                player.Wealth += 5;
+                player.Happiness += 5;
+                player.Education += 5;
+            }
+
             Random rand = new Random();
 
             if (MouseUtils.KeyJustPressed(Keys.Enter))
             {
-                Random rng = new();
-                activeBlocks.Add(Block.CloneBlock(allBlocks[rng.Next(0, allBlocks.Count)]));
-                activeBlocks[activeBlocks.Count - 1].Position = new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom));
+                // Spawns a new block (or group of blocks) depending on player stats, gives random position if 
+                List<Block> newBlocks = GenerateNewBlocks();
+                if (newBlocks.Count > 0)
+                {
+                    float groupWidth = 0;
+                    for(int i = 0; i < newBlocks.Count; i++)
+                    {
+                        activeBlocks.Add(newBlocks[i]);
+                        if (i == 0)
+                            newBlocks[0].Position = new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom));
+                        else
+                            newBlocks[i].Position = newBlocks[0].Position + new Vector2(groupWidth, 0);
+                        groupWidth += newBlocks[i].Width;
+                    }
+                }
+
                 //activeBlocks.Add(new Block(
                 //    "test",
                 //    new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom)),
@@ -189,6 +220,44 @@ namespace MakeEveryDay
                 //A man has fallen into the river in lego city!
                 //player.Animation = new AnimationState(defaultImage, 1, true, 1);
             }
+        }
+
+        /// <summary>
+        /// Returns a new block (or blocks) depending on the player's stats.
+        /// </summary>
+        /// <returns>The new block (or blocks) if possible, otherwise returns an empty block list.</returns>
+        private List<Block> GenerateNewBlocks()
+        {
+            List<List<Block>> potentialBlocks = new List<List<Block>>(allBlocks.Count);
+            foreach(List<Block> blockList in allBlocks)
+            {
+                bool success = true;
+                foreach(Block block in blockList)
+                {
+                    if (!(block.HealthRange.IsInRange(player.Health)
+                        && block.WealthRange.IsInRange(player.Wealth)
+                        && block.HappyRange.IsInRange(player.Happiness)
+                        && block.EducationRange.IsInRange(player.Education)
+                        // && block.AgeRange.IsInRange(player.Age)
+                        ))
+                    {
+                        success = false;
+                        break;
+                    }
+                }
+                if (success)
+                    potentialBlocks.Add(blockList);
+            }
+            if (potentialBlocks.Count > 0)
+            {
+                Random rand = new();
+                int index = rand.Next(0, potentialBlocks.Count);
+                List<Block> newBlockList = new List<Block>(potentialBlocks[index].Count);
+                foreach (Block block in potentialBlocks[index])
+                    newBlockList.Add(Block.CloneBlock(block));
+                return newBlockList;
+            }
+            return new List<Block>(1);
         }
     }
 }

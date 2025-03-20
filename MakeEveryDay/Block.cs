@@ -104,7 +104,7 @@ namespace MakeEveryDay
         //Custom Ranges
         public CustomRange HealthRange
         {
-            get { return HealthRange; }
+            get { return healthRange; }
             set { HealthRange = value; }
         }
 
