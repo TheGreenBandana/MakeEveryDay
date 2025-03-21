@@ -30,6 +30,13 @@ namespace MakeEveryDay
             //animation = new AnimationState(sprite, 1, true, 1);
         }
 
+        
+        public void StartFalling()
+        {
+            base.PresetColor = Color.Red;
+            //will eventually switch the animation being used to the falling animation
+        }
+
         internal override void Update(GameTime gameTime)
         {
             //animation.Update(gameTime);
