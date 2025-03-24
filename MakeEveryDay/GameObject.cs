@@ -214,9 +214,16 @@ namespace MakeEveryDay
         {
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
 
+            Microsoft.Xna.Framework.Rectangle scaledRectangle = new(
+                (int)(AsRectangle.X * (Game1.ScreenSize.X / Game1.Width)),
+                (int)(AsRectangle.Y * (Game1.ScreenSize.X / Game1.Width) + (Game1.Width / Game1.ScreenSize.X)),
+                (int)(AsRectangle.Width * (Game1.ScreenSize.X / Game1.Width)),
+                (int)(AsRectangle.Height * (Game1.ScreenSize.X / Game1.Width))
+                );
+
             sb.Draw(
                 sprite,
-                AsRectangle,
+                scaledRectangle,
                 null,
                 ColorAndLayer.Item1,
                 0,

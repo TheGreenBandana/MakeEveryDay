@@ -131,6 +131,9 @@ namespace MakeEveryDay
                 player.Education += 5;
             }
 
+            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.D))
+                Game1.Width += 5;
+
             Random rand = new Random();
 
             if (MouseUtils.KeyJustPressed(Keys.Enter))
