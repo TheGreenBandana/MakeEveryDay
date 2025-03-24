@@ -4,9 +4,11 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MakeEveryDay
 {
@@ -20,11 +22,14 @@ namespace MakeEveryDay
         private Block testBlock;
         
         private Button playButton;
+
+        private Button fullscreenButton;
+
         public MenuState() { }
 
         public override void Enter()
         {
-            playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
+            playButton = new Button(blockTexture, new Microsoft.Xna.Framework.Rectangle((int)Game1.ScreenSize.X / 2 - 100, (int)Game1.ScreenSize.Y / 2 - 50, 200, 100));
             
             testBlock = new Block(
                 "test",
@@ -39,7 +44,7 @@ namespace MakeEveryDay
             {
                 return new GameplayState();
             }
-                return null;
+            return null;
             
             /*
             MouseState ms = Mouse.GetState();
@@ -68,11 +73,12 @@ namespace MakeEveryDay
         public override void Draw(SpriteBatch sb)
         {
             playButton.Draw(sb);
+            fullscreenButton.Draw(sb);
             sb.DrawString(
                 titleFont,
                 "This is a title\nleft click to start",
                 Vector2.One * 10,
-                Color.White);
+                Microsoft.Xna.Framework.Color.White);
             
 
             //testBlock.Draw(sb);

@@ -6,8 +6,12 @@ namespace MakeEveryDay
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public static GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        public static Vector2 ScreenSize { get => new Vector2(
+            _graphics.PreferredBackBufferWidth,
+            _graphics.PreferredBackBufferHeight); }
 
         // Game state-related
         private GameState currentState;
@@ -16,6 +20,9 @@ namespace MakeEveryDay
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
