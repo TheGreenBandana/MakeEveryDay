@@ -49,7 +49,6 @@ namespace MakeEveryDay
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
-            Width = 1920;
 
             // TODO: use this.Content to load your game content here
 

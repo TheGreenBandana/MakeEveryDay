@@ -30,6 +30,8 @@ namespace MakeEveryDay
                 "test",
                 new Vector2(300, 200),
                 100);
+
+            Game1.Width = 1000;
             
         }
 

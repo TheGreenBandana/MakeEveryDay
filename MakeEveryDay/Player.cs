@@ -21,7 +21,7 @@ namespace MakeEveryDay
         public int Education { get { return education; } set { education = value; } }
         //public AnimationState Animation { get { return animation; } set { animation = value; } }
 
-        public Player() : base(sprite, new Vector2(0, 300), new Point(50, 50))
+        public Player() : base(sprite, new Vector2(0, Game1.ScreenSize.Y / 2 - 50 + 350), new Point(50, 50))
         {
             health = 50;
             wealth = 0;

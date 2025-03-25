@@ -47,6 +47,8 @@ namespace MakeEveryDay
 
         public override void Enter() // Reading in blocks should happen here
         {
+            Game1.Width = 1000;
+
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
             allBlocks = new List<List<Block>>();
@@ -104,7 +106,7 @@ namespace MakeEveryDay
 
             theLine.Add(new Block(
                 "start",
-                new Vector2(0, 350),
+                new Vector2(0, Game1.ScreenSize.Y / 2 + 350),
                 100));
             player = new Player();
         }
@@ -131,8 +133,11 @@ namespace MakeEveryDay
                 player.Education += 5;
             }
 
-            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.D))
-                Game1.Width += 5;
+            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
+                Game1.Width += 25;
+
+            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
+                Game1.Width -= 25;
 
             Random rand = new Random();
 

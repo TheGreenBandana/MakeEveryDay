@@ -5,7 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -68,6 +68,24 @@ namespace MakeEveryDay
             {
                 position = value.Location.ToVector2();
                 size = value.Size;
+            }
+        }
+
+        /// <summary>
+        /// Returns the rectangle of the object, scaled to fit the internal width of the screen
+        /// </summary>
+        public Microsoft.Xna.Framework.Rectangle ScaledRectangle
+        {
+            get
+            {
+                float yPixelFocus = Game1.ScreenSize.Y / 2 + 350;
+                float scaleFactor = Game1.ScreenSize.X / Game1.Width;
+                Microsoft.Xna.Framework.Rectangle asRectangle = AsRectangle;
+                return new(
+                    (int)(asRectangle.X * scaleFactor),
+                    (int)(asRectangle.Y + (scaleFactor * (Game1.Width - Game1.ScreenSize.X) * (asRectangle.Y - yPixelFocus) / (Game1.ScreenSize.Y * -1 * (Game1.ScreenSize.X / Game1.ScreenSize.Y)))),
+                    (int)(asRectangle.Width * scaleFactor),
+                    (int)(asRectangle.Height * scaleFactor));
             }
         }
 
@@ -213,17 +231,9 @@ namespace MakeEveryDay
         internal virtual void Draw(SpriteBatch sb)
         {
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
-
-            Microsoft.Xna.Framework.Rectangle scaledRectangle = new(
-                (int)(AsRectangle.X * (Game1.ScreenSize.X / Game1.Width)),
-                (int)(AsRectangle.Y * (Game1.ScreenSize.X / Game1.Width) + (Game1.Width / Game1.ScreenSize.X)),
-                (int)(AsRectangle.Width * (Game1.ScreenSize.X / Game1.Width)),
-                (int)(AsRectangle.Height * (Game1.ScreenSize.X / Game1.Width))
-                );
-
             sb.Draw(
                 sprite,
-                scaledRectangle,
+                ScaledRectangle,
                 null,
                 ColorAndLayer.Item1,
                 0,
