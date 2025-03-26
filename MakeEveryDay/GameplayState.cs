@@ -106,7 +106,7 @@ namespace MakeEveryDay
 
             theLine.Add(new Block(
                 "start",
-                new Vector2(0, Game1.ScreenSize.Y / 2 + 350),
+                new Vector2(0, Game1.ScreenSize.Y / 4 * 3 - 25),
                 100));
             player = new Player();
         }

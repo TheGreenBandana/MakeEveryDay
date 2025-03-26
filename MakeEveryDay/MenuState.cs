@@ -31,7 +31,7 @@ namespace MakeEveryDay
                 new Vector2(300, 200),
                 100);
 
-            Game1.Width = 1000;
+            Game1.Width = (int)Game1.ScreenSize.X;
             
         }
 

@@ -14,6 +14,8 @@ namespace MakeEveryDay
 
         public static int Width;
 
+        public static int Height => (int)(Width / ScreenSize.X * ScreenSize.Y);
+
         public static Vector2 ScreenSize { get => new Vector2(
             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height

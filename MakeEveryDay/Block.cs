@@ -247,13 +247,15 @@ namespace MakeEveryDay
         {
             base.Update(gameTime);
 
-            if (MouseUtils.IsJustPressed() && AsRectangle.Contains(MouseUtils.CurrentState.Position))
+            Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(MouseUtils.CurrentState.Position);
+
+            if (MouseUtils.IsJustPressed() && ScaledRectangle.Contains(currentScaledMousePosition))
             {
-                positionToClick = Position - MouseUtils.CurrentState.Position.ToVector2();
+                positionToClick = new Microsoft.Xna.Framework.Vector2(ScaledRectangle.X, ScaledRectangle.Y) - currentScaledMousePosition.ToVector2();
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && positionToClick != -Microsoft.Xna.Framework.Vector2.One) {
-                Position = MouseUtils.CurrentState.Position.ToVector2() + positionToClick;
+                Position = currentScaledMousePosition.ToVector2() + positionToClick;
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)

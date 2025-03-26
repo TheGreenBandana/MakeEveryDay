@@ -78,7 +78,7 @@ namespace MakeEveryDay
         {
             get
             {
-                float yPixelFocus = Game1.ScreenSize.Y / 2 + 350;
+                float yPixelFocus = Game1.ScreenSize.Y / 4 * 3;
                 float scaleFactor = Game1.ScreenSize.X / Game1.Width;
                 Microsoft.Xna.Framework.Rectangle asRectangle = AsRectangle;
                 return new(

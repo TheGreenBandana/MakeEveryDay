@@ -79,5 +79,16 @@ namespace MakeEveryDay
         {
             return (previousKBState.IsKeyDown(key) && currentKBState.IsKeyUp(key));
         }
+
+        /// <summary>
+        /// Puts the screen space mouse position into world space.
+        /// </summary>
+        /// <returns>The mouse position in world space.</returns>
+        public static Point ScaleMousePosition(Point realMousePosition)
+        {
+            return new Point((int)(realMousePosition.X / Game1.ScreenSize.X * Game1.Width),
+                (int)(realMousePosition.Y / Game1.ScreenSize.Y * Game1.Height)
+                );
+        }
     }
 }
