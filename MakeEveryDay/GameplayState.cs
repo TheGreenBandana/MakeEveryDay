@@ -245,6 +245,8 @@ namespace MakeEveryDay
                     statusBars[2].CurrentValue = player.Education;
                     statusBars[3].CurrentValue = player.Wealth;
 
+                    player.Age += block.Width;
+
                     block.Checked = true;
                     break;
                 }
