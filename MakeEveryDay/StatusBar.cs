@@ -47,10 +47,10 @@ namespace MakeEveryDay
         /// Draws the inner and outer bars
         /// </summary>
         /// <param name="sb">The sprite batch to draw with</param>
-        internal override void Draw(SpriteBatch sb)
+        internal override void DrawUnscaled(SpriteBatch sb)
         {
-            base.Draw(sb);
-            innerBar.Draw(sb);
+            base.DrawUnscaled(sb);
+            innerBar.DrawUnscaled(sb);
         }
         
     }

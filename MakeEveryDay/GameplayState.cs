@@ -48,6 +48,8 @@ namespace MakeEveryDay
 
         public override void Enter() // Reading in blocks should happen here
         {
+            Game1.Width = 1000;
+
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
             allBlocks = new List<List<Block>>();
@@ -84,15 +86,6 @@ namespace MakeEveryDay
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
                     ) } );
                 }
-
-                // Creates a group of the 1st 3 blocks, can be removed once done testing
-                allBlocks.Add(new List<Block>
-                {
-                    allBlocks[0][0],
-                    allBlocks[1][0],
-                    allBlocks[2][0]
-                });
-
             }
             catch
             {
@@ -106,7 +99,7 @@ namespace MakeEveryDay
 
             theLine.Add(new Block(
                 "start",
-                new Vector2(0, 350),
+                new Vector2(0, Game1.BridgePosition),
                 100));
             player = new Player();
 
@@ -126,6 +119,11 @@ namespace MakeEveryDay
         {
             KeyboardState kb = Keyboard.GetState();
 
+            float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+            spawnableArea = new Rectangle((int)(100 * scaleFactor), (int)(-1 * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X) + 100 * scaleFactor),
+                (int)(Game1.Width - 500 * scaleFactor), (int)(Game1.ScreenSize.Y / 3 * scaleFactor - 200 * scaleFactor)
+                );
+
             if (kb.IsKeyDown(Keys.Tab))
             {
                 return new MenuState();
@@ -138,6 +136,12 @@ namespace MakeEveryDay
                 player.Happiness += 5;
                 player.Education += 5;
             }
+
+            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
+                Game1.Width = Math.Clamp(Game1.Width + 25, 100, 3500);
+
+            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
+                Game1.Width = Math.Clamp(Game1.Width - 25, 100, 3500);
 
             Random rand = new Random();
 
@@ -215,7 +219,7 @@ namespace MakeEveryDay
 
             foreach (StatusBar bar in statusBars)
             {
-                bar.Draw(sb);
+                bar.DrawUnscaled(sb);
             }
 
             player.Draw(sb);
