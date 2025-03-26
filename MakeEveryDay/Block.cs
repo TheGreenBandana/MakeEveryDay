@@ -50,6 +50,11 @@ namespace MakeEveryDay
         private Microsoft.Xna.Framework.Vector2 positionToClick;
 
         // Properties
+        public bool Checked
+        {
+            get;
+            set;
+        }
 
         //Modifiers
         public int HealthMod
@@ -352,6 +357,12 @@ namespace MakeEveryDay
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="arrows"></param>
+        /// <param name="nextX"></param>
         private void DrawArrowsHelper(SpriteBatch sb, int arrows, ref float nextX)
         {
             if (arrows == 0) return;

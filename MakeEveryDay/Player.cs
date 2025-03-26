@@ -9,32 +9,42 @@ namespace MakeEveryDay
     {
         public static Texture2D sprite;
 
-        private int health;
-        private int wealth;
-        private int happiness;
-        private int education;
+        
         //private AnimationState animation;
 
-        public int Health { get { return health; } set { health = value; } }
-        public int Wealth { get { return wealth; } set { wealth = value; } }
-        public int Happiness { get { return happiness; } set { happiness = value; } }
-        public int Education { get { return education; } set { education = value; } }
+        public int Health { get; set; }
+        public int Wealth { get; set; }
+        public int Happiness { get; set; }
+        public int Education { get; set; }
+        public int Age { get; set; }
         //public AnimationState Animation { get { return animation; } set { animation = value; } }
 
         public Player() : base(sprite, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
         {
-            health = 50;
-            wealth = 0;
-            happiness = 0;
-            education = 0;
+            Health = 50;
+            Wealth = 0;
+            Happiness = 0;
+            Education = 0;
+            Age = 0;
             //animation = new AnimationState(sprite, 1, true, 1);
         }
 
-        
+        /// <summary>
+        /// Code to run when the player runs off a block
+        /// </summary>
         public void StartFalling()
         {
             base.PresetColor = Color.Red;
             //will eventually switch the animation being used to the falling animation
+        }
+
+        /// <summary>
+        /// Code to run to kill the player while they're on a block
+        /// </summary>
+        public void Die()
+        {
+            base.PresetColor = Color.Red;
+            //will eventually switch the animation being used to a tripping and falling animation
         }
 
         internal override void Update(GameTime gameTime)

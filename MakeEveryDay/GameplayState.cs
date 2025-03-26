@@ -31,6 +31,7 @@ namespace MakeEveryDay
 
         private Block testBlock1;
         private Player player;
+        private StatusBar[] statusBars;
 
         private List<Block> loadedBlocks;
 
@@ -52,6 +53,7 @@ namespace MakeEveryDay
             theLine = new List<Block>();
             activeBlocks = new List<Block>();
             allBlocks = new List<List<Block>>();
+            statusBars = new StatusBar[4];
 
             // Reading in blocks
             StreamReader reader = null;
@@ -100,6 +102,12 @@ namespace MakeEveryDay
                 new Vector2(0, Game1.BridgePosition),
                 100));
             player = new Player();
+
+            //Create status bars
+            statusBars[0] = new StatusBar(new Vector2(0, 0), new Point(200, 80), player.Health, Color.Red);
+            statusBars[1] = new StatusBar(new Vector2(0, 80), new Point(200, 80), 0, Color.Yellow);
+            statusBars[2] = new StatusBar(new Vector2(0, 160), new Point(200, 80), 0, Color.Blue);
+            statusBars[3] = new StatusBar(new Vector2(0, 240), new Point(200, 80), 0, Color.Green);
         }
 
         public override void Exit()
@@ -189,6 +197,11 @@ namespace MakeEveryDay
 
             UpdatePlayer();
 
+            foreach(StatusBar bar in statusBars)
+            {
+                bar.Update();
+            }
+
             return null;
         }
 
@@ -204,6 +217,11 @@ namespace MakeEveryDay
                 activeBlocks[i].Draw(sb);
             }
 
+            foreach (StatusBar bar in statusBars)
+            {
+                bar.Draw(sb);
+            }
+
             player.Draw(sb);
         }
 
@@ -212,18 +230,42 @@ namespace MakeEveryDay
         /// </summary>
         private void UpdatePlayer()
         {
-            if(LastBlockOnLine.Left == 0)
+            foreach(Block block in theLine)
             {
-                player.Health += LastBlockOnLine.HealthMod;
-                player.Wealth += LastBlockOnLine.WealthMod;
-                player.Happiness += LastBlockOnLine.HappyMod;
-                player.Education += LastBlockOnLine.EducationMod;
+                if (block.Left <= 0 && block.Checked == false)
+                {
+                    player.Health += block.HealthMod;
+                    player.Happiness += block.HappyMod;
+                    player.Education += block.EducationMod;
+                    player.Wealth += block.WealthMod;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Happiness;
+                    statusBars[2].CurrentValue = player.Education;
+                    statusBars[3].CurrentValue = player.Wealth;
+
+                    player.Age += block.Width;
+
+                    block.Checked = true;
+                    break;
+                }
             }
-            else if (LastBlockOnLine.Right <= 0)
+
+            if (LastBlockOnLine.Right <= 0)
             {
                 //A man has fallen into the river in lego city!
                 //player.Animation = new AnimationState(defaultImage, 1, true, 1);
                 player.StartFalling();
+            }
+
+            if (player.Health <= 0)
+            {
+                player.Die();
             }
         }
 
