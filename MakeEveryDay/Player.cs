@@ -46,6 +46,10 @@ namespace MakeEveryDay
         internal override void Update(GameTime gameTime)
         {
             //animation.Update(gameTime);
+            health = Math.Clamp(health, 0, 100);
+            wealth = Math.Clamp(wealth, 0, 100);
+            happiness = Math.Clamp(happiness, 0, 100);
+            education = Math.Clamp(education, 0, 100);
             base.Update(gameTime);
         }
 

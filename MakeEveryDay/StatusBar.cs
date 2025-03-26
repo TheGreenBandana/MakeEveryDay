@@ -24,11 +24,12 @@ namespace MakeEveryDay
         /// <param name="position">The vector2 representing the position of the bar</param>
         /// <param name="size">The point representing the size of the bar</param>
         /// <param name="startValue">The starting value of the bar</param>
-        public StatusBar(Vector2 position, Point size, int startValue) : base(sprite, position, size, Color.White, .5f)
+        /// <param name="color">The color of the bar in question</param>
+        public StatusBar(Vector2 position, Point size, int startValue, Color color) : base(sprite, position, new Point(size.X + 6, size.Y), Color.White, .5f)
         {
             currentValue = startValue;
-            innerBar = new GameObject(sprite, new Vector2(position.X + 3, position.Y + 3), new Point(size.X - 6, size.Y - 6), Color.Green, .6f);
-            scaling = 100 / (size.X - 6);
+            innerBar = new GameObject(sprite, new Vector2(position.X + 3, position.Y + 3), new Point(size.X - 6, size.Y - 6), color, .6f);
+            scaling = size.X / 100;
         }
 
         /// <summary>

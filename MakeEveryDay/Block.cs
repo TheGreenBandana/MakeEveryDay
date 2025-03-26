@@ -50,6 +50,11 @@ namespace MakeEveryDay
         private Microsoft.Xna.Framework.Vector2 positionToClick;
 
         // Properties
+        public bool Checked
+        {
+            get;
+            set;
+        }
 
         //Modifiers
         public int HealthMod
@@ -332,6 +337,12 @@ namespace MakeEveryDay
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="arrows"></param>
+        /// <param name="nextX"></param>
         private void DrawArrowsHelper(SpriteBatch sb, int arrows, ref float nextX)
         {
             if (arrows == 0) return;
@@ -344,8 +355,17 @@ namespace MakeEveryDay
                     {
                         sb.Draw(
                         arrowTexture,
-                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
-                            Microsoft.Xna.Framework.Color.White);
+                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize), 
+                            null,
+                            Microsoft.Xna.Framework.Color.White, (float)Math.PI, new Microsoft.Xna.Framework.Vector2(Width/4, Height/2), SpriteEffects.None, .5f);
+
+                        /*
+                         * sb.Draw(
+                            arrowTexture,
+                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize), 
+                            null,
+                            Microsoft.Xna.Framework.Color.White, (float)Math.PI, new Microsoft.Xna.Framework.Vector2(Width/4, Height/2), SpriteEffects.None, .5f); 
+                         */
                     }
                     break;
                 case -1:
