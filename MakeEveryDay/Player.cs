@@ -19,7 +19,7 @@ namespace MakeEveryDay
         public int Age { get; set; }
         //public AnimationState Animation { get { return animation; } set { animation = value; } }
 
-        public Player() : base(sprite, new Vector2(0, 300), new Point(50, 50))
+        public Player() : base(sprite, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
         {
             Health = 50;
             Wealth = 0;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -68,6 +68,24 @@ namespace MakeEveryDay
             {
                 position = value.Location.ToVector2();
                 size = value.Size;
+            }
+        }
+
+        /// <summary>
+        /// Returns the rectangle of the object, scaled to fit the internal width of the screen
+        /// </summary>
+        public Microsoft.Xna.Framework.Rectangle ScaledRectangle
+        {
+            get
+            {
+                float scaleFactor = Game1.ScreenSize.X / Game1.Width;
+                Microsoft.Xna.Framework.Rectangle asRectangle = AsRectangle;
+                return new(
+                    (int)(asRectangle.X * scaleFactor),
+                    (int)(asRectangle.Y + (scaleFactor * (Game1.Width - Game1.ScreenSize.X) * (asRectangle.Y - Game1.BridgePosition)
+                        / (Game1.ScreenSize.Y * -1 * (Game1.ScreenSize.X / Game1.ScreenSize.Y)))),
+                    Math.Clamp((int)(asRectangle.Width * scaleFactor), 1, int.MaxValue),
+                    Math.Clamp((int)(asRectangle.Height * scaleFactor), 1, int.MaxValue));
             }
         }
 
@@ -215,7 +233,24 @@ namespace MakeEveryDay
         internal virtual void Draw(SpriteBatch sb)
         {
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
+            sb.Draw(
+                sprite,
+                ScaledRectangle,
+                null,
+                ColorAndLayer.Item1,
+                0,
+                Microsoft.Xna.Framework.Vector2.Zero,
+                SpriteEffects.None,
+                ColorAndLayer.Item2);
+        }
 
+        /// <summary>
+        /// UNSCALED - Basic draw method for the object. Assumes Begin() has already been called on the SpriteBatch
+        /// </summary>
+        /// <param name="sb">SpriteBatch object being drawn to, assumes begin has been called</param>
+        internal virtual void DrawUnscaled(SpriteBatch sb)
+        {
+            Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
             sb.Draw(
                 sprite,
                 AsRectangle,
@@ -275,7 +310,7 @@ namespace MakeEveryDay
 
             sb.Draw(
                 sprite,
-                AsRectangle,
+                ScaledRectangle,
                 null,
                 ColorAndLayer.Item1,
                 rotation,

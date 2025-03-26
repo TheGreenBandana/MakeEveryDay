@@ -16,7 +16,7 @@ namespace MakeEveryDay
         }
         public bool IsPressed()
         {
-            if (MouseUtils.IsJustReleased() && (MouseUtils.CurrentState.X >= this.Left && MouseUtils.CurrentState.X <= this.Right && MouseUtils.CurrentState.Y >= this.Top && MouseUtils.CurrentState.Y <= this.Bottom))
+            if (MouseUtils.IsJustReleased() && AsRectangle.Contains(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position)))
             {
                 return true;
             }

@@ -252,13 +252,16 @@ namespace MakeEveryDay
         {
             base.Update(gameTime);
 
-            if (MouseUtils.IsJustPressed() && AsRectangle.Contains(MouseUtils.CurrentState.Position))
+            Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position));
+            Point realMousePosition = MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position);
+
+            if (MouseUtils.IsJustPressed() && ScaledRectangle.Contains(realMousePosition))
             {
-                positionToClick = Position - MouseUtils.CurrentState.Position.ToVector2();
+                positionToClick = Position - currentScaledMousePosition.ToVector2();
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && positionToClick != -Microsoft.Xna.Framework.Vector2.One) {
-                Position = MouseUtils.CurrentState.Position.ToVector2() + positionToClick;
+                Position = currentScaledMousePosition.ToVector2() + positionToClick;
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
@@ -272,15 +275,31 @@ namespace MakeEveryDay
             // Draw the box
             base.Draw(sb);
 
+            // Only do scaling calculation once
+            Rectangle scaledRectangle = base.ScaledRectangle;
+            float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+
+            // Scaling
+            float scale;
+            try
+            {
+                scale = Math.Clamp((scaledRectangle.Width - (10 * scaleFactor)) / nameFont.MeasureString(name).X, .1f,
+                    (scaledRectangle.Height - (10 * scaleFactor)) / nameFont.MeasureString(name).Y);
+            }
+            catch
+            {
+                scale = .1f;
+            }
+
             // Draw the name
             sb.DrawString(
                 nameFont,
                 name,
-                base.Position + Microsoft.Xna.Framework.Vector2.One * 5,
+                scaledRectangle.Location.ToVector2() + Microsoft.Xna.Framework.Vector2.One * 5 * scaleFactor,
                 Color.White,
-                0,
+                0.001f,
                 Microsoft.Xna.Framework.Vector2.Zero,
-                Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height - 10) / nameFont.MeasureString(name).Y), 
+                scale, 
                 SpriteEffects.None, 
                 1);
 
@@ -292,14 +311,15 @@ namespace MakeEveryDay
             {
                 sb.Draw(
                     statIcons[i],
-                    new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                    new Rectangle((scaledRectangle.Location.ToVector2() + new Microsoft.Xna.Framework.Vector2(nextX, (Size.Y - iconSize.Y) / scaleFactor)).ToPoint(),
+                        new Point((int)(iconSize.X / scaleFactor), (int)(iconSize.Y / scaleFactor))),
                     Microsoft.Xna.Framework.Color.White);
 
-                nextX += iconSize.X;
+                nextX += iconSize.X / scaleFactor;
 
                 DrawArrowsHelper(sb, statArrows[i], ref nextX);
 
-                nextX += iconSize.X * Math.Abs(statArrows[i]);
+                nextX += iconSize.X * Math.Abs(statArrows[i]) / scaleFactor;
             }
         }
 
@@ -348,6 +368,10 @@ namespace MakeEveryDay
             if (arrows == 0) return;
             int arrowsNormal = arrows / Math.Abs(arrows);
 
+            // Only do scaling calculation once
+            Rectangle scaledRectangle = base.ScaledRectangle;
+            float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+
             switch (arrowsNormal)
             {
                 case 1:
@@ -355,17 +379,10 @@ namespace MakeEveryDay
                     {
                         sb.Draw(
                         arrowTexture,
-                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize), 
-                            null,
-                            Microsoft.Xna.Framework.Color.White, (float)Math.PI, new Microsoft.Xna.Framework.Vector2(Width/4, Height/2), SpriteEffects.None, .5f);
-
-                        /*
-                         * sb.Draw(
-                            arrowTexture,
-                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize), 
-                            null,
-                            Microsoft.Xna.Framework.Color.White, (float)Math.PI, new Microsoft.Xna.Framework.Vector2(Width/4, Height/2), SpriteEffects.None, .5f); 
-                         */
+                            new Rectangle((scaledRectangle.Location.ToVector2()
+                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height - iconSize.Y) / scaleFactor)).ToPoint(),
+                            new Point(Math.Clamp((int)(iconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(iconSize.Y / scaleFactor), 1, int.MaxValue))),
+                            Microsoft.Xna.Framework.Color.White);
                     }
                     break;
                 case -1:
@@ -373,7 +390,9 @@ namespace MakeEveryDay
                     {
                         sb.Draw(
                         arrowTexture,
-                            new Rectangle((base.Position + new Microsoft.Xna.Framework.Vector2(nextX, base.Height - iconSize.Y)).ToPoint(), iconSize),
+                            new Rectangle((scaledRectangle.Location.ToVector2()
+                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height - iconSize.Y) / scaleFactor)).ToPoint(),
+                            new Point(Math.Clamp((int)(iconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(iconSize.Y / scaleFactor), 1, int.MaxValue))),
                             Microsoft.Xna.Framework.Color.White);
                     }
                     break;
