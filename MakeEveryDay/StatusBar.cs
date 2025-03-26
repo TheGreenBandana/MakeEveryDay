@@ -12,22 +12,25 @@ namespace MakeEveryDay
     {
         public static Texture2D sprite;
 
-        private int currentValue;
         private GameObject innerBar;
         private float scaling;
 
-        public int CurrentValue { get { return currentValue; } set { currentValue = value; } }
+        /// <summary>
+        /// The current value of the status bar
+        /// </summary>
+        public int CurrentValue { get; set; }
 
         /// <summary>
         /// Constructor for a status bar
         /// </summary>
         /// <param name="position">The vector2 representing the position of the bar</param>
-        /// <param name="size">The point representing the size of the bar</param>
+        /// <param name="size">The point representing the size of the bar
+        /// (try to keep it's width a multiple of 100, scaling may break if it isn't)</param>
         /// <param name="startValue">The starting value of the bar</param>
         /// <param name="color">The color of the bar in question</param>
         public StatusBar(Vector2 position, Point size, int startValue, Color color) : base(sprite, position, new Point(size.X + 6, size.Y), Color.White, .5f)
         {
-            currentValue = startValue;
+            CurrentValue = startValue;
             innerBar = new GameObject(sprite, new Vector2(position.X + 3, position.Y + 3), new Point(size.X - 6, size.Y - 6), color, .6f);
             scaling = size.X / 100;
         }
@@ -37,7 +40,7 @@ namespace MakeEveryDay
         /// </summary>
         public void Update()
         {
-            innerBar.Width = (int)(currentValue * scaling);
+            innerBar.Width = (int)(CurrentValue * scaling);
         }
 
         /// <summary>

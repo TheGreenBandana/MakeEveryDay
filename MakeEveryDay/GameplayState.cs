@@ -228,8 +228,9 @@ namespace MakeEveryDay
         {
             foreach(Block block in theLine)
             {
-                if (block.Left <= 0 && block.Checked == false)
+                if (block.Left <= 0 && block.Checked == false) //This is the block currently being stood on
                 {
+                    //Edit stats
                     player.Health += block.HealthMod;
                     player.Happiness += block.HappyMod;
                     player.Education += block.EducationMod;
@@ -240,6 +241,7 @@ namespace MakeEveryDay
                     player.Education = Math.Clamp(player.Education, 0, 100);
                     player.Wealth = Math.Clamp(player.Wealth, 0, 100);
 
+                    //Set the status bars
                     statusBars[0].CurrentValue = player.Health;
                     statusBars[1].CurrentValue = player.Happiness;
                     statusBars[2].CurrentValue = player.Education;
@@ -247,19 +249,19 @@ namespace MakeEveryDay
 
                     player.Age += block.Width;
 
-                    block.Checked = true;
+                    block.Checked = true; //Ensures the block isn't checked again
                     break;
                 }
             }
 
-            if (LastBlockOnLine.Right <= 0)
+            if (LastBlockOnLine.Right <= 0) //Goes off if there is no block under the player
             {
                 //A man has fallen into the river in lego city!
                 //player.Animation = new AnimationState(defaultImage, 1, true, 1);
                 player.StartFalling();
             }
 
-            if (player.Health <= 0)
+            if (player.Health <= 0) //Kills the player if their stats get too low. Can be updated to include more values
             {
                 player.Die();
             }
