@@ -84,15 +84,6 @@ namespace MakeEveryDay
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
                     ) } );
                 }
-
-                // Creates a group of the 1st 3 blocks, can be removed once done testing
-                allBlocks.Add(new List<Block>
-                {
-                    allBlocks[0][0],
-                    allBlocks[1][0],
-                    allBlocks[2][0]
-                });
-
             }
             catch
             {
@@ -121,8 +112,9 @@ namespace MakeEveryDay
             KeyboardState kb = Keyboard.GetState();
 
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
-            spawnableArea = new Rectangle((int)(100 * scaleFactor), 0,
-                (int)(Game1.Width - 200 * scaleFactor), (int)(Game1.ScreenSize.Y / 2 * scaleFactor - 200 * scaleFactor));
+            spawnableArea = new Rectangle((int)(100 * scaleFactor), (int)(-1 * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X) + 100 * scaleFactor),
+                (int)(Game1.Width - 500 * scaleFactor), (int)(Game1.ScreenSize.Y / 3 * scaleFactor - 200 * scaleFactor)
+                );
 
             if (kb.IsKeyDown(Keys.Tab))
             {
@@ -138,10 +130,10 @@ namespace MakeEveryDay
             }
 
             if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
-                Game1.Width += 25;
+                Game1.Width = Math.Clamp(Game1.Width + 25, 100, 3500);
 
             if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
-                Game1.Width -= 25;
+                Game1.Width = Math.Clamp(Game1.Width - 25, 100, 3500);
 
             Random rand = new Random();
 

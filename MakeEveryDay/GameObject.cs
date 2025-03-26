@@ -84,8 +84,8 @@ namespace MakeEveryDay
                     (int)(asRectangle.X * scaleFactor),
                     (int)(asRectangle.Y + (scaleFactor * (Game1.Width - Game1.ScreenSize.X) * (asRectangle.Y - Game1.BridgePosition)
                         / (Game1.ScreenSize.Y * -1 * (Game1.ScreenSize.X / Game1.ScreenSize.Y)))),
-                    (int)(asRectangle.Width * scaleFactor),
-                    (int)(asRectangle.Height * scaleFactor));
+                    Math.Clamp((int)(asRectangle.Width * scaleFactor), 1, int.MaxValue),
+                    Math.Clamp((int)(asRectangle.Height * scaleFactor), 1, int.MaxValue));
             }
         }
 
