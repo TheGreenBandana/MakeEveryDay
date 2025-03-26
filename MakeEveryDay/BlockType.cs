@@ -1,0 +1,26 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MakeEveryDay
+{
+    internal interface BlockType
+    {
+
+        public string Name
+        {
+            get;
+            set;
+        }
+        public Microsoft.Xna.Framework.Point Size
+        {
+            get;
+        }
+
+        internal void Draw(SpriteBatch sb);
+    }
+}

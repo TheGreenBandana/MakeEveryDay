@@ -68,6 +68,10 @@ namespace MakeEveryDay
             // Status bar class content initialization
             StatusBar.sprite = Content.Load<Texture2D>("Status Bar");
 
+            // Block Group class content initialization
+            BlockGroup.blockGroupSprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            BlockGroup.nameFont = Content.Load<SpriteFont>("Times24");
+
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
 
