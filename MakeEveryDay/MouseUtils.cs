@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -33,7 +34,7 @@ namespace MakeEveryDay
         /// <returns>bool representing if the left button was just pressed</returns>
         public static bool IsJustPressed() 
         {
-            return (previousState.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed); 
+            return (previousState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released && currentState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed); 
         }
         /// <summary>
         /// Determines if the left button specifically was just released this frame
@@ -41,7 +42,7 @@ namespace MakeEveryDay
         /// <returns>bool representing if the left button was just released</returns>
         public static bool IsJustReleased()
         {
-            return (previousState.LeftButton == ButtonState.Pressed && currentState.LeftButton == ButtonState.Released);
+            return (previousState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && currentState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released);
         }
 
         // Gonna throw in some keyboard stuff here too
@@ -65,7 +66,7 @@ namespace MakeEveryDay
         /// </summary>
         /// <param name="key">which key you're testing for</param>
         /// <returns>bool representing if the key was just pressed</returns>
-        public static bool KeyJustPressed(Keys key)
+        public static bool KeyJustPressed(Microsoft.Xna.Framework.Input.Keys key)
         {
             return (previousKBState.IsKeyUp(key) && currentKBState.IsKeyDown(key));
         }
@@ -75,7 +76,7 @@ namespace MakeEveryDay
         /// </summary>
         /// <param name="key">which key you're testing for</param>
         /// <returns>bool representing if the key was just released</returns>
-        public static bool KeyJustReleased(Keys key)
+        public static bool KeyJustReleased(Microsoft.Xna.Framework.Input.Keys key)
         {
             return (previousKBState.IsKeyDown(key) && currentKBState.IsKeyUp(key));
         }
@@ -86,9 +87,19 @@ namespace MakeEveryDay
         /// <returns>The mouse position in world space.</returns>
         public static Point ScaleMousePosition(Point realMousePosition)
         {
-            return new Point((int)(realMousePosition.X / Game1.ScreenSize.X * Game1.Width),
-                (int)(realMousePosition.Y / Game1.ScreenSize.Y * Game1.Height)
+            return new Point((int)(realMousePosition.X * (Game1.Width / Game1.ScreenSize.X)),
+                (int)(realMousePosition.Y * (Game1.Width / Game1.ScreenSize.X))
                 );
+        }
+
+        /// <summary>
+        /// Offset's the given point by the cursor's height.
+        /// </summary>
+        /// <param name="realMousePositon">The point to offset.</param>
+        /// <returns>The offset point.</returns>
+        public static Point OffsetMousePosition(Point realMousePositon)
+        {
+            return realMousePositon - new Point(0, Cursors.Arrow.Size.Height / 2);
         }
     }
 }

@@ -106,7 +106,7 @@ namespace MakeEveryDay
 
             theLine.Add(new Block(
                 "start",
-                new Vector2(0, Game1.ScreenSize.Y / 4 * 3 - 25),
+                new Vector2(0, Game1.BridgePosition),
                 100));
             player = new Player();
         }
@@ -119,6 +119,10 @@ namespace MakeEveryDay
         public override State CustomUpdate(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
+
+            float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+            spawnableArea = new Rectangle((int)(100 * scaleFactor), 0,
+                (int)(Game1.Width - 200 * scaleFactor), (int)(Game1.ScreenSize.Y / 2 * scaleFactor - 200 * scaleFactor));
 
             if (kb.IsKeyDown(Keys.Tab))
             {

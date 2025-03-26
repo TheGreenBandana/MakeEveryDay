@@ -78,12 +78,12 @@ namespace MakeEveryDay
         {
             get
             {
-                float yPixelFocus = Game1.ScreenSize.Y / 4 * 3;
                 float scaleFactor = Game1.ScreenSize.X / Game1.Width;
                 Microsoft.Xna.Framework.Rectangle asRectangle = AsRectangle;
                 return new(
                     (int)(asRectangle.X * scaleFactor),
-                    (int)(asRectangle.Y + (scaleFactor * (Game1.Width - Game1.ScreenSize.X) * (asRectangle.Y - yPixelFocus) / (Game1.ScreenSize.Y * -1 * (Game1.ScreenSize.X / Game1.ScreenSize.Y)))),
+                    (int)(asRectangle.Y + (scaleFactor * (Game1.Width - Game1.ScreenSize.X) * (asRectangle.Y - Game1.BridgePosition)
+                        / (Game1.ScreenSize.Y * -1 * (Game1.ScreenSize.X / Game1.ScreenSize.Y)))),
                     (int)(asRectangle.Width * scaleFactor),
                     (int)(asRectangle.Height * scaleFactor));
             }
@@ -243,6 +243,24 @@ namespace MakeEveryDay
         }
 
         /// <summary>
+        /// UNSCALED - Basic draw method for the object. Assumes Begin() has already been called on the SpriteBatch
+        /// </summary>
+        /// <param name="sb">SpriteBatch object being drawn to, assumes begin has been called</param>
+        internal virtual void DrawUnscaled(SpriteBatch sb)
+        {
+            Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
+            sb.Draw(
+                sprite,
+                AsRectangle,
+                null,
+                ColorAndLayer.Item1,
+                0,
+                Microsoft.Xna.Framework.Vector2.Zero,
+                SpriteEffects.None,
+                ColorAndLayer.Item2);
+        }
+
+        /// <summary>
         /// Overloaded draw method for GameObjects
         /// </summary>
         /// <param name="sb">SpriteBatch object being drawn to, assumes begin has been called</param>
@@ -290,7 +308,7 @@ namespace MakeEveryDay
 
             sb.Draw(
                 sprite,
-                AsRectangle,
+                ScaledRectangle,
                 null,
                 ColorAndLayer.Item1,
                 rotation,

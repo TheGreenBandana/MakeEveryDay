@@ -22,6 +22,9 @@ namespace MakeEveryDay
             );
         }
 
+        // Change in Visual Studio to modify bridge position, also changes how objects are scaled on the Y axis
+        public static int BridgePosition => (int)ScreenSize.Y / 4 * 3;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
