@@ -12,14 +12,20 @@ namespace MakeEveryDay
         // Game state-related
         private GameState currentState;
 
+        public static int Width;
+
+        public static Vector2 ScreenSize { get => new Vector2(
+            GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
+            GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
+            );
+        }
+
+        // Change in Visual Studio to modify bridge position, also changes how objects are scaled on the Y axis
+        public static int BridgePosition => (int)ScreenSize.Y / 4 * 3;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.IsFullScreen = true;
-            _graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -40,6 +46,12 @@ namespace MakeEveryDay
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Setting game to fullscreen at screen's size
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.IsFullScreen = true;
+            _graphics.ApplyChanges();
 
             // TODO: use this.Content to load your game content here
 
