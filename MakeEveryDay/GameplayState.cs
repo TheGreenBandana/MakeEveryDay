@@ -219,7 +219,7 @@ namespace MakeEveryDay
 
             foreach (StatusBar bar in statusBars)
             {
-                bar.Draw(sb);
+                bar.DrawUnscaled(sb);
             }
 
             player.Draw(sb);
