@@ -65,6 +65,9 @@ namespace MakeEveryDay
             // Player class content initialization
             Player.sprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
+            // Status bar class content initialization
+            StatusBar.sprite = Content.Load<Texture2D>("Status Bar");
+
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
 

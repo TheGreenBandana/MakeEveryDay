@@ -37,6 +37,12 @@ namespace MakeEveryDay
             //will eventually switch the animation being used to the falling animation
         }
 
+        public void Die()
+        {
+            base.PresetColor = Color.Red;
+            //will eventually switch the animation being used to a tripping and falling animation
+        }
+
         internal override void Update(GameTime gameTime)
         {
             //animation.Update(gameTime);

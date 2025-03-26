@@ -75,10 +75,12 @@ namespace MakeEveryDay
         public int Width
         {
             get { return size.X; }
+            set { size.X = value; }
         }
         public int Height
         {
             get { return size.Y; }
+            set { size.Y = value; }
         }
 
         // Locations
