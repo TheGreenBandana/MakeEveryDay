@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MakeEveryDay
+namespace MakeEveryDay.States
 {
-    internal class MenuState:GameState
+    internal class MenuState : State
     {
         internal static SpriteFont titleFont = default;
         internal static SpriteFont subtitleFont = default;
@@ -18,21 +18,21 @@ namespace MakeEveryDay
         internal static Texture2D blockTexture;
 
         private Block testBlock;
-        
+
         private Button playButton;
         public MenuState() { }
 
         public override void Enter()
         {
             playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
-            
+
             testBlock = new Block(
                 "test",
                 new Vector2(300, 200),
                 100);
 
             Game1.Width = (int)Game1.ScreenSize.X;
-            
+
         }
 
         public override State CustomUpdate(GameTime gameTime)
@@ -41,8 +41,8 @@ namespace MakeEveryDay
             {
                 return new GameplayState();
             }
-                return null;
-            
+            return null;
+
             /*
             MouseState ms = Mouse.GetState();
             
@@ -75,7 +75,7 @@ namespace MakeEveryDay
                 "This is a title\nleft click to start",
                 Vector2.One * 10,
                 Color.White);
-            
+
 
             //testBlock.Draw(sb);
         }

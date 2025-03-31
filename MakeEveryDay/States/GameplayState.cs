@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MakeEveryDay
+namespace MakeEveryDay.States
 {
-    internal class GameplayState:GameState
+    internal class GameplayState : State
     {
         internal static SpriteFont defaultText = default;
 
@@ -43,7 +43,7 @@ namespace MakeEveryDay
 
         public GameplayState()
         {
-            
+
         }
 
         public override void Enter() // Reading in blocks should happen here
@@ -84,7 +84,7 @@ namespace MakeEveryDay
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
-                    ) } );
+                    ) });
                 }
             }
             catch
@@ -152,7 +152,7 @@ namespace MakeEveryDay
                 if (newBlocks.Count > 0)
                 {
                     float groupWidth = 0;
-                    for(int i = 0; i < newBlocks.Count; i++)
+                    for (int i = 0; i < newBlocks.Count; i++)
                     {
                         activeBlocks.Add(newBlocks[i]);
                         if (i == 0)
@@ -169,7 +169,7 @@ namespace MakeEveryDay
                 //    100));
             }
 
-            for(int i = 0; i < activeBlocks.Count; i++)
+            for (int i = 0; i < activeBlocks.Count; i++)
             {
                 activeBlocks[i].Update(gameTime);
 
@@ -187,7 +187,7 @@ namespace MakeEveryDay
 
 
             Vector2 adjustVector = new Vector2(-lineSpeed, 0);
-            for(int i = 0; i < theLine.Count; i++)
+            for (int i = 0; i < theLine.Count; i++)
             {
                 if (kb.IsKeyDown(Keys.A))
                 {
@@ -197,7 +197,7 @@ namespace MakeEveryDay
 
             UpdatePlayer();
 
-            foreach(StatusBar bar in statusBars)
+            foreach (StatusBar bar in statusBars)
             {
                 bar.Update();
             }
@@ -207,12 +207,12 @@ namespace MakeEveryDay
 
         public override void Draw(SpriteBatch sb)
         {
-            for(int i = 0; i < theLine.Count; i++)
+            for (int i = 0; i < theLine.Count; i++)
             {
                 theLine[i].Draw(sb);
             }
 
-            for(int i = 0; i < activeBlocks.Count; i++)
+            for (int i = 0; i < activeBlocks.Count; i++)
             {
                 activeBlocks[i].Draw(sb);
             }
@@ -230,7 +230,7 @@ namespace MakeEveryDay
         /// </summary>
         private void UpdatePlayer()
         {
-            foreach(Block block in theLine)
+            foreach (Block block in theLine)
             {
                 if (block.Left <= 0 && block.Checked == false) //This is the block currently being stood on
                 {
@@ -278,10 +278,10 @@ namespace MakeEveryDay
         private List<Block> GenerateNewBlocks()
         {
             List<List<Block>> potentialBlocks = new List<List<Block>>(allBlocks.Count);
-            foreach(List<Block> blockList in allBlocks)
+            foreach (List<Block> blockList in allBlocks)
             {
                 bool success = true;
-                foreach(Block block in blockList)
+                foreach (Block block in blockList)
                 {
                     if (!(block.HealthRange.IsInRange(player.Health)
                         && block.WealthRange.IsInRange(player.Wealth)

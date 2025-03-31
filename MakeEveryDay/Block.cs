@@ -16,7 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MakeEveryDay
 {
-    internal class Block: GameObject
+    internal class Block: GameObject, BlockType
     {
 
         // Fields - static
@@ -50,6 +50,11 @@ namespace MakeEveryDay
         private Microsoft.Xna.Framework.Vector2 positionToClick;
 
         // Properties
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
         public bool Checked
         {
             get;
@@ -322,6 +327,18 @@ namespace MakeEveryDay
                 nextX += iconSize.X * Math.Abs(statArrows[i]) / scaleFactor;
             }
         }
+
+        /// <summary>
+        /// Returns a list of the mods for this block in following order: "Health","Edu","Happy","Money." Required method for BlockType interface, more necessary for BlockGroup class
+        /// </summary>
+        /// <param name="playerXPosition">X position to check the block for</param>
+        /// <returns>List of the mods for the block as listed above</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<int> GetCurrentMods(float playerXPosition)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// Turns the block into something storable.

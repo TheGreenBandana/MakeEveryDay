@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace MakeEveryDay
 {
-    internal class BlockGroup : GameObject//, //BlockType
+    internal class BlockGroup : GameObject, BlockType
     {
         public static Texture2D blockGroupSprite;
         public static SpriteFont nameFont;
 
         private string name;
-        private List<Block> blocks;
+        private List<BlockType> blocks;
 
         //Properties
 
@@ -24,23 +24,27 @@ namespace MakeEveryDay
             set => name = value;
         }
 
-        public List<Block> Blocks
+        public List<BlockType> Blocks
         {
             get => blocks;
         }
 
         // Constructors
-        public BlockGroup(string name, List<Block> blocks) : base(blockGroupSprite)
+        public BlockGroup(string name, List<BlockType> blocks) : base(blockGroupSprite)
         {
             this.name = name;
             this.blocks = blocks;
 
             //.Size = new Vector2()
         }
-        public BlockGroup(string name) : this(name, new List<Block>()) { }
+        public BlockGroup(string name) : this(name, new List<BlockType>()) { }
 
         // Methods
-        public void Add(Block block)
+        /// <summary>
+        /// Add a block to the block group
+        /// </summary>
+        /// <param name="block"></param>
+        public void Add(BlockType block)
         {
             blocks.Add(block);
         }
@@ -59,6 +63,21 @@ namespace MakeEveryDay
                 Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height - 10) / nameFont.MeasureString(name).Y),
                 SpriteEffects.None,
                 1);
+
+            foreach(BlockType block in blocks)
+            {
+                ((GameObject) block).Draw(sb);
+            }
+        }
+    /// <summary>
+    /// Gets the mods for which 
+    /// </summary>
+    /// <param name="playerXPosition"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+        public List<int> GetCurrentMods(float playerXPosition)
+        {
+            throw new NotImplementedException();
         }
     }
 }

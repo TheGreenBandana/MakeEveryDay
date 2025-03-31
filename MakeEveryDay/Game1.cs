@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MakeEveryDay.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,9 +11,11 @@ namespace MakeEveryDay
         private SpriteBatch _spriteBatch;
 
         // Game state-related
-        private GameState currentState;
+        private State currentState;
 
         public static int Width;
+
+        public static bool toggleKyle;
 
         public static Vector2 ScreenSize { get => new Vector2(
             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
@@ -28,6 +31,8 @@ namespace MakeEveryDay
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            toggleKyle = true;
         }
 
         protected override void Initialize()
@@ -54,6 +59,13 @@ namespace MakeEveryDay
             _graphics.ApplyChanges();
 
             // TODO: use this.Content to load your game content here
+
+            // Base "state" content initialization
+            State.DefaultGameFont = Content.Load<SpriteFont>("Times24");
+            State.DefaultGameTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+
+            // GameObject class content initialization
+            GameObject.gameObjectDefaultTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
             // Block class content initialization
             Block.baseBlockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
@@ -99,11 +111,16 @@ namespace MakeEveryDay
             MouseUtils.CurrentKBState = Keyboard.GetState();
             // DON'T DELETE THESE DON'T DELETE THESE
 
-            GameState newState = (GameState) currentState.CustomUpdate(gameTime: gameTime);
+            State newState = currentState.CustomUpdate(gameTime: gameTime);
 
             if (newState != null)
             {
                 ChangeState(newState: newState);
+            }
+
+            if (MouseUtils.KeyJustPressed(Keys.K))
+            {
+                toggleKyle = !toggleKyle;
             }
 
             // DON'T DELETE THESE DON'T DELETE THESE
@@ -133,7 +150,7 @@ namespace MakeEveryDay
         /// Called whenever a gameplay state needs to be exchanged for a new state, calls the appropriate enter and exit functions
         /// </summary>
         /// <param name="newState">new GameState to enter</param>
-        private void ChangeState(GameState newState)
+        private void ChangeState(State newState)
         {
             // The king is dead
             currentState.Exit();

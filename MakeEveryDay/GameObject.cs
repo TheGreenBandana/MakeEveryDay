@@ -14,6 +14,8 @@ namespace MakeEveryDay
 {
     internal class GameObject
     {
+        public static Texture2D gameObjectDefaultTexture;
+
         // Fields
 
         private Microsoft.Xna.Framework.Vector2 position;
@@ -234,7 +236,7 @@ namespace MakeEveryDay
         {
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
             sb.Draw(
-                sprite,
+                CheckToggleKyle(sprite),
                 ScaledRectangle,
                 null,
                 ColorAndLayer.Item1,
@@ -252,7 +254,7 @@ namespace MakeEveryDay
         {
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
             sb.Draw(
-                sprite,
+                CheckToggleKyle(sprite),
                 AsRectangle,
                 null,
                 ColorAndLayer.Item1,
@@ -286,7 +288,7 @@ namespace MakeEveryDay
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(colorOverwrite, layerDepthOverwrite);
 
             sb.Draw(
-                sprite,
+                CheckToggleKyle(sprite),
                 position,
                 null,
                 ColorAndLayer.Item1,
@@ -309,7 +311,7 @@ namespace MakeEveryDay
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(colorOverwrite, layerDepthOverwrite);
 
             sb.Draw(
-                sprite,
+                CheckToggleKyle(sprite),
                 ScaledRectangle,
                 null,
                 ColorAndLayer.Item1,
@@ -344,6 +346,22 @@ namespace MakeEveryDay
 
             // Make a tuple to return the final values of the color and layer
             return new Tuple<Microsoft.Xna.Framework.Color, float>((Microsoft.Xna.Framework.Color)chosenColor, (float)chosenLayerDepth);
+        }
+
+        /// <summary>
+        /// Pass in textures going into the draw method in here to check if kyle mode is enabled
+        /// </summary>
+        /// <param name="instanceDefaultTexture">the texture which appears for the game object normally</param>
+        /// <returns>texture that should be drawn</returns>
+        private Texture2D CheckToggleKyle(Texture2D instanceDefaultTexture)
+        {
+            if (!Game1.toggleKyle)
+            {
+                return instanceDefaultTexture;
+            } else
+            {
+                return gameObjectDefaultTexture;
+            }
         }
     }
 }

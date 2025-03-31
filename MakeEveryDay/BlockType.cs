@@ -20,7 +20,6 @@ namespace MakeEveryDay
         {
             get;
         }
-
-        internal void Draw(SpriteBatch sb);
+        public List<int> GetCurrentMods(float playerXPosition);
     }
 }
