@@ -49,6 +49,10 @@ namespace MakeEveryDay
 
         private Microsoft.Xna.Framework.Vector2 positionToClick;
 
+        private bool mouseHovering;
+        private bool mouseHoveringReal;
+        private bool mouseHoveringPrevious;
+
         // Properties
         public string Name
         {
@@ -60,6 +64,7 @@ namespace MakeEveryDay
             get;
             set;
         }
+        public bool MouseHovering => mouseHovering;
 
         //Modifiers
         public int HealthMod
@@ -146,6 +151,23 @@ namespace MakeEveryDay
         public bool IsClicked
         {
             get { return positionToClick != - Microsoft.Xna.Framework.Vector2.One; }
+        }
+
+        public Rectangle HoveredRectangle
+        {
+            get
+            {
+                Rectangle scaledRect = ScaledRectangle;
+                float scaleFactor = Game1.Width / Game1.ScreenSize.X * 1.5f;
+                if (scaleFactor > 1)
+                {
+                    scaledRect.Width = (int)(scaledRect.Width * scaleFactor);
+                    scaledRect.Height = (int)(scaledRect.Height * scaleFactor);
+                    scaledRect.X = scaledRect.X - scaledRect.Width / 2 + ScaledRectangle.Width / 2;
+                    scaledRect.Y = scaledRect.Y - scaledRect.Height / 2 + ScaledRectangle.Height / 2;
+                }
+                return scaledRect;
+            }
         }
 
         // Constructors
@@ -260,18 +282,36 @@ namespace MakeEveryDay
             Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position));
             Point realMousePosition = MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position);
 
-            if (MouseUtils.IsJustPressed() && ScaledRectangle.Contains(realMousePosition))
+            // Mouse hovering scaling
+            mouseHoveringReal = ScaledRectangle.Contains(realMousePosition);
+            mouseHovering = HoveredRectangle.Contains(realMousePosition);
+
+            if (!mouseHoveringPrevious)
+            {
+                mouseHovering = mouseHoveringReal;
+                mouseHoveringPrevious = mouseHovering;
+            }
+            else
+                mouseHovering = HoveredRectangle.Contains(realMousePosition);
+            if (!mouseHovering)
+                mouseHoveringPrevious = false;
+
+            // Block detection
+            if (MouseUtils.IsJustPressed() && mouseHovering)
             {
                 positionToClick = Position - currentScaledMousePosition.ToVector2();
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && positionToClick != -Microsoft.Xna.Framework.Vector2.One) {
+                mouseHovering = false;
                 Position = currentScaledMousePosition.ToVector2() + positionToClick;
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
             {
                 positionToClick = -Microsoft.Xna.Framework.Vector2.One;
+                if (MouseUtils.PreviousState.LeftButton == ButtonState.Pressed)
+                    mouseHovering = false;
             }
         }
 

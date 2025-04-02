@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -99,7 +100,7 @@ namespace MakeEveryDay
         /// <returns>The offset point.</returns>
         public static Point OffsetMousePosition(Point realMousePositon)
         {
-            return realMousePositon - new Point(0, Cursors.Arrow.Size.Height / 2);
+            return realMousePositon + new Point(0, Cursors.Arrow.Size.Height / 4);
         }
     }
 }
