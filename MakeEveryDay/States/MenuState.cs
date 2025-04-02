@@ -16,15 +16,21 @@ namespace MakeEveryDay.States
         internal static SpriteFont subtitleFont = default;
 
         internal static Texture2D blockTexture;
+        internal static Texture2D playButtonTexture;
+        internal static Texture2D quitButtonTexture;
+        internal static Texture2D titleTexture;
 
         private Block testBlock;
-
+        private Button titleScreen;
         private Button playButton;
+        private Button quitButton;
         public MenuState() { }
 
         public override void Enter()
         {
-            playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
+            playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-150, (int)Game1.ScreenSize.Y/2, 400, 200));
+            quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-150, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
+            titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
 
             testBlock = new Block(
                 "test",
@@ -37,6 +43,10 @@ namespace MakeEveryDay.States
 
         public override State CustomUpdate(GameTime gameTime)
         {
+            if (quitButton.IsPressed())
+            {
+                game1Reference.ExitGame();
+            }
             if (playButton.IsPressed())
             {
                 return new GameplayState();
@@ -70,6 +80,8 @@ namespace MakeEveryDay.States
         public override void Draw(SpriteBatch sb)
         {
             playButton.Draw(sb);
+            quitButton.Draw(sb);
+            titleScreen.Draw(sb);
             sb.DrawString(
                 titleFont,
                 "This is a title\nleft click to start",
@@ -83,10 +95,6 @@ namespace MakeEveryDay.States
         /// <summary>
         /// Exit override - Blank to avoid error from base state class exit method
         /// </summary>
-        public override void Exit()
-        {
-            
-        }
 
     }
 }

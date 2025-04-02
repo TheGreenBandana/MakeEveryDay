@@ -67,6 +67,7 @@ namespace MakeEveryDay
             // Base "state" content initialization
             State.DefaultGameFont = Content.Load<SpriteFont>("Times24");
             State.DefaultGameTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            State.game1Reference = this;
 
             // GameObject class content initialization
             GameObject.gameObjectDefaultTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
@@ -84,6 +85,9 @@ namespace MakeEveryDay
             // Menu-State content initialization
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
+            MenuState.playButtonTexture = Content.Load<Texture2D>("Playbutton");
+            MenuState.quitButtonTexture = Content.Load<Texture2D>("Quitbutton");
+            MenuState.titleTexture = Content.Load<Texture2D>("TitleScreenTitle");
 
             MenuState.blockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
@@ -163,6 +167,11 @@ namespace MakeEveryDay
 
             // Long live the king
             currentState.Enter();
+        }
+
+        public void ExitGame()
+        {
+            Exit(); 
         }
     }
 }

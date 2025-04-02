@@ -14,6 +14,8 @@ namespace MakeEveryDay.States
         public static SpriteFont DefaultGameFont;
         public static Texture2D DefaultGameTexture;
 
+        public static Game1 game1Reference;
+
         public virtual void Enter()
         {
             
