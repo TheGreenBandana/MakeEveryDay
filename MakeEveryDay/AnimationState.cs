@@ -123,6 +123,10 @@ namespace MakeEveryDay
             sb.Draw(texture, position, GetFrame(), Color.White, 0f, Microsoft.Xna.Framework.Vector2.Zero, scale, SpriteEffects.None, layerDepth);
         }
 
+        /// <summary>
+        /// Gets the source rectangle for the current frame
+        /// </summary>
+        /// <returns>the source rectang</returns>
         private Microsoft.Xna.Framework.Rectangle GetFrame()
         {
             int y = 0;

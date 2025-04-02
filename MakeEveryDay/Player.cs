@@ -2,19 +2,20 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Windows.Forms;
 
 namespace MakeEveryDay
 {
     internal class Player : GameObject
     {
-        public static Texture2D sprite;
-
         public int Health { get; set; }
         public int Wealth { get; set; }
         public int Happiness { get; set; }
         public int Education { get; set; }
         public int Age { get; set; }
         public static AnimationState Animation { get; set; }
+        public static Texture2D Fall { get; set; }
+        public static Texture2D Shit { get; set; }
 
         public Player() : base(Animation.Texture, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
         {
@@ -30,7 +31,7 @@ namespace MakeEveryDay
         /// </summary>
         public void StartFalling()
         {
-            base.PresetColor = Color.Red;
+            Animation = new AnimationState(Fall, 15, false, 12);
             //will eventually switch the animation being used to the falling animation
         }
 
@@ -39,7 +40,7 @@ namespace MakeEveryDay
         /// </summary>
         public void Die()
         {
-            base.PresetColor = Color.Red;
+            Animation = new AnimationState(Shit, 18, false, 12);
             //will eventually switch the animation being used to a tripping and falling animation
         }
 
@@ -51,8 +52,7 @@ namespace MakeEveryDay
 
         internal override void Draw(SpriteBatch sb)
         {
-            //base.Draw(sb);
-            Animation.Draw(sb, base.Position, 50/360f, 1f);
+            Animation.Draw(sb, base.Position, 200/360f, 1f);
         }
     }
 }
