@@ -96,6 +96,8 @@ namespace MakeEveryDay
 
             // Player class content initialization
             Player.Animation = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
+            Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
+            Player.Shit = Content.Load<Texture2D>("LilGuyEatShit");
 
             // Status bar class content initialization
             StatusBar.sprite = Content.Load<Texture2D>("Status Bar");

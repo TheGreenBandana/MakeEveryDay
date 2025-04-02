@@ -170,6 +170,15 @@ namespace MakeEveryDay
             }
         }
 
+        public Point IconSize
+        {
+            get
+            {
+                float scaleFactor = Game1.Width / Game1.ScreenSize.X * 1.5f;
+                return mouseHovering ? new Point((int)(iconSize.X * (scaleFactor > 1 ? scaleFactor : 1)), (int)(iconSize.Y * (scaleFactor > 1 ? scaleFactor : 1))) : iconSize;
+            }
+        }
+
         // Constructors
 
         /// <summary>
@@ -321,7 +330,7 @@ namespace MakeEveryDay
             base.Draw(sb);
 
             // Only do scaling calculation once
-            Rectangle scaledRectangle = base.ScaledRectangle;
+            Rectangle scaledRectangle = mouseHovering ? HoveredRectangle : ScaledRectangle;
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
 
             // Scaling
@@ -356,15 +365,15 @@ namespace MakeEveryDay
             {
                 sb.Draw(
                     statIcons[i],
-                    new Rectangle((scaledRectangle.Location.ToVector2() + new Microsoft.Xna.Framework.Vector2(nextX, (Size.Y - iconSize.Y) / scaleFactor)).ToPoint(),
-                        new Point((int)(iconSize.X / scaleFactor), (int)(iconSize.Y / scaleFactor))),
+                    new Rectangle((scaledRectangle.Location.ToVector2() + new Microsoft.Xna.Framework.Vector2(nextX, (AsRectangle.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
+                        new Point((int)(IconSize.X / scaleFactor), (int)(IconSize.Y / scaleFactor))),
                     Microsoft.Xna.Framework.Color.White);
 
-                nextX += iconSize.X / scaleFactor;
+                nextX += IconSize.X / scaleFactor;
 
                 DrawArrowsHelper(sb, statArrows[i], ref nextX);
 
-                nextX += iconSize.X * Math.Abs(statArrows[i]) / scaleFactor;
+                nextX += IconSize.X * Math.Abs(statArrows[i]) / scaleFactor;
             }
         }
 
@@ -432,7 +441,7 @@ namespace MakeEveryDay
             int arrowsNormal = arrows / Math.Abs(arrows);
 
             // Only do scaling calculation once
-            Rectangle scaledRectangle = base.ScaledRectangle;
+            Rectangle scaledRectangle = mouseHovering ? HoveredRectangle : ScaledRectangle;
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
 
             switch (arrowsNormal)
@@ -443,8 +452,8 @@ namespace MakeEveryDay
                         sb.Draw(
                         arrowTexture,
                             new Rectangle((scaledRectangle.Location.ToVector2()
-                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height - iconSize.Y) / scaleFactor)).ToPoint(),
-                            new Point(Math.Clamp((int)(iconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(iconSize.Y / scaleFactor), 1, int.MaxValue))),
+                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
+                            new Point(Math.Clamp((int)(IconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))),
                             Microsoft.Xna.Framework.Color.White);
                     }
                     break;
@@ -454,8 +463,8 @@ namespace MakeEveryDay
                         sb.Draw(
                         arrowTexture,
                             new Rectangle((scaledRectangle.Location.ToVector2()
-                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height - iconSize.Y) / scaleFactor)).ToPoint(),
-                            new Point(Math.Clamp((int)(iconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(iconSize.Y / scaleFactor), 1, int.MaxValue))),
+                            + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
+                            new Point(Math.Clamp((int)(IconSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))),
                             Microsoft.Xna.Framework.Color.White);
                     }
                     break;
