@@ -58,7 +58,7 @@ namespace MakeEveryDay
 
             timeCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (timeCounter>= timePerFrame)
+            if (timeCounter >= timePerFrame)
             {
                 currentFrame += 1;
 
