@@ -195,7 +195,7 @@ namespace MakeEveryDay.States
                 }
             }
 
-            UpdatePlayer();
+            UpdatePlayer(gameTime);
 
             foreach (StatusBar bar in statusBars)
             {
@@ -228,8 +228,10 @@ namespace MakeEveryDay.States
         /// <summary>
         /// Updates the player's stats based on the block beneath their feet
         /// </summary>
-        private void UpdatePlayer()
+        private void UpdatePlayer(GameTime gameTime)
         {
+            player.Update(gameTime);
+
             foreach (Block block in theLine)
             {
                 if (block.Left <= 0 && block.Checked == false) //This is the block currently being stood on

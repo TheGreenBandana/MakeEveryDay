@@ -9,24 +9,20 @@ namespace MakeEveryDay
     {
         public static Texture2D sprite;
 
-        
-        //private AnimationState animation;
-
         public int Health { get; set; }
         public int Wealth { get; set; }
         public int Happiness { get; set; }
         public int Education { get; set; }
         public int Age { get; set; }
-        //public AnimationState Animation { get { return animation; } set { animation = value; } }
+        public static AnimationState Animation { get; set; }
 
-        public Player() : base(sprite, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
+        public Player() : base(Animation.Texture, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
         {
             Health = 50;
             Wealth = 0;
             Happiness = 0;
             Education = 0;
             Age = 0;
-            //animation = new AnimationState(sprite, 1, true, 1);
         }
 
         /// <summary>
@@ -49,14 +45,14 @@ namespace MakeEveryDay
 
         internal override void Update(GameTime gameTime)
         {
-            //animation.Update(gameTime);
+            Animation.Update(gameTime);
             base.Update(gameTime);
         }
 
         internal override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
-            //animation.Draw(sb, base.Position, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
+            //base.Draw(sb);
+            Animation.Draw(sb, base.Position, 50/360f, 1f);
         }
     }
 }
