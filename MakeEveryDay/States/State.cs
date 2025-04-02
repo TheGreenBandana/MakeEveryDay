@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,11 @@ namespace MakeEveryDay.States
 
         public virtual void Enter()
         {
-            throw new Exception("Enter on base state class called. Do not call this method.");
+            
         }
         public virtual void Exit()
         {
-            throw new Exception("Enter on base state class called. Do not call this method.");
+
         }
 
         public virtual State CustomUpdate(GameTime gameTime)

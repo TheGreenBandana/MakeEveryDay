@@ -70,14 +70,20 @@ namespace MakeEveryDay
             }
         }
     /// <summary>
-    /// Gets the mods for which 
+    /// Gets the mods for which block we're currently above
     /// </summary>
-    /// <param name="playerXPosition"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-        public List<int> GetCurrentMods(float playerXPosition)
+    /// <param name="playerXPosition">current horizontal position of the player</param>
+    /// <returns>a set of mods in a list in the following format: health, education, happiness, wealth</returns>
+        public List<int>? GetCurrentMods(float playerXPosition)
         {
-            throw new NotImplementedException();
+            foreach (BlockType block in blocks)
+            {
+                if (block.Left < playerXPosition && block.Right >= playerXPosition)
+                {
+                    return block.GetCurrentMods(playerXPosition);
+                }
+            }
+            return null;
         }
     }
 }
