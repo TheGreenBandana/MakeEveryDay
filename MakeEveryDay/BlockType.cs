@@ -16,6 +16,24 @@ namespace MakeEveryDay
             get;
             set;
         }
+
+        public float Left
+        {
+            get;
+        }
+        public float Right
+        {
+            get;
+        }
+        public float Top
+        {
+            get;
+        }
+        public float Bottom
+        {
+            get;
+        }
+
         public Microsoft.Xna.Framework.Point Size
         {
             get;
