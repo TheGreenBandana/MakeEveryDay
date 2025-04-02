@@ -32,7 +32,7 @@ namespace MakeEveryDay
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            toggleKyle = true;
+            toggleKyle = false;
         }
 
         protected override void Initialize()
@@ -55,7 +55,11 @@ namespace MakeEveryDay
             // Setting game to fullscreen at screen's size
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.IsFullScreen = true;
+
+            // LEAVE FALSE WHILE DEVELOPING - UNHANDLED EXCEPTIONS WHILE FULLSCREENED CAUSE FLASHBANG
+            _graphics.IsFullScreen = false;
+            // LEAVE FALSE WHILE DEVELOPING - UNHANDLED EXCEPTIONS WHILE FULLSCREENED CAUSE FLASHBANG
+
             _graphics.ApplyChanges();
 
             // TODO: use this.Content to load your game content here

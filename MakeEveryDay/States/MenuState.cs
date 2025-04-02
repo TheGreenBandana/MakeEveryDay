@@ -80,6 +80,13 @@ namespace MakeEveryDay.States
             //testBlock.Draw(sb);
         }
 
+        /// <summary>
+        /// Exit override - Blank to avoid error from base state class exit method
+        /// </summary>
+        public override void Exit()
+        {
+            
+        }
 
     }
 }
