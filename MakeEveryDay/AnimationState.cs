@@ -41,6 +41,7 @@ namespace MakeEveryDay
             this.numFrames = numFrames;
             this.loops = loops;
             timePerFrame = 1 / fps;
+            currentFrame = 1;
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace MakeEveryDay
 
                 if (currentFrame > numFrames && loops)
                 {
-                    currentFrame = 0;
+                    currentFrame = 1;
 
                 } else if (currentFrame > numFrames)
                 {
@@ -101,13 +102,43 @@ namespace MakeEveryDay
             sb.Draw(
                 texture,
                 destination,
-                new Microsoft.Xna.Framework.Rectangle((texture.Width / numFrames) * currentFrame, 0, texture.Width / numFrames, texture.Height),
+                GetFrame(),
                 color,
                 rotation,
                 origin,
                 scale,
                 effects,
                 layerDepth);
+        }
+
+        /// <summary>
+        /// Simpler draw function for the animation state
+        /// </summary>
+        /// <param name="sb">the spritebatch</param>
+        /// <param name="position">Where to draw the image</param>
+        /// <param name="scale">How to scale the image</param>
+        /// <param name="layerDepth">What layer to draw on</param>
+        public void Draw(SpriteBatch sb, Microsoft.Xna.Framework.Vector2 position, float scale, float layerDepth)
+        {
+            sb.Draw(texture, position, GetFrame(), Color.White, 0f, Microsoft.Xna.Framework.Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+        }
+
+        /// <summary>
+        /// Gets the source rectangle for the current frame
+        /// </summary>
+        /// <returns>the source rectang</returns>
+        private Microsoft.Xna.Framework.Rectangle GetFrame()
+        {
+            int y = 0;
+            int right = 360 * currentFrame;
+            while (right > texture.Width)
+            {
+                y += 360;
+                right -= texture.Width;
+            }
+            int x = right - 360;
+
+            return new Rectangle(x, y, 360, 360);
         }
     }
 }

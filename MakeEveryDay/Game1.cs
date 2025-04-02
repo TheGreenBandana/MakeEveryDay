@@ -91,7 +91,9 @@ namespace MakeEveryDay
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
 
             // Player class content initialization
-            Player.sprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            Player.Animation = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
+            Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
+            Player.Shit = Content.Load<Texture2D>("LilGuyEatShit");
 
             // Status bar class content initialization
             StatusBar.sprite = Content.Load<Texture2D>("Status Bar");
