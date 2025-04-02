@@ -391,6 +391,12 @@ namespace MakeEveryDay
         }
 
         // Helper Methods
+        /// <summary>
+        /// Called when the value for Arrows needs to be initialized 
+        /// </summary>
+        /// <param name="mod">-100 to 100 modifier for the stat</param>
+        /// <returns>arrow value for the associated modifier</returns>
+        /// <exception cref="Exception">Shouldn't happen, talk to Kyle or read/fix the code yourself</exception>
         private int ArrowFromModHelper(int mod)
         {
             
@@ -415,11 +421,11 @@ namespace MakeEveryDay
         }
 
         /// <summary>
-        /// 
+        /// Draws arrows to the screen depending on the value of ___Arrows for each stat
         /// </summary>
-        /// <param name="sb"></param>
-        /// <param name="arrows"></param>
-        /// <param name="nextX"></param>
+        /// <param name="sb">SpriteBatch object for the frame</param>
+        /// <param name="arrows">the Arrows value for the stat</param>
+        /// <param name="nextX">current value of nextX (see Draw() for more details)</param>
         private void DrawArrowsHelper(SpriteBatch sb, int arrows, ref float nextX)
         {
             if (arrows == 0) return;
