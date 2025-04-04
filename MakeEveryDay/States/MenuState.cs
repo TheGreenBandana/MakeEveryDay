@@ -20,22 +20,18 @@ namespace MakeEveryDay.States
         internal static Texture2D quitButtonTexture;
         internal static Texture2D titleTexture;
 
-        private Block testBlock;
         private Button titleScreen;
         private Button playButton;
+        private Button debugButton;
         private Button quitButton;
         public MenuState() { }
 
         public override void Enter()
         {
-            playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-150, (int)Game1.ScreenSize.Y/2, 400, 200));
-            quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-150, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
+            playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
+            debugButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
+            quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
             titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
-
-            testBlock = new Block(
-                "test",
-                new Vector2(300, 200),
-                100);
 
             Game1.Width = (int)Game1.ScreenSize.X;
 
@@ -49,7 +45,11 @@ namespace MakeEveryDay.States
             }
             if (playButton.IsPressed())
             {
-                return new GameplayState();
+                return new GameplayState(false);
+            }
+            if (debugButton.IsPressed())
+            {
+                return new GameplayState(true);
             }
             return null;
 
@@ -80,16 +80,9 @@ namespace MakeEveryDay.States
         public override void Draw(SpriteBatch sb)
         {
             playButton.Draw(sb);
+            debugButton.Draw(sb);
             quitButton.Draw(sb);
             titleScreen.Draw(sb);
-            sb.DrawString(
-                titleFont,
-                "This is a title\nleft click to start",
-                Vector2.One * 10,
-                Color.White);
-
-
-            //testBlock.Draw(sb);
         }
 
         /// <summary>

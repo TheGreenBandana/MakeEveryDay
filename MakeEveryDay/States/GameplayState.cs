@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace MakeEveryDay.States
 {
@@ -35,15 +36,18 @@ namespace MakeEveryDay.States
 
         private List<Block> loadedBlocks;
 
+        private bool debug;
+        private float totalWidth;
+        private float spawnTimer;
 
         private Block LastBlockOnLine
         {
             get { return theLine[theLine.Count - 1]; }
         }
 
-        public GameplayState()
+        public GameplayState(bool debug)
         {
-
+            this.debug = debug;
         }
 
         public override void Enter() // Reading in blocks should happen here
@@ -100,7 +104,7 @@ namespace MakeEveryDay.States
             theLine.Add(new Block(
                 "start",
                 new Vector2(0, Game1.BridgePosition),
-                100));
+                500));
             player = new Player();
 
             //Create status bars
@@ -108,6 +112,8 @@ namespace MakeEveryDay.States
             statusBars[1] = new StatusBar(new Vector2(0, 80), new Point(200, 80), 0, Color.Yellow);
             statusBars[2] = new StatusBar(new Vector2(0, 160), new Point(200, 80), 0, Color.Blue);
             statusBars[3] = new StatusBar(new Vector2(0, 240), new Point(200, 80), 0, Color.Green);
+
+            spawnTimer = 0;
         }
 
         public override void Exit()
@@ -129,44 +135,52 @@ namespace MakeEveryDay.States
                 return new MenuState();
             }
 
-            if (MouseUtils.KeyJustPressed(Keys.Up))
+            if (debug)
             {
-                player.Health += 5;
-                player.Wealth += 5;
-                player.Happiness += 5;
-                player.Education += 5;
-            }
-
-            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
-                Game1.Width = Math.Clamp(Game1.Width + 25, 100, 3500);
-
-            if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
-                Game1.Width = Math.Clamp(Game1.Width - 25, 100, 3500);
-
-            Random rand = new Random();
-
-            if (MouseUtils.KeyJustPressed(Keys.Enter))
-            {
-                // Spawns a new block (or group of blocks) depending on player stats, gives random position if 
-                List<Block> newBlocks = GenerateNewBlocks();
-                if (newBlocks.Count > 0)
+                if (MouseUtils.KeyJustPressed(Keys.Up))
                 {
-                    float groupWidth = 0;
-                    for (int i = 0; i < newBlocks.Count; i++)
-                    {
-                        activeBlocks.Add(newBlocks[i]);
-                        if (i == 0)
-                            newBlocks[0].Position = new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom));
-                        else
-                            newBlocks[i].Position = newBlocks[0].Position + new Vector2(groupWidth, 0);
-                        groupWidth += newBlocks[i].Width;
-                    }
+                    player.Health += 5;
+                    player.Wealth += 5;
+                    player.Happiness += 5;
+                    player.Education += 5;
                 }
 
-                //activeBlocks.Add(new Block(
-                //    "test",
-                //    new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom)),
-                //    100));
+                if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
+                    Game1.Width = Math.Clamp(Game1.Width + 25, 100, 3500);
+
+                if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
+                    Game1.Width = Math.Clamp(Game1.Width - 25, 100, 3500);
+
+
+                if (MouseUtils.KeyJustPressed(Keys.Enter))
+                {
+                    TrySpawnBlock();
+                }
+
+                Vector2 adjustVector = new Vector2(-lineSpeed, 0);
+                for (int i = 0; i < theLine.Count; i++)
+                {
+                    if (kb.IsKeyDown(Keys.A))
+                    {
+                        theLine[i].Position += adjustVector;
+                    }
+                }
+            }
+            else
+            {
+                // Automatic spawning of blocks / bridge movement
+                spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
+                if (spawnTimer >= (3000 - (50 * player.Age + 1)))
+                {
+                    spawnTimer = 0;
+                    TrySpawnBlock();
+                }
+                
+                Vector2 adjustVector = new Vector2(-lineSpeed * gameTime.ElapsedGameTime.Milliseconds / (150 - (player.Age + 1) * 5), 0);
+                for (int i = 0; i < theLine.Count; i++)
+                {
+                    theLine[i].Position += adjustVector;
+                }
             }
 
             for (int i = 0; i < activeBlocks.Count; i++)
@@ -182,16 +196,6 @@ namespace MakeEveryDay.States
                     activeBlocks.RemoveAt(i);
                     i--;
                     theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
-                }
-            }
-
-
-            Vector2 adjustVector = new Vector2(-lineSpeed, 0);
-            for (int i = 0; i < theLine.Count; i++)
-            {
-                if (kb.IsKeyDown(Keys.A))
-                {
-                    theLine[i].Position += adjustVector;
                 }
             }
 
@@ -221,6 +225,8 @@ namespace MakeEveryDay.States
             {
                 bar.DrawUnscaled(sb);
             }
+
+            sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.White);
 
             player.Draw(sb);
         }
@@ -253,7 +259,10 @@ namespace MakeEveryDay.States
                     statusBars[2].CurrentValue = player.Education;
                     statusBars[3].CurrentValue = player.Wealth;
 
-                    player.Age += block.Width;
+                    // Aging - MODIFY VALUES HERE TO INCREASE OR DECREASE RATE OF AGING AND WIDTH
+                    totalWidth += block.Width;
+                    player.Age = (int)(totalWidth / 750);
+                    Game1.Width = Math.Clamp(Game1.Width += (int)(block.Width / 15f), 100, 3500);
 
                     block.Checked = true; //Ensures the block isn't checked again
                     break;
@@ -289,7 +298,7 @@ namespace MakeEveryDay.States
                         && block.WealthRange.IsInRange(player.Wealth)
                         && block.HappyRange.IsInRange(player.Happiness)
                         && block.EducationRange.IsInRange(player.Education)
-                        // && block.AgeRange.IsInRange(player.Age)
+                        && block.AgeRange.IsInRange(player.Age)
                         ))
                     {
                         success = false;
@@ -309,6 +318,30 @@ namespace MakeEveryDay.States
                 return newBlockList;
             }
             return new List<Block>(1);
+        }
+
+        /// <summary>
+        /// Holds all logic for attempting to spawn a block.
+        /// </summary>
+        private void TrySpawnBlock()
+        {
+            Random rand = new Random();
+
+            // Spawns a new block (or group of blocks) depending on player stats, gives random position
+            List<Block> newBlocks = GenerateNewBlocks();
+            if (newBlocks.Count > 0)
+            {
+                float groupWidth = 0;
+                for (int i = 0; i < newBlocks.Count; i++)
+                {
+                    activeBlocks.Add(newBlocks[i]);
+                    if (i == 0)
+                        newBlocks[0].Position = new Vector2(rand.Next(spawnableArea.Left, spawnableArea.Right), rand.Next(spawnableArea.Top, spawnableArea.Bottom));
+                    else
+                        newBlocks[i].Position = newBlocks[0].Position + new Vector2(groupWidth, 0);
+                    groupWidth += newBlocks[i].Width;
+                }
+            }
         }
     }
 }
