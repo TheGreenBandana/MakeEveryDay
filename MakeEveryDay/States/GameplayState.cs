@@ -24,7 +24,7 @@ namespace MakeEveryDay.States
 
         private static Rectangle spawnableArea = new Rectangle(100, 50, 400, 250);
 
-        private static float lineSpeed = 5f;
+        private static float lineSpeed = 6.5f;
 
         private List<List<Block>> allBlocks;
         private List<Block> activeBlocks;
@@ -170,7 +170,7 @@ namespace MakeEveryDay.States
             {
                 // Automatic spawning of blocks / bridge movement
                 spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
-                if (spawnTimer >= (3000 - (50 * player.Age + 1)))
+                if (spawnTimer >= (1500 - (50 * player.Age + 1)))
                 {
                     spawnTimer = 0;
                     TrySpawnBlock();
