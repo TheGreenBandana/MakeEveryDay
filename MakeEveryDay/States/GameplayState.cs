@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ShapeUtils;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
@@ -126,9 +127,8 @@ namespace MakeEveryDay.States
             KeyboardState kb = Keyboard.GetState();
 
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
-            spawnableArea = new Rectangle((int)(100 * scaleFactor), (int)(-1 * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X) + 100 * scaleFactor),
-                (int)(Game1.Width - 500 * scaleFactor), (int)(Game1.ScreenSize.Y / 3 * scaleFactor - 200 * scaleFactor)
-                );
+            spawnableArea = new Rectangle((int)(scaleFactor * statusBars[0].Width), (int)(100 - .75f * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X)),
+                Game1.Width - (int)(2 * scaleFactor * statusBars[0].Width), (int)(Game1.ScreenSize.Y / 2.5f * scaleFactor));
 
             if (kb.IsKeyDown(Keys.Tab))
             {
