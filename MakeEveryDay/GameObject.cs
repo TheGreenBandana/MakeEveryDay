@@ -123,16 +123,21 @@ namespace MakeEveryDay
 
         // Constructors
 
+        public GameObject()
+        {
+            this.sprite = gameObjectDefaultTexture;
+            size = sprite.Bounds.Size;
+            position = Microsoft.Xna.Framework.Vector2.Zero;
+            presetColor = null;
+        }
+
         /// <summary>
         /// Creates a game object at point (0,0) with provided sprite. Size is default size for texture object
         /// </summary>
         /// <param name="sprite">Texture2D to create the game object with</param>
-        public GameObject(Texture2D sprite)
+        public GameObject(Texture2D sprite) : this()
         {
             this.sprite = sprite;
-            size = sprite.Bounds.Size;
-            position = Microsoft.Xna.Framework.Vector2.Zero;
-            presetColor = null;
         }
 
         /// <summary>

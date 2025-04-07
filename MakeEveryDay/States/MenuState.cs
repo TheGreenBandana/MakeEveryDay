@@ -20,11 +20,16 @@ namespace MakeEveryDay.States
         private Block testBlock;
 
         private Button playButton;
+
+        private Button blockMakerButton;
+
         public MenuState() { }
 
         public override void Enter()
         {
             playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
+
+            blockMakerButton = new Button(blockTexture, new Rectangle(600, 400, 200, 100));
 
             testBlock = new Block(
                 "test",
@@ -40,6 +45,10 @@ namespace MakeEveryDay.States
             if (playButton.IsPressed())
             {
                 return new GameplayState();
+            }
+            if (blockMakerButton.IsPressed())
+            {
+                return new GroupMakerState();
             }
             return null;
 
@@ -76,6 +85,7 @@ namespace MakeEveryDay.States
                 Vector2.One * 10,
                 Color.White);
 
+            blockMakerButton.Draw(sb);
 
             //testBlock.Draw(sb);
         }
