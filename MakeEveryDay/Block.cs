@@ -47,7 +47,7 @@ namespace MakeEveryDay
         private CustomRange wealthRange;
         private CustomRange ageRange;
 
-        private Microsoft.Xna.Framework.Vector2 positionToClick;
+        private Microsoft.Xna.Framework.Vector2 positionToClick = -Microsoft.Xna.Framework.Vector2.One;
 
         private bool mouseHovering;
         private bool mouseHoveringReal;
