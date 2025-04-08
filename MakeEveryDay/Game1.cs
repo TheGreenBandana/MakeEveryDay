@@ -95,7 +95,7 @@ namespace MakeEveryDay
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
 
             // Player class content initialization
-            Player.Animation = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
+            Player.Running = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
             Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
             Player.Shit = Content.Load<Texture2D>("LilGuyEatShit");
 

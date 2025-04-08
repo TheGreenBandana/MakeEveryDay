@@ -20,7 +20,6 @@ namespace MakeEveryDay
         private double timeCounter;
         private bool finishedAnimation;
 
-
         public Texture2D Texture
         {
             get { return texture; }
@@ -34,6 +33,7 @@ namespace MakeEveryDay
             get { return loops; }
             set { loops = value; }
         }
+        public bool Ended => finishedAnimation;
 
         public AnimationState(Texture2D texture, int numFrames, bool loops, float fps)
         {
@@ -42,6 +42,7 @@ namespace MakeEveryDay
             this.loops = loops;
             timePerFrame = 1 / fps;
             currentFrame = 1;
+            finishedAnimation = false;
         }
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace MakeEveryDay
                 } else if (currentFrame > numFrames)
                 {
                     currentFrame = numFrames - 1;
+                    finishedAnimation = true;
                     return true;
                 }
 

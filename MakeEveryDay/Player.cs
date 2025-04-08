@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MakeEveryDay.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,17 +14,19 @@ namespace MakeEveryDay
         public int Happiness { get; set; }
         public int Education { get; set; }
         public int Age { get; set; }
-        public static AnimationState Animation { get; set; }
+        public static AnimationState Running { get; set; }
+        public AnimationState Animation { get; set; }
         public static Texture2D Fall { get; set; }
         public static Texture2D Shit { get; set; }
 
-        public Player() : base(Animation.Texture, new Vector2(0, Game1.BridgePosition - 200), new Point(50, 50))
+        public Player() : base(Running.Texture, new Vector2(0, Game1.BridgePosition - 200), new Point(50, 50))
         {
             Health = 50;
             Wealth = 0;
             Happiness = 0;
             Education = 0;
             Age = 0;
+            Animation = Running;
         }
 
         /// <summary>
