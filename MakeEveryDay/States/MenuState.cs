@@ -16,25 +16,31 @@ namespace MakeEveryDay.States
         internal static SpriteFont subtitleFont = default;
 
         internal static Texture2D blockTexture;
+        internal static Texture2D playButtonTexture;
+        internal static Texture2D quitButtonTexture;
+        internal static Texture2D titleTexture;
 
-        private Block testBlock;
-
+        private Button titleScreen;
         private Button playButton;
 
         private Button blockMakerButton;
+
+        private Button debugButton;
+        private Button quitButton;
 
         public MenuState() { }
 
         public override void Enter()
         {
-            playButton = new Button(blockTexture, new Rectangle(300, 200, 200, 100));
+
 
             blockMakerButton = new Button(blockTexture, new Rectangle(600, 400, 200, 100));
 
-            testBlock = new Block(
-                "test",
-                new Vector2(300, 200),
-                100);
+            playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
+            debugButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
+            quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
+            titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
+
 
             Game1.Width = (int)Game1.ScreenSize.X;
 
@@ -42,9 +48,17 @@ namespace MakeEveryDay.States
 
         public override State CustomUpdate(GameTime gameTime)
         {
+            if (quitButton.IsPressed())
+            {
+                game1Reference.ExitGame();
+            }
             if (playButton.IsPressed())
             {
-                return new GameplayState();
+                return new GameplayState(false);
+            }
+            if (debugButton.IsPressed())
+            {
+                return new GameplayState(true);
             }
             if (blockMakerButton.IsPressed())
             {
@@ -88,15 +102,14 @@ namespace MakeEveryDay.States
             blockMakerButton.Draw(sb);
 
             //testBlock.Draw(sb);
+            debugButton.Draw(sb);
+            quitButton.Draw(sb);
+            titleScreen.Draw(sb);
         }
 
         /// <summary>
         /// Exit override - Blank to avoid error from base state class exit method
         /// </summary>
-        public override void Exit()
-        {
-            
-        }
 
     }
 }

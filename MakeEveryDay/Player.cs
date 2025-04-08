@@ -1,32 +1,32 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MakeEveryDay.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Windows.Forms;
 
 namespace MakeEveryDay
 {
     internal class Player : GameObject
     {
-        public static Texture2D sprite;
-
-        
-        //private AnimationState animation;
-
         public int Health { get; set; }
         public int Wealth { get; set; }
         public int Happiness { get; set; }
         public int Education { get; set; }
         public int Age { get; set; }
-        //public AnimationState Animation { get { return animation; } set { animation = value; } }
+        public static AnimationState Running { get; set; }
+        public AnimationState Animation { get; set; }
+        public static Texture2D Fall { get; set; }
+        public static Texture2D Shit { get; set; }
 
-        public Player() : base(sprite, new Vector2(0, Game1.BridgePosition - 50), new Point(50, 50))
+        public Player() : base(Running.Texture, new Vector2(0, Game1.BridgePosition - 200), new Point(50, 50))
         {
             Health = 50;
             Wealth = 0;
             Happiness = 0;
             Education = 0;
             Age = 0;
-            //animation = new AnimationState(sprite, 1, true, 1);
+            Animation = Running;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace MakeEveryDay
         /// </summary>
         public void StartFalling()
         {
-            base.PresetColor = Color.Red;
+            Animation = new AnimationState(Fall, 15, false, 12);
             //will eventually switch the animation being used to the falling animation
         }
 
@@ -43,20 +43,19 @@ namespace MakeEveryDay
         /// </summary>
         public void Die()
         {
-            base.PresetColor = Color.Red;
+            Animation = new AnimationState(Shit, 18, false, 12);
             //will eventually switch the animation being used to a tripping and falling animation
         }
 
         internal override void Update(GameTime gameTime)
         {
-            //animation.Update(gameTime);
+            Animation.Update(gameTime);
             base.Update(gameTime);
         }
 
         internal override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
-            //animation.Draw(sb, base.Position, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
+            Animation.Draw(sb, base.Position, 200/360f, 1f);
         }
     }
 }

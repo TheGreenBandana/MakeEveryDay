@@ -239,10 +239,19 @@ namespace MakeEveryDay
         /// <param name="sb">SpriteBatch object being drawn to, assumes begin has been called</param>
         internal virtual void Draw(SpriteBatch sb)
         {
+            Microsoft.Xna.Framework.Rectangle drawingRectangle = ScaledRectangle;
+            bool hovering = false;
+            if (this is Block)
+            {
+                Block block = (Block)this;
+                if (block.MouseHovering)
+                    drawingRectangle = block.HoveredRectangle;
+            }
+
             Tuple<Microsoft.Xna.Framework.Color, float> ColorAndLayer = DrawColorAndLayerHelper(null, null);
             sb.Draw(
                 CheckToggleKyle(sprite),
-                ScaledRectangle,
+                drawingRectangle,
                 null,
                 ColorAndLayer.Item1,
                 0,

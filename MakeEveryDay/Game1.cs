@@ -74,6 +74,7 @@ namespace MakeEveryDay
             // Base "state" content initialization
             State.DefaultGameFont = Content.Load<SpriteFont>("Times24");
             State.DefaultGameTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            State.game1Reference = this;
 
             // GameObject class content initialization
             GameObject.gameObjectDefaultTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
@@ -91,6 +92,9 @@ namespace MakeEveryDay
             // Menu-State content initialization
             MenuState.titleFont = Content.Load<SpriteFont>("Times24");
             MenuState.subtitleFont = Content.Load<SpriteFont>("Times24");
+            MenuState.playButtonTexture = Content.Load<Texture2D>("Playbutton");
+            MenuState.quitButtonTexture = Content.Load<Texture2D>("Quitbutton");
+            MenuState.titleTexture = Content.Load<Texture2D>("TitleScreenTitle");
 
             MenuState.blockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
@@ -98,7 +102,9 @@ namespace MakeEveryDay
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
 
             // Player class content initialization
-            Player.sprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+            Player.Running = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
+            Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
+            Player.Shit = Content.Load<Texture2D>("LilGuyEatShit");
 
             // Status bar class content initialization
             StatusBar.sprite = Content.Load<Texture2D>("Status Bar");
@@ -170,6 +176,11 @@ namespace MakeEveryDay
 
             // Long live the king
             currentState.Enter();
+        }
+
+        public void ExitGame()
+        {
+            Exit(); 
         }
     }
 }
