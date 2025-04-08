@@ -8,36 +8,75 @@ using System.Threading.Tasks;
 
 namespace MakeEveryDay
 {
-    internal interface BlockType
+    internal abstract class BlockType : GameObject
     {
+        // Fields
+        private static Texture2D defaultBlockTypeTexture;
+
+        private string name;
+
+        private BlockType? leftLink;
+        private BlockType? rightLink;
+
+        private Microsoft.Xna.Framework.Vector2 positionToClick;
 
         public string Name
         {
-            get;
-            set;
+            get => name;
+            set => name = value;
         }
 
-        public float Left
+        public BlockType LeftLink
         {
-            get;
+            get
+            {
+                return leftLink;
+            }
+            set
+            {
+                leftLink = value;
+                if (value != null)
+                {
+                    value.RightLink = this;
+                }
+            }
         }
-        public float Right
+        public BlockType? RightLink
         {
-            get;
-        }
-        public float Top
-        {
-            get;
-        }
-        public float Bottom
-        {
-            get;
+            get
+            {
+                return rightLink;
+            }
+            set
+            {
+                rightLink = value;
+                if (value != null)
+                {
+                    value.LeftLink = this;
+                }
+            }
         }
 
-        public Microsoft.Xna.Framework.Point Size
+        public bool IsClicked
         {
-            get;
+            get { return positionToClick != -Microsoft.Xna.Framework.Vector2.One; }
         }
-        public List<int> GetCurrentMods(float playerXPosition);
+        public Microsoft.Xna.Framework.Vector2 PositionToClick
+        {
+            get { return positionToClick; }
+            set { positionToClick = value; }
+        }
+
+        public BlockType() : base() { }
+        public BlockType(Texture2D sprite) : base(sprite) { }
+        public BlockType(
+            Texture2D baseBlockTexture,
+            Microsoft.Xna.Framework.Vector2 position,
+            Microsoft.Xna.Framework.Vector2 size,
+            Microsoft.Xna.Framework.Color color,
+            float blockDrawLayer) : base(baseBlockTexture, position, size, color, blockDrawLayer) { }
+
+
+        public abstract List<int> GetCurrentMods(float playerXPosition);
     }
 }

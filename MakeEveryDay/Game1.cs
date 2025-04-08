@@ -17,6 +17,11 @@ namespace MakeEveryDay
 
         public static bool toggleKyle;
 
+        /// <summary>
+        /// Stores current clicked object at any given time
+        /// </summary>
+        internal static GameObject clickedObject;
+
         public static Vector2 ScreenSize { get => new Vector2(
             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
@@ -44,6 +49,8 @@ namespace MakeEveryDay
             //This is intentional, don't want to have any errors on frame one when mouseUtils tries to reference this variable
             MouseUtils.PreviousState = new MouseState();
             MouseUtils.PreviousKBState = new KeyboardState();
+
+            DrawLayerUtils.InitializeDrawLayerUtils();
 
             base.Initialize();
         }

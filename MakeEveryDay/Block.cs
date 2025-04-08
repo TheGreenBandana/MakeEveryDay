@@ -16,7 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MakeEveryDay
 {
-    internal class Block: GameObject, BlockType
+    internal class Block: BlockType
     {
 
         // Fields - static
@@ -34,9 +34,7 @@ namespace MakeEveryDay
 
         internal static Point iconSize = new Point(15, 15);
 
-        // Fields - non-static
-        private string name;
-        
+        // Fields - non-static        
         private int[] statMods;
 
         private int[] statArrows;
@@ -47,18 +45,15 @@ namespace MakeEveryDay
         private CustomRange wealthRange;
         private CustomRange ageRange;
 
+
         private Microsoft.Xna.Framework.Vector2 positionToClick = -Microsoft.Xna.Framework.Vector2.One;
 
         private bool mouseHovering;
         private bool mouseHoveringReal;
         private bool mouseHoveringPrevious;
 
+
         // Properties
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
         public bool Checked
         {
             get;
@@ -146,7 +141,6 @@ namespace MakeEveryDay
             get { return ageRange; }
             set { ageRange = value; }
         }
-
         // Misc.
         public bool IsClicked
         {
@@ -178,7 +172,6 @@ namespace MakeEveryDay
                 return mouseHovering ? new Point((int)(iconSize.X * (scaleFactor > 1 ? scaleFactor : 1)), (int)(iconSize.Y * (scaleFactor > 1 ? scaleFactor : 1))) : iconSize;
             }
         }
-
         // Constructors
 
         /// <summary>
@@ -213,7 +206,7 @@ namespace MakeEveryDay
             CustomRange ageRange)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width,presetHeight), color, blockDrawLayer)
         {
-            this.name = name;
+            this.Name = name;
 
             statMods = new int[4];
             statMods[0] = healthMod;
@@ -308,17 +301,18 @@ namespace MakeEveryDay
             // Block detection
             if (MouseUtils.IsJustPressed() && mouseHovering)
             {
-                positionToClick = Position - currentScaledMousePosition.ToVector2();
+                PositionToClick = Position - currentScaledMousePosition.ToVector2();
             }
 
-            if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && positionToClick != -Microsoft.Xna.Framework.Vector2.One) {
+            if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && PositionToClick != -Microsoft.Xna.Framework.Vector2.One) {
                 mouseHovering = false;
-                Position = currentScaledMousePosition.ToVector2() + positionToClick;
+                Position = currentScaledMousePosition.ToVector2() + PositionToClick;
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
             {
-                positionToClick = -Microsoft.Xna.Framework.Vector2.One;
+
+                PositionToClick = -Microsoft.Xna.Framework.Vector2.One;
                 if (MouseUtils.PreviousState.LeftButton == ButtonState.Pressed)
                     mouseHovering = false;
             }
@@ -337,8 +331,8 @@ namespace MakeEveryDay
             float scale;
             try
             {
-                scale = Math.Clamp((scaledRectangle.Width - (10 * scaleFactor)) / nameFont.MeasureString(name).X, .1f,
-                    (scaledRectangle.Height - (10 * scaleFactor)) / nameFont.MeasureString(name).Y);
+                scale = Math.Clamp((scaledRectangle.Width - (10 * scaleFactor)) / nameFont.MeasureString(Name).X, .1f,
+                    (scaledRectangle.Height - (10 * scaleFactor)) / nameFont.MeasureString(Name).Y);
             }
             catch
             {
@@ -348,7 +342,7 @@ namespace MakeEveryDay
             // Draw the name
             sb.DrawString(
                 nameFont,
-                name,
+                Name,
                 scaledRectangle.Location.ToVector2() + Microsoft.Xna.Framework.Vector2.One * 5 * scaleFactor,
                 Color.White,
                 0.001f,
@@ -381,9 +375,9 @@ namespace MakeEveryDay
         /// <param name="playerXPosition">X position to check the block for</param>
         /// <returns>List of the mods for the block as listed above</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<int> GetCurrentMods(float playerXPosition)
+        public override List<int> GetCurrentMods(float playerXPosition)
         {
-            throw new NotImplementedException();
+            return statMods.ToList<int>();
         }
 
 
@@ -393,7 +387,7 @@ namespace MakeEveryDay
         /// <returns>The string of the block.</returns>
         public override string ToString()
         {
-            return $"{name}|{Size.X}|{PresetColor.GetHashCode}|{statMods[0]}|{statMods[1]}|{statMods[2]}|{statMods[3]}|" +
+            return $"{Name}|{Size.X}|{PresetColor.GetHashCode}|{statMods[0]}|{statMods[1]}|{statMods[2]}|{statMods[3]}|" +
                 $"{healthRange.ToString()}|{educationRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}";
         }
 
@@ -481,7 +475,7 @@ namespace MakeEveryDay
         public static Block CloneBlock(Block block)
         {
             return new Block(
-                block.name, 
+                block.Name, 
                 block.Position, 
                 block.Width, 
                 (Color)block.PresetColor,

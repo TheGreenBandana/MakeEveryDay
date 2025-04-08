@@ -22,16 +22,25 @@ namespace MakeEveryDay.States
 
         private Button titleScreen;
         private Button playButton;
+
+        private Button blockMakerButton;
+
         private Button debugButton;
         private Button quitButton;
+
         public MenuState() { }
 
         public override void Enter()
         {
+
+
+            blockMakerButton = new Button(blockTexture, new Rectangle(600, 400, 200, 100));
+
             playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
             debugButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
             quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
             titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
+
 
             Game1.Width = (int)Game1.ScreenSize.X;
 
@@ -50,6 +59,10 @@ namespace MakeEveryDay.States
             if (debugButton.IsPressed())
             {
                 return new GameplayState(true);
+            }
+            if (blockMakerButton.IsPressed())
+            {
+                return new GroupMakerState();
             }
             return null;
 
@@ -80,6 +93,15 @@ namespace MakeEveryDay.States
         public override void Draw(SpriteBatch sb)
         {
             playButton.Draw(sb);
+            sb.DrawString(
+                titleFont,
+                "This is a title\nleft click to start",
+                Vector2.One * 10,
+                Color.White);
+
+            blockMakerButton.Draw(sb);
+
+            //testBlock.Draw(sb);
             debugButton.Draw(sb);
             quitButton.Draw(sb);
             titleScreen.Draw(sb);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MakeEveryDay
 {
-    internal class BlockGroup : GameObject, BlockType
+    internal class BlockGroup : BlockType
     {
         public static Texture2D blockGroupSprite;
         public static SpriteFont nameFont;
@@ -17,27 +17,19 @@ namespace MakeEveryDay
         private List<BlockType> blocks;
 
         //Properties
-
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
-
         public List<BlockType> Blocks
         {
             get => blocks;
         }
 
         // Constructors
-        public BlockGroup(string name, List<BlockType> blocks) : base(blockGroupSprite)
+        public BlockGroup(string name, Vector2 position) : this(name, new List<BlockType>(), position, new Vector2(200, 100)) { }
+        public BlockGroup(string name, List<BlockType> blocks, Vector2 position, Vector2 size) : base(blockGroupSprite, position, size, Color.White, .5f)
         {
             this.name = name;
             this.blocks = blocks;
-
-            //.Size = new Vector2()
         }
-        public BlockGroup(string name) : this(name, new List<BlockType>()) { }
+        
 
         // Methods
         /// <summary>
@@ -74,7 +66,7 @@ namespace MakeEveryDay
     /// </summary>
     /// <param name="playerXPosition">current horizontal position of the player</param>
     /// <returns>a set of mods in a list in the following format: health, education, happiness, wealth</returns>
-        public List<int>? GetCurrentMods(float playerXPosition)
+        public override List<int>? GetCurrentMods(float playerXPosition)
         {
             foreach (BlockType block in blocks)
             {
