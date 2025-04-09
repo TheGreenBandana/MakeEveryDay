@@ -335,13 +335,15 @@ namespace MakeEveryDay.States
                 if (LastBlockOnLine.Right <= 80) //Goes off if there is no block under the player
                 {
                     player.StartFalling();
-                    gameOver = true;
+                    if (!debug)
+                        gameOver = true;
                 }
 
                 if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Width <= 0) //Kills the player if their stats get too low. Can be updated to include more values
                 {
                     player.Die();
-                    gameOver = true;
+                    if(!debug)
+                        gameOver = true;
                 }
             }
         }
