@@ -201,6 +201,15 @@ namespace MakeEveryDay.States
             if (!gameOver || debug)
             {
                 if (activeBlocks.Count > 0)
+                {
+                    for (int i = activeBlocks.Count - 1; i >= 0; i--)
+                        if (activeBlocks[i].IsClicked && activeBlocks.Count > 1)
+                        {
+                            Block frontBlock = activeBlocks[i];
+                            activeBlocks.RemoveAt(i);
+                            activeBlocks.Add(frontBlock);
+                            break;
+                        }
                     for (int i = activeBlocks.Count - 1; i >= 0; i--)
                     {
                         activeBlocks[i].Update(gameTime);
@@ -216,6 +225,7 @@ namespace MakeEveryDay.States
                             grabbingBlock = false;
                         }
                     }
+                }
 
                 if (Game1.Width < targetWidth)
                     Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
