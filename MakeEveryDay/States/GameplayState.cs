@@ -247,6 +247,10 @@ namespace MakeEveryDay.States
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.White);
+
+            player.Draw(sb);
+
             for (int i = 0; i < theLine.Count; i++)
             {
                 theLine[i].Draw(sb);
@@ -264,8 +268,6 @@ namespace MakeEveryDay.States
 
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.White);
             sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.White);
-
-            player.Draw(sb);
         }
 
         /// <summary>
@@ -310,7 +312,7 @@ namespace MakeEveryDay.States
 
             if (player.Animation == Player.Running)
             {
-                if (LastBlockOnLine.Right <= 0) //Goes off if there is no block under the player
+                if (LastBlockOnLine.Right <= 50) //Goes off if there is no block under the player
                 {
                     //A man has fallen into the river in lego city!
                     //player.Animation = new AnimationState(defaultImage, 1, true, 1);

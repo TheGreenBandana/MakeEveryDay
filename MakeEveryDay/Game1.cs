@@ -17,6 +17,8 @@ namespace MakeEveryDay
 
         public static bool toggleKyle;
 
+        private static Texture2D paper;
+
         /// <summary>
         /// Stores current clicked object at any given time
         /// </summary>
@@ -30,6 +32,7 @@ namespace MakeEveryDay
 
         // Change in Visual Studio to modify bridge position, also changes how objects are scaled on the Y axis
         public static int BridgePosition => (int)ScreenSize.Y / 4 * 3;
+        public static Texture2D Paper => paper;
 
         public Game1()
         {
@@ -70,6 +73,9 @@ namespace MakeEveryDay
             _graphics.ApplyChanges();
 
             // TODO: use this.Content to load your game content here
+
+            // Background initialization
+            paper = Content.Load<Texture2D>("paper");
 
             // Base "state" content initialization
             State.DefaultGameFont = Content.Load<SpriteFont>("Times24");
