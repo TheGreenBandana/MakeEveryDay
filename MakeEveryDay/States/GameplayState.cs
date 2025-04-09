@@ -400,7 +400,7 @@ namespace MakeEveryDay.States
         private void TrySpawnBlock()
         {
             // Only spawn under a certain amount of blocks on screen, excluding the bridge
-            if (activeBlocks.Count < 15 + player.Age / 5 || debug)
+            if (activeBlocks.Count < 10 + player.Age / 5 || debug)
             {
                 Random rand = new Random();
 
