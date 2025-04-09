@@ -17,7 +17,7 @@ namespace MakeEveryDay
         public static AnimationState Running { get; set; }
         public AnimationState Animation { get; set; }
         public static Texture2D Fall { get; set; }
-        public static Texture2D Shit { get; set; }
+        public static Texture2D Trip { get; set; }
 
         public Player() : base(Running.Texture, new Vector2(0, Game1.BridgePosition - 200), new Point(50, 50))
         {
@@ -43,7 +43,7 @@ namespace MakeEveryDay
         /// </summary>
         public void Die()
         {
-            Animation = new AnimationState(Shit, 18, false, 12);
+            Animation = new AnimationState(Trip, 18, false, 12);
             //will eventually switch the animation being used to a tripping and falling animation
         }
 

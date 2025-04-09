@@ -23,7 +23,7 @@ namespace MakeEveryDay.States
         private Button titleScreen;
         private Button playButton;
 
-        private Button blockMakerButton;
+        //private Button blockMakerButton;
 
         private Button debugButton;
         private Button quitButton;
@@ -32,9 +32,7 @@ namespace MakeEveryDay.States
 
         public override void Enter()
         {
-
-
-            blockMakerButton = new Button(blockTexture, new Rectangle(600, 400, 200, 100));
+            //blockMakerButton = new Button(blockTexture, new Rectangle(600, 400, 200, 100));
 
             playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
             debugButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
@@ -43,7 +41,6 @@ namespace MakeEveryDay.States
 
 
             Game1.Width = (int)Game1.ScreenSize.X;
-
         }
 
         public override State CustomUpdate(GameTime gameTime)
@@ -60,34 +57,12 @@ namespace MakeEveryDay.States
             {
                 return new GameplayState(true);
             }
+            /*
             if (blockMakerButton.IsPressed())
             {
                 return new GroupMakerState();
-            }
+            } */
             return null;
-
-            /*
-            MouseState ms = Mouse.GetState();
-            
-            if (ms.LeftButton == ButtonState.Pressed)
-            {
-                return new GameplayState();
-            }
-            */
-
-            //testBlock.Update(gameTime);
-
-            /*
-            if (MouseUtils.IsJustPressed() && testBlock.AsRectangle.Contains(MouseUtils.CurrentState.Position.ToVector2()))
-            {
-                return new GameplayState();
-            }
-
-            // This return statement should always come at the end
-            // Unless there is a change in state that should happen,
-            // it will always return this.
-            return null;
-            */
         }
 
         public override void Draw(SpriteBatch sb)
@@ -99,17 +74,12 @@ namespace MakeEveryDay.States
                 Vector2.One * 10,
                 Color.White);
 
-            blockMakerButton.Draw(sb);
+            //blockMakerButton.Draw(sb);
 
             //testBlock.Draw(sb);
             debugButton.Draw(sb);
             quitButton.Draw(sb);
             titleScreen.Draw(sb);
         }
-
-        /// <summary>
-        /// Exit override - Blank to avoid error from base state class exit method
-        /// </summary>
-
     }
 }
