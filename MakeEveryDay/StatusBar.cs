@@ -28,7 +28,7 @@ namespace MakeEveryDay
         /// (try to keep it's width a multiple of 100, scaling may break if it isn't)</param>
         /// <param name="startValue">The starting value of the bar</param>
         /// <param name="color">The color of the bar in question</param>
-        public StatusBar(Vector2 position, Point size, int startValue, Color color) : base(sprite, position, new Point(size.X + 6, size.Y), Color.White, .5f)
+        public StatusBar(Vector2 position, Point size, int startValue, Color color) : base(sprite, position, new Point(size.X + 6, size.Y), Color.Gray, .5f)
         {
             CurrentValue = startValue;
             innerBar = new GameObject(sprite, new Vector2(position.X + 3, position.Y + 3), new Point(size.X - 6, size.Y - 6), color, .6f);

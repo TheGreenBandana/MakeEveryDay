@@ -266,8 +266,8 @@ namespace MakeEveryDay.States
                 bar.DrawUnscaled(sb);
             }
 
-            sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.White);
-            sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.White);
+            sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);
+            sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.Black);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace MakeEveryDay.States
 
             foreach (Block block in theLine)
             {
-                if (block.Left <= 0 && block.Checked == false) //This is the block currently being stood on
+                if (block.Left <= 60 && block.Checked == false) //This is the block currently being stood on
                 {
                     //Edit stats
                     player.Health += block.HealthMod;
@@ -312,7 +312,7 @@ namespace MakeEveryDay.States
 
             if (player.Animation == Player.Running)
             {
-                if (LastBlockOnLine.Right <= 50) //Goes off if there is no block under the player
+                if (LastBlockOnLine.Right <= 60) //Goes off if there is no block under the player
                 {
                     player.StartFalling();
                     gameOver = true;

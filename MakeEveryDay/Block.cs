@@ -358,11 +358,11 @@ namespace MakeEveryDay
                 nameFont,
                 Name,
                 scaledRectangle.Location.ToVector2() + Microsoft.Xna.Framework.Vector2.One * 5 * scaleFactor,
-                Color.White,
+                Color.Black,
                 0.001f,
                 Microsoft.Xna.Framework.Vector2.Zero,
-                scale, 
-                SpriteEffects.None, 
+                scale,
+                SpriteEffects.None,
                 1);
 
             // Draw the icons
