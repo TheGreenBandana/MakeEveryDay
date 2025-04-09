@@ -127,10 +127,10 @@ namespace MakeEveryDay.States
             player = new Player();
 
             //Create status bars
-            statusBars[0] = new StatusBar(new Vector2(0, 0), new Point(200, 80), player.Health, Color.Red);
-            statusBars[1] = new StatusBar(new Vector2(0, 80), new Point(200, 80), 0, Color.Yellow);
-            statusBars[2] = new StatusBar(new Vector2(0, 160), new Point(200, 80), 0, Color.Blue);
-            statusBars[3] = new StatusBar(new Vector2(0, 240), new Point(200, 80), 0, Color.Green);
+            statusBars[0] = new StatusBar(new Vector2(25, 0), new Point(200, 80), player.Health, Color.Red);
+            statusBars[1] = new StatusBar(new Vector2(25, 80), new Point(200, 80), 0, Color.Yellow);
+            statusBars[2] = new StatusBar(new Vector2(25, 160), new Point(200, 80), 0, Color.Blue);
+            statusBars[3] = new StatusBar(new Vector2(25, 240), new Point(200, 80), 0, Color.Green);
 
             spawnTimer = 0;
         }
@@ -160,6 +160,16 @@ namespace MakeEveryDay.States
                     player.Wealth += 5;
                     player.Happiness += 5;
                     player.Education += 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
                 }
 
                 if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
@@ -279,7 +289,7 @@ namespace MakeEveryDay.States
 
             foreach (Block block in theLine)
             {
-                if (block.Left <= 60 && block.Checked == false) //This is the block currently being stood on
+                if (block.Left <= 80 && block.Checked == false) //This is the block currently being stood on
                 {
                     //Edit stats
                     player.Health += block.HealthMod;
@@ -294,8 +304,8 @@ namespace MakeEveryDay.States
 
                     //Set the status bars
                     statusBars[0].CurrentValue = player.Health;
-                    statusBars[1].CurrentValue = player.Happiness;
-                    statusBars[2].CurrentValue = player.Education;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
                     statusBars[3].CurrentValue = player.Wealth;
 
                     // Aging - MODIFY VALUES HERE TO INCREASE OR DECREASE RATE OF AGING AND WIDTH
@@ -312,13 +322,13 @@ namespace MakeEveryDay.States
 
             if (player.Animation == Player.Running)
             {
-                if (LastBlockOnLine.Right <= 60) //Goes off if there is no block under the player
+                if (LastBlockOnLine.Right <= 80) //Goes off if there is no block under the player
                 {
                     player.StartFalling();
                     gameOver = true;
                 }
 
-                if (player.Health <= 0) //Kills the player if their stats get too low. Can be updated to include more values
+                if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Width <= 0) //Kills the player if their stats get too low. Can be updated to include more values
                 {
                     player.Die();
                     gameOver = true;
