@@ -145,7 +145,7 @@ namespace MakeEveryDay
             set { ageRange = value; }
         }
         // Misc.
-        public bool IsClicked => currentlyHeld;
+        public bool IsClicked { get => currentlyHeld; set => currentlyHeld = value; }
 
         public Rectangle HoveredRectangle
         {
@@ -225,8 +225,6 @@ namespace MakeEveryDay
             {
                 statArrows[i] = ArrowFromModHelper(statMods[i]);
             }
-            
-
         }
         /// <summary>
          /// Default Constructor

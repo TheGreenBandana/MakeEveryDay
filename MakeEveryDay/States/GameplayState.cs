@@ -55,7 +55,7 @@ namespace MakeEveryDay.States
         }
 
         public static int TargetWidth => targetWidth;
-        public static bool GrabbingBlock { get; set; }
+        public static bool GrabbingBlock { get => grabbingBlock; set => grabbingBlock = value; }
 
         public GameplayState(bool debug)
         {
@@ -220,7 +220,7 @@ namespace MakeEveryDay.States
                             activeBlocks.Add(frontBlock);
                             break;
                         }
-                    for (int i = activeBlocks.Count - 1; i >= 0; i--)
+                    for (int i = 0; i < activeBlocks.Count; i++)
                     {
                         activeBlocks[i].Update(gameTime);
 
@@ -230,9 +230,9 @@ namespace MakeEveryDay.States
                         {
                             theLine.Add(activeBlocks[i]);
                             activeBlocks.RemoveAt(i);
-                            i--;
                             theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
                             grabbingBlock = false;
+                            i--;
                         }
                     }
                 }
@@ -397,6 +397,7 @@ namespace MakeEveryDay.States
                         else
                             newBlocks[i].Position = newBlocks[0].Position + new Vector2(groupWidth, 0);
                         groupWidth += newBlocks[i].Width;
+                        newBlocks[i].IsClicked = false;
                     }
                 }
             }
