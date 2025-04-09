@@ -208,7 +208,7 @@ namespace MakeEveryDay.States
                     TrySpawnBlock();
                 }
             }
-            if (player.Animation.Texture != Player.Fall)
+            if (player.Animation.Texture != Player.Fall && !debug)
             {
                 Vector2 adjustVector = new Vector2(-lineSpeed * gameTime.ElapsedGameTime.Milliseconds / (150 - (player.Age + 1) * 5), 0);
                 for (int i = 0; i < theLine.Count; i++)
@@ -233,8 +233,9 @@ namespace MakeEveryDay.States
                         activeBlocks[i].Update(gameTime);
 
                         if (LastBlockOnLine.Right > activeBlocks[i].Left &&
+                            LastBlockOnLine.Right <= Game1.Width &&
                             LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
-                            LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom)
+                            activeBlocks[i].WasJustHeld)
                         {
                             theLine.Add(activeBlocks[i]);
                             activeBlocks.RemoveAt(i);

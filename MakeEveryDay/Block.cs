@@ -55,6 +55,7 @@ namespace MakeEveryDay
         private bool mouseHoveringReal;
         private bool mouseHoveringPrevious;
         private bool currentlyHeld;
+        private bool previouslyHeld;
 
         // Properties
         public bool Checked
@@ -63,6 +64,7 @@ namespace MakeEveryDay
             set;
         }
         public bool MouseHovering => mouseHovering;
+        public bool WasJustHeld => !currentlyHeld && previouslyHeld;
 
         //Modifiers
         public int HealthMod
@@ -277,6 +279,8 @@ namespace MakeEveryDay
 
         internal override void Update(GameTime gameTime)
         {
+            previouslyHeld = currentlyHeld;
+           
             base.Update(gameTime);
 
             Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position));
