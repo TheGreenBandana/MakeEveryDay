@@ -45,12 +45,14 @@ namespace MakeEveryDay.States
 
         private int score;
 
-        private int targetWidth;
+        private static int targetWidth;
 
         private Block LastBlockOnLine
         {
             get { return theLine[theLine.Count - 1]; }
         }
+
+        public static int TargetWidth => targetWidth;
 
         public GameplayState(bool debug)
         {
@@ -157,11 +159,10 @@ namespace MakeEveryDay.States
                 }
 
                 if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
-                    Game1.Width = Math.Clamp(Game1.Width + 25, 100, 3500);
+                    targetWidth = Math.Clamp(targetWidth + 25, 100, 3500);
 
                 if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Left))
-                    Game1.Width = Math.Clamp(Game1.Width - 25, 100, 3500);
-
+                    targetWidth = Math.Clamp(targetWidth - 25, 100, 3500);
 
                 if (MouseUtils.KeyJustPressed(Keys.Enter))
                 {
@@ -192,9 +193,6 @@ namespace MakeEveryDay.States
                 {
                     theLine[i].Position += adjustVector;
                 }
-
-                if (Game1.Width < targetWidth)
-                    Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
             }
             if (!gameOver || debug)
             {
@@ -204,8 +202,7 @@ namespace MakeEveryDay.States
 
                     if (LastBlockOnLine.Right > activeBlocks[i].Left &&
                         LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
-                        LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom &&
-                        activeBlocks[i].IsClicked == false)
+                        LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom)
                     {
                         theLine.Add(activeBlocks[i]);
                         activeBlocks.RemoveAt(i);
@@ -213,6 +210,9 @@ namespace MakeEveryDay.States
                         theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
                     }
                 }
+
+                if (Game1.Width < targetWidth)
+                    Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
             }
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)

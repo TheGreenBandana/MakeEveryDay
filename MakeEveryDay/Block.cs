@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+using MakeEveryDay.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -46,12 +46,14 @@ namespace MakeEveryDay
         private CustomRange ageRange;
 
 
-        private Microsoft.Xna.Framework.Vector2 positionToClick = -Microsoft.Xna.Framework.Vector2.One;
+        private Microsoft.Xna.Framework.Vector2 positionToClick;
+        private Microsoft.Xna.Framework.Vector2 previousPosition;
+        private Microsoft.Xna.Framework.Vector2 widthChangingOffset;
 
         private bool mouseHovering;
         private bool mouseHoveringReal;
         private bool mouseHoveringPrevious;
-
+        private bool currentlyHeld;
 
         // Properties
         public bool Checked
@@ -142,10 +144,7 @@ namespace MakeEveryDay
             set { ageRange = value; }
         }
         // Misc.
-        public bool IsClicked
-        {
-            get { return positionToClick != - Microsoft.Xna.Framework.Vector2.One; }
-        }
+        public bool IsClicked => currentlyHeld;
 
         public Rectangle HoveredRectangle
         {
@@ -302,20 +301,30 @@ namespace MakeEveryDay
             if (MouseUtils.IsJustPressed() && mouseHovering)
             {
                 PositionToClick = Position - currentScaledMousePosition.ToVector2();
+                widthChangingOffset = Microsoft.Xna.Framework.Vector2.Zero;
+                currentlyHeld = true;
             }
 
-            if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && PositionToClick != -Microsoft.Xna.Framework.Vector2.One) {
+            if (MouseUtils.CurrentState.LeftButton == ButtonState.Pressed && currentlyHeld) {
                 mouseHovering = false;
-                Position = currentScaledMousePosition.ToVector2() + PositionToClick;
+                // Maintain offset when width changes
+                if (Game1.Width < GameplayState.TargetWidth)
+                {
+                    float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+                    widthChangingOffset -= (previousPosition - MouseUtils.ScaleMousePosition(new Point((int)Game1.ScreenSize.X, Game1.BridgePosition)).ToVector2())
+                        * new Microsoft.Xna.Framework.Vector2(0, -Game1.ScreenSize.Y / Game1.ScreenSize.X / scaleFactor);
+                }
+                Position = currentScaledMousePosition.ToVector2() + PositionToClick + widthChangingOffset;
             }
 
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
             {
-
-                PositionToClick = -Microsoft.Xna.Framework.Vector2.One;
                 if (MouseUtils.PreviousState.LeftButton == ButtonState.Pressed)
                     mouseHovering = false;
+                currentlyHeld = false;
             }
+
+            previousPosition = MouseUtils.ScaleMousePosition(new Point((int)Game1.ScreenSize.X, Game1.BridgePosition)).ToVector2();
         }
 
         internal override void Draw(SpriteBatch sb)
