@@ -25,7 +25,7 @@ namespace MakeEveryDay.States
 
         private static Rectangle spawnableArea = new Rectangle(100, 50, 400, 250);
 
-        private static float lineSpeed = 6.5f;
+        private static float lineSpeed;
 
         private List<List<Block>> allBlocks;
         private List<Block> activeBlocks;
@@ -71,6 +71,8 @@ namespace MakeEveryDay.States
             positionToCheckStats = 80;
 
             score = 0;
+
+            lineSpeed = 6.5f;
 
             Game1.Width = 1000;
             targetWidth = 1000;
@@ -205,7 +207,9 @@ namespace MakeEveryDay.States
                     spawnTimer = 0;
                     TrySpawnBlock();
                 }
-                
+            }
+            if (player.Animation.Texture != Player.Fall)
+            {
                 Vector2 adjustVector = new Vector2(-lineSpeed * gameTime.ElapsedGameTime.Milliseconds / (150 - (player.Age + 1) * 5), 0);
                 for (int i = 0; i < theLine.Count; i++)
                 {
@@ -342,7 +346,7 @@ namespace MakeEveryDay.States
                     gameOver = true;
                 }
 
-                if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Width <= 0) //Kills the player if their stats get too low. Can be updated to include more values
+                if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Wealth <= 0) //Kills the player if their stats get too low. Can be updated to include more values
                 {
                     player.Die();
                     gameOver = true;
