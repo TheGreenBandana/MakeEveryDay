@@ -542,7 +542,7 @@
             label4.Name = "label4";
             label4.Size = new Size(25, 15);
             label4.TabIndex = 13;
-            label4.Text = "400";
+            label4.Text = "600";
             label4.TextAlign = ContentAlignment.TopRight;
             // 
             // label3
@@ -550,9 +550,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(57, 103);
             label3.Name = "label3";
-            label3.Size = new Size(19, 15);
+            label3.Size = new Size(25, 15);
             label3.TabIndex = 12;
-            label3.Text = "10";
+            label3.Text = "100";
             // 
             // pictureBox_colorPreview
             // 
@@ -586,15 +586,16 @@
             // 
             trackBar_width.AutoSize = false;
             trackBar_width.Cursor = Cursors.SizeWE;
+            trackBar_width.LargeChange = 10;
             trackBar_width.Location = new Point(57, 73);
-            trackBar_width.Maximum = 400;
-            trackBar_width.Minimum = 10;
+            trackBar_width.Maximum = 600;
+            trackBar_width.Minimum = 100;
             trackBar_width.Name = "trackBar_width";
             trackBar_width.Size = new Size(350, 45);
             trackBar_width.SmallChange = 5;
             trackBar_width.TabIndex = 5;
             trackBar_width.TickFrequency = 5;
-            trackBar_width.Value = 10;
+            trackBar_width.Value = 100;
             trackBar_width.ValueChanged += trackBar_width_ValueChanged;
             // 
             // textBox_name

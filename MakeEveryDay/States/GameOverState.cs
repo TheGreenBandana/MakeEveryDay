@@ -34,6 +34,8 @@ namespace MakeEveryDay.States
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.PaleVioletRed);
+
             sb.DrawString(GameplayState.defaultText, "GAME OVER", new Vector2(
                 Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString("GAME OVER").X * 2.5f,
                 Game1.ScreenSize.Y / 5), Color.White, 0, Vector2.Zero, 5, SpriteEffects.None, 0);

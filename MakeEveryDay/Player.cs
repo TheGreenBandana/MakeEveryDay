@@ -19,7 +19,7 @@ namespace MakeEveryDay
         public static Texture2D Fall { get; set; }
         public static Texture2D Trip { get; set; }
 
-        public Player() : base(Running.Texture, new Vector2(0, Game1.BridgePosition - 200), new Point(50, 50))
+        public Player() : base(Running.Texture, new Vector2(0, Game1.BridgePosition - 170), new Point(50, 50))
         {
             Health = 50;
             Wealth = 0;

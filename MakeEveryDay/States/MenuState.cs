@@ -67,6 +67,8 @@ namespace MakeEveryDay.States
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.Wheat);
+
             playButton.Draw(sb);
             sb.DrawString(
                 titleFont,
