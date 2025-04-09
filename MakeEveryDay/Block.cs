@@ -298,10 +298,11 @@ namespace MakeEveryDay
                 mouseHoveringPrevious = false;
 
             // Block detection
-            if (MouseUtils.IsJustPressed() && mouseHovering)
+            if (MouseUtils.IsJustPressed() && mouseHovering && !GameplayState.GrabbingBlock)
             {
                 PositionToClick = Position - currentScaledMousePosition.ToVector2();
                 widthChangingOffset = Microsoft.Xna.Framework.Vector2.Zero;
+                GameplayState.GrabbingBlock = true;
                 currentlyHeld = true;
             }
 
@@ -320,7 +321,10 @@ namespace MakeEveryDay
             if (MouseUtils.CurrentState.LeftButton == ButtonState.Released)
             {
                 if (MouseUtils.PreviousState.LeftButton == ButtonState.Pressed)
+                {
                     mouseHovering = false;
+                    GameplayState.GrabbingBlock = false;
+                }
                 currentlyHeld = false;
             }
 

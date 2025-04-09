@@ -47,12 +47,15 @@ namespace MakeEveryDay.States
 
         private static int targetWidth;
 
+        private static bool grabbingBlock;
+
         private Block LastBlockOnLine
         {
             get { return theLine[theLine.Count - 1]; }
         }
 
         public static int TargetWidth => targetWidth;
+        public static bool GrabbingBlock { get; set; }
 
         public GameplayState(bool debug)
         {
@@ -140,7 +143,8 @@ namespace MakeEveryDay.States
         public override State CustomUpdate(GameTime gameTime)
         {
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
-            spawnableArea = new Rectangle((int)(scaleFactor * statusBars[0].Width), (int)(100 - .75f * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X)),
+            spawnableArea = new Rectangle((int)(scaleFactor * statusBars[0].Width),
+                (int)(100 - .75f * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X)),
                 Game1.Width - (int)(2 * scaleFactor * statusBars[0].Width) - 400, (int)(Game1.ScreenSize.Y / 2.5f * scaleFactor));
 
             if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Tab))
@@ -196,20 +200,22 @@ namespace MakeEveryDay.States
             }
             if (!gameOver || debug)
             {
-                for (int i = 0; i < activeBlocks.Count; i++)
-                {
-                    activeBlocks[i].Update(gameTime);
-
-                    if (LastBlockOnLine.Right > activeBlocks[i].Left &&
-                        LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
-                        LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom)
+                if (activeBlocks.Count > 0)
+                    for (int i = activeBlocks.Count - 1; i >= 0; i--)
                     {
-                        theLine.Add(activeBlocks[i]);
-                        activeBlocks.RemoveAt(i);
-                        i--;
-                        theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
+                        activeBlocks[i].Update(gameTime);
+
+                        if (LastBlockOnLine.Right > activeBlocks[i].Left &&
+                            LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
+                            LastBlockOnLine.Bottom + LastBlockOnLine.Height > activeBlocks[i].Bottom)
+                        {
+                            theLine.Add(activeBlocks[i]);
+                            activeBlocks.RemoveAt(i);
+                            i--;
+                            theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
+                            grabbingBlock = false;
+                        }
                     }
-                }
 
                 if (Game1.Width < targetWidth)
                     Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
