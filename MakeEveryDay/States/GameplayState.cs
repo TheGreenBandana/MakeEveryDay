@@ -62,7 +62,7 @@ namespace MakeEveryDay.States
             this.debug = debug;
         }
 
-        public override void Enter() // Reading in blocks should happen here
+        public override void Enter()
         {
             gameOver = false;
 
@@ -314,8 +314,6 @@ namespace MakeEveryDay.States
             {
                 if (LastBlockOnLine.Right <= 50) //Goes off if there is no block under the player
                 {
-                    //A man has fallen into the river in lego city!
-                    //player.Animation = new AnimationState(defaultImage, 1, true, 1);
                     player.StartFalling();
                     gameOver = true;
                 }

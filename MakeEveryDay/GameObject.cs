@@ -122,7 +122,9 @@ namespace MakeEveryDay
         }
 
         // Constructors
-
+        /// <summary>
+        /// Default constructor makes most basic possible game object
+        /// </summary>
         public GameObject()
         {
             this.sprite = gameObjectDefaultTexture;

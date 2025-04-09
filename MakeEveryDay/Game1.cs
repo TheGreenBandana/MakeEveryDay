@@ -86,7 +86,6 @@ namespace MakeEveryDay
             GameObject.gameObjectDefaultTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
             // Block class content initialization
-            Block.baseBlockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
             Block.nameFont = Content.Load<SpriteFont>("Times24");
 
             Block.arrowTexture = Content.Load<Texture2D>("Icons/StatChangeArrow");
@@ -110,13 +109,12 @@ namespace MakeEveryDay
             // Player class content initialization
             Player.Running = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
             Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
-            Player.Shit = Content.Load<Texture2D>("LilGuyEatShit");
+            Player.Trip = Content.Load<Texture2D>("LilGuyEatShit");
 
             // Status bar class content initialization
             StatusBar.sprite = Content.Load<Texture2D>("Status Bar");
 
             // Block Group class content initialization
-            BlockGroup.blockGroupSprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
             BlockGroup.nameFont = Content.Load<SpriteFont>("Times24");
 
             // Note: requires content to be loaded, cannot be done in Initialize()
