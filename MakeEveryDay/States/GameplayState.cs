@@ -68,6 +68,8 @@ namespace MakeEveryDay.States
         {
             gameOver = false;
 
+            positionToCheckStats = 80;
+
             score = 0;
 
             Game1.Width = 1000;
@@ -243,6 +245,8 @@ namespace MakeEveryDay.States
                     Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
                 else if (Game1.Width > targetWidth)
                     Game1.Width = Math.Clamp(Game1.Width - 1, 100, 3500);
+
+                positionToCheckStats = 80 + (Game1.Width - 1000) * .0675f;
             }
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)
@@ -299,7 +303,7 @@ namespace MakeEveryDay.States
 
             foreach (Block block in theLine)
             {
-                if (block.Left <= 80 && block.Checked == false) //This is the block currently being stood on
+                if (block.Left <= positionToCheckStats && block.Checked == false) //This is the block currently being stood on
                 {
                     //Edit stats
                     player.Health += block.HealthMod;
@@ -332,7 +336,7 @@ namespace MakeEveryDay.States
 
             if (player.Animation == Player.Running)
             {
-                if (LastBlockOnLine.Right <= 80) //Goes off if there is no block under the player
+                if (LastBlockOnLine.Right <= positionToCheckStats) //Goes off if there is no block under the player
                 {
                     player.StartFalling();
                     gameOver = true;
