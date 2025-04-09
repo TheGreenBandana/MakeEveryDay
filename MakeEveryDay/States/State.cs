@@ -22,7 +22,7 @@ namespace MakeEveryDay.States
         }
         public virtual void Exit()
         {
-
+            DrawLayerUtils.ResetObjectsPerLayer();
         }
 
         public virtual State CustomUpdate(GameTime gameTime)

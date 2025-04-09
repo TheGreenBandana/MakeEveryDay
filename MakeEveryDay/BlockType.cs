@@ -20,12 +20,18 @@ namespace MakeEveryDay
 
         private Microsoft.Xna.Framework.Vector2 positionToClick;
 
+        /// <summary>
+        /// Gets/sets the current name of the blocktype
+        /// </summary>
         public string Name
         {
             get => name;
             set => name = value;
         }
 
+        /// <summary>
+        /// Gets/sets the block linked left to this one. Mostly useless functionality at this point
+        /// </summary>
         public BlockType LeftLink
         {
             get
@@ -41,6 +47,9 @@ namespace MakeEveryDay
                 }
             }
         }
+        /// <summary>
+        /// Gets/sets the block linked right to this one. Mostly useless functionality at this point.
+        /// </summary>
         public BlockType? RightLink
         {
             get
@@ -57,10 +66,16 @@ namespace MakeEveryDay
             }
         }
 
+        /// <summary>
+        /// Returns a bool representing if the block is currently clicked
+        /// </summary>
         public bool IsClicked
         {
             get { return positionToClick != -Microsoft.Xna.Framework.Vector2.One; }
         }
+        /// <summary>
+        /// Returns the current positionToClick value, set to -Vector2.One (xna vector) to unclick (i think)
+        /// </summary>
         public Microsoft.Xna.Framework.Vector2 PositionToClick
         {
             get { return positionToClick; }
@@ -76,7 +91,11 @@ namespace MakeEveryDay
             Microsoft.Xna.Framework.Color color,
             float blockDrawLayer) : base(baseBlockTexture, position, size, color, blockDrawLayer) { }
 
-
+        /// <summary>
+        /// Used to get the set of modifiers that should be affecting the player given their current position
+        /// </summary>
+        /// <param name="playerXPosition">current x position of the player, the mods of the block directly under which will be returned</param>
+        /// <returns>A set of mods dependent on the current position of the player</returns>
         public abstract List<int> GetCurrentMods(float playerXPosition);
     }
 }

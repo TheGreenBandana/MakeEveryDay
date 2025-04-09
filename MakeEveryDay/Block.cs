@@ -29,6 +29,7 @@ namespace MakeEveryDay
         internal static SpriteFont nameFont;
 
         internal static float blockDrawLayer = .5f;
+        //internal static DrawLayer blockDrawLayer = DrawLayer.GameObjects1;
 
         internal static Rectangle blockSpawnArea = new Rectangle(100, 50, 500, 300);
 
@@ -409,8 +410,6 @@ namespace MakeEveryDay
         /// <exception cref="Exception">Shouldn't happen, talk to Kyle or read/fix the code yourself</exception>
         private int ArrowFromModHelper(int mod)
         {
-            
-
             if (mod == 0)
             {
                 return 0;
