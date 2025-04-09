@@ -49,6 +49,8 @@ namespace MakeEveryDay.States
 
         private static bool grabbingBlock;
 
+        private float positionToCheckStats;
+
         private Block LastBlockOnLine
         {
             get { return theLine[theLine.Count - 1]; }
@@ -239,6 +241,8 @@ namespace MakeEveryDay.States
 
                 if (Game1.Width < targetWidth)
                     Game1.Width = Math.Clamp(Game1.Width + 1, 100, 3500);
+                else if (Game1.Width > targetWidth)
+                    Game1.Width = Math.Clamp(Game1.Width - 1, 100, 3500);
             }
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)
@@ -278,6 +282,12 @@ namespace MakeEveryDay.States
 
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);
             sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.Black);
+
+            if (debug)
+            {
+                sb.DrawString(defaultText, "Width: " + Game1.Width.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.8f), Color.Black);
+                sb.DrawString(defaultText, "Target Width: " + TargetWidth.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.2f), Color.Black);
+            }
         }
 
         /// <summary>
