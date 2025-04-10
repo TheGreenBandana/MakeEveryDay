@@ -34,6 +34,7 @@ namespace MakeEveryDay.States
         private Block testBlock1;
         private Player player;
         private StatusBar[] statusBars;
+        private GameObject[] statIcons;
 
         private List<Block> loadedBlocks;
 
@@ -132,11 +133,22 @@ namespace MakeEveryDay.States
             targetWidth -= (int)(500 / 15f);
             player = new Player();
 
-            //Create status bars
-            statusBars[0] = new StatusBar(new Vector2(25, 0), new Point(200, 80), player.Health, Color.Red);
-            statusBars[1] = new StatusBar(new Vector2(25, 80), new Point(200, 80), 0, Color.Yellow);
-            statusBars[2] = new StatusBar(new Vector2(25, 160), new Point(200, 80), 0, Color.Blue);
-            statusBars[3] = new StatusBar(new Vector2(25, 240), new Point(200, 80), 0, Color.Green);
+            // Create status bars
+            statusBars[0] = new StatusBar(new Vector2(7, 0), new Point(200, 80), player.Health, Color.Red);
+            statusBars[1] = new StatusBar(new Vector2(7, 80), new Point(200, 80), 0, Color.Yellow);
+            statusBars[2] = new StatusBar(new Vector2(7, 160), new Point(200, 80), 0, Color.Blue);
+            statusBars[3] = new StatusBar(new Vector2(7, 240), new Point(200, 80), 0, Color.Green);
+
+            // Icons to display next to status bars
+            statIcons = new GameObject[4];
+            statIcons[0] = new GameObject(Block.statIcons[0], new Rectangle(statusBars[0].Position.ToPoint()
+                + new Point(statusBars[0].Width + 7, statusBars[0].Height / 4), new Point(statusBars[0].Height / 2, statusBars[0].Height / 2)));
+            statIcons[1] = new GameObject(Block.statIcons[1], new Rectangle(statusBars[1].Position.ToPoint()
+                + new Point(statusBars[1].Width + 7, statusBars[1].Height / 4), new Point(statusBars[1].Height / 2, statusBars[1].Height / 2)));
+            statIcons[2] = new GameObject(Block.statIcons[2], new Rectangle(statusBars[2].Position.ToPoint()
+                + new Point(statusBars[2].Width + 7, statusBars[2].Height / 4), new Point(statusBars[2].Height / 2, statusBars[2].Height / 2)));
+            statIcons[3] = new GameObject(Block.statIcons[3], new Rectangle(statusBars[3].Position.ToPoint()
+                + new Point(statusBars[3].Width + 7, statusBars[3].Height / 4), new Point(statusBars[3].Height / 2, statusBars[3].Height / 2)));
 
             spawnTimer = 0;
         }
@@ -221,17 +233,17 @@ namespace MakeEveryDay.States
                 if (activeBlocks.Count > 0)
                 {
                     for (int i = activeBlocks.Count - 1; i >= 0; i--)
-                        if (activeBlocks[i].IsClicked && activeBlocks.Count > 1)
-                        {
-                            Block frontBlock = activeBlocks[i];
-                            activeBlocks.RemoveAt(i);
-                            activeBlocks.Add(frontBlock);
-                            break;
-                        }
-                    for (int i = 0; i < activeBlocks.Count; i++)
                     {
                         activeBlocks[i].Update(gameTime);
-
+                        if (activeBlocks[i].IsClicked)
+                        {
+                            Block frontBlock = activeBlocks[i];
+                            activeBlocks.Add(frontBlock);
+                            activeBlocks.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < activeBlocks.Count; i++)
+                    {
                         if (LastBlockOnLine.Right > activeBlocks[i].Left &&
                             LastBlockOnLine.Right <= Game1.Width &&
                             LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
@@ -287,6 +299,11 @@ namespace MakeEveryDay.States
             foreach (StatusBar bar in statusBars)
             {
                 bar.DrawUnscaled(sb);
+            }
+
+            foreach (GameObject icon in statIcons)
+            {
+                icon.DrawUnscaled(sb);
             }
 
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);

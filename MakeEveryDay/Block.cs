@@ -174,6 +174,21 @@ namespace MakeEveryDay
                 return mouseHovering ? new Point((int)(iconSize.X * (scaleFactor > 1 ? scaleFactor : 1)), (int)(iconSize.Y * (scaleFactor > 1 ? scaleFactor : 1))) : iconSize;
             }
         }
+
+        public Point ArrowSize
+        {
+            get
+            {
+                Point storedIconSize = iconSize;
+                float scaleFactor = Game1.Width / Game1.ScreenSize.X * 1.5f;
+                int totalIcons = 0;
+                foreach (int value in statArrows)
+                    totalIcons += Math.Abs(value);
+                while (storedIconSize.X * totalIcons + IconSize.X * 4 > Width && storedIconSize.X >= 5)
+                    storedIconSize.X--;
+                return mouseHovering ? new Point((int)(storedIconSize.X * (scaleFactor > 1 ? scaleFactor : 1)), (int)(storedIconSize.Y * (scaleFactor > 1 ? scaleFactor : 1))) : storedIconSize;
+            }
+        }
         // Constructors
 
         /// <summary>
@@ -449,7 +464,6 @@ namespace MakeEveryDay
             // Only do scaling calculation once
             Rectangle scaledRectangle = mouseHovering ? HoveredRectangle : ScaledRectangle;
             float scaleFactor = Game1.Width / Game1.ScreenSize.X;
-            float xSize = Math.Clamp(Math.Abs(arrows), 3, int.MaxValue) - 2;
 
             switch (arrowsNormal)
             {
@@ -460,9 +474,9 @@ namespace MakeEveryDay
                         arrowTexture,
                             new Rectangle((scaledRectangle.Location.ToVector2()
                             + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
-                            new Point(Math.Clamp((int)(IconSize.X / xSize / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))), new Rectangle(0, 0, arrowTexture.Width, arrowTexture.Height),
+                            new Point(Math.Clamp((int)(ArrowSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))), new Rectangle(0, 0, arrowTexture.Width, arrowTexture.Height),
                             Microsoft.Xna.Framework.Color.White, 0, Microsoft.Xna.Framework.Vector2.Zero, SpriteEffects.FlipVertically, .5f);
-                        nextX += IconSize.X / xSize / scaleFactor;
+                        nextX += ArrowSize.X / scaleFactor;
                     }
                     break;
                 case -1:
@@ -472,9 +486,9 @@ namespace MakeEveryDay
                         arrowTexture,
                             new Rectangle((scaledRectangle.Location.ToVector2()
                             + new Microsoft.Xna.Framework.Vector2(nextX, (base.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
-                            new Point(Math.Clamp((int)(IconSize.X / xSize / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))),
+                            new Point(Math.Clamp((int)(ArrowSize.X / scaleFactor), 1, int.MaxValue), Math.Clamp((int)(IconSize.Y / scaleFactor), 1, int.MaxValue))),
                             Microsoft.Xna.Framework.Color.White);
-                        nextX += IconSize.X / xSize / scaleFactor;
+                        nextX += ArrowSize.X / scaleFactor;
                     }
                     break;
             }

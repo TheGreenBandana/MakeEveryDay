@@ -101,6 +101,7 @@ namespace MakeEveryDay
             MenuState.playButtonTexture = Content.Load<Texture2D>("Playbutton");
             MenuState.quitButtonTexture = Content.Load<Texture2D>("Quitbutton");
             MenuState.titleTexture = Content.Load<Texture2D>("TitleScreenTitle");
+            MenuState.debugButtonTexture = Content.Load<Texture2D>("DebugButton");
 
             MenuState.blockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
