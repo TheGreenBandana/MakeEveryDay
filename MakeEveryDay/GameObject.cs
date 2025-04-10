@@ -157,10 +157,17 @@ namespace MakeEveryDay
         /// <param name="sprite">sprite of the GameObject</param>
         /// <param name="position">Vector position of the GameObject</param>
         /// <param name="presetColor">color with which to draw the GameObject</param>
-        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color? presetColor, float? presetDrawLayer)
+        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color presetColor, float? presetDrawLayer)
             : this(sprite, position)
         {
-            this.presetColor = presetColor;
+            if (this is Block)
+                this.presetColor = new Microsoft.Xna.Framework.Color(
+                    Math.Clamp((int)presetColor.R, 100, 255),
+                    Math.Clamp((int)presetColor.G, 100, 255),
+                    Math.Clamp((int)presetColor.B, 100, 255)
+                    );
+            else
+                this.presetColor = presetColor;
             this.presetDrawLayer = presetDrawLayer;
         }
 
@@ -183,7 +190,7 @@ namespace MakeEveryDay
         /// <param name="position">Vector position to place the GameObject</param>
         /// <param name="size">Point size to give the GameObject</param>
         /// <param name="presetColor">color preset to give the GameObject</param>
-        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Point size, Microsoft.Xna.Framework.Color? presetColor, float? presetDrawLayer)
+        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Point size, Microsoft.Xna.Framework.Color presetColor, float? presetDrawLayer)
             : this(sprite, position, presetColor, presetDrawLayer) 
         {
             this.size = size;
@@ -203,7 +210,7 @@ namespace MakeEveryDay
         /// <param name="sprite"></param>
         /// <param name="position"></param>
         /// <param name="presetColor"></param>
-        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Rectangle position, Microsoft.Xna.Framework.Color? presetColor, float? presetDrawLayer)
+        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Rectangle position, Microsoft.Xna.Framework.Color presetColor, float? presetDrawLayer)
             : this(sprite, position.Location.ToVector2(), position.Size, presetColor, presetDrawLayer) { }
 
         /// <summary>
@@ -222,7 +229,7 @@ namespace MakeEveryDay
         /// <param name="position"></param>
         /// <param name="size"></param>
         /// <param name="presetColor"></param>
-        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, Microsoft.Xna.Framework.Color? presetColor, float? presetDrawLayer)
+        public GameObject(Texture2D sprite, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, Microsoft.Xna.Framework.Color presetColor, float? presetDrawLayer)
             : this(sprite, position, size.ToPoint(), presetColor, presetDrawLayer) { }
 
         // Methods
