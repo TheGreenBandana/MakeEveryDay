@@ -517,5 +517,15 @@ namespace MakeEveryDay
                 block.wealthRange, 
                 block.ageRange);
         }
+
+        public bool CheckAgainstPlayerStats(Player player)
+        {
+            return
+                HealthRange.IsInRange(player.Health)
+                && WealthRange.IsInRange(player.Wealth)
+                && HappyRange.IsInRange(player.Happiness)
+                && EducationRange.IsInRange(player.Education)
+                && AgeRange.IsInRange(player.Age);
+        }
     }
 }
