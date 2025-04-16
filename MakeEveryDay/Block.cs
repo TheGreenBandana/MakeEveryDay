@@ -388,15 +388,18 @@ namespace MakeEveryDay
 
             for (int i = 0; i < statIcons.Length; i++)
             {
-                sb.Draw(
+                if (statArrows[i] != 0)
+                {
+                    sb.Draw(
                     statIcons[i],
                     new Rectangle((scaledRectangle.Location.ToVector2() + new Microsoft.Xna.Framework.Vector2(nextX, (AsRectangle.Height * (mouseHovering && scaleFactor * 1.5f > 1 ? scaleFactor * 1.5f : 1) - IconSize.Y) / scaleFactor)).ToPoint(),
                         new Point((int)(IconSize.X / scaleFactor), (int)(IconSize.Y / scaleFactor))),
                     Microsoft.Xna.Framework.Color.White);
 
-                nextX += IconSize.X / scaleFactor;
+                    nextX += IconSize.X / scaleFactor;
 
-                DrawArrowsHelper(sb, statArrows[i], ref nextX);
+                    DrawArrowsHelper(sb, statArrows[i], ref nextX);
+                }
             }
         }
 
