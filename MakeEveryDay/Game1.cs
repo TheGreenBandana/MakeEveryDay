@@ -163,7 +163,7 @@ namespace MakeEveryDay
 
             // TODO: Add your drawing code here
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
             currentState.Draw(sb: _spriteBatch);
 
