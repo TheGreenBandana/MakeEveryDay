@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,10 @@ namespace MakeEveryDay.States
         public override State CustomUpdate(GameTime gameTime)
         {
             if (exitButton.IsPressed())
+            {
+                TrySaveScore();
                 return new MenuState();
+            }
             return null;
         }
 
@@ -43,6 +47,14 @@ namespace MakeEveryDay.States
                 Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString("Your score: " + score.ToString()).X * 1.5f,
                 Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 3, SpriteEffects.None, 0);
             exitButton.DrawUnscaled(sb);
+        }
+
+        /// <summary>
+        /// Attempt to save a new score.
+        /// </summary>
+        private void TrySaveScore()
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "highScores.scores");
         }
     }
 }
