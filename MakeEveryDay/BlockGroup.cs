@@ -59,13 +59,20 @@ namespace MakeEveryDay
                 Microsoft.Xna.Framework.Vector2.Zero,
                 Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height / 2) / nameFont.MeasureString(name).Y),
                 SpriteEffects.None,
-                1);
+                1); //How the fuck do layers work? is 1 High or Low? Que carajo es la problema con mi cabeza?????
             
             foreach(BlockType block in blocks)
             {
                 block.Position = new Vector2(base.AsRectangle.X + currentXPosition, base.AsRectangle.Y);
                 currentXPosition += block.Width;
-                ((GameObject) block).Draw(sb);
+
+                block.Draw(sb, 
+                    Color.White, 
+                    0, 
+                    Vector2.Zero, 
+                    Math.Clamp(Width / base.Width, 0, (Height / 2) / nameFont.MeasureString(name).Y), //Scaling math I'm too tired to figure out (should make all the blocks fit into the group) (width should be equal to the blocks anyway, so this should focus on height not width)
+                    SpriteEffects.None,
+                    0.5f); //see previous comment on layers
             }
             
         }
@@ -79,6 +86,11 @@ namespace MakeEveryDay
             foreach(BlockType block in blocks)
             {
                 base.Width += block.Width;
+            }
+
+            if(base.Width == 0)
+            {
+                base.Width = 100;
             }
         }
 
