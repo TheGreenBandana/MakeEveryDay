@@ -1,10 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Framework.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +33,8 @@ namespace MakeEveryDay.States
         private Button debugButton;
         private Button quitButton;
 
+        private string scores;
+
         public MenuState() { }
 
         public override void Enter()
@@ -39,8 +45,73 @@ namespace MakeEveryDay.States
             quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
             titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
 
+            Game1.Width = 1920;
 
-            Game1.Width = (int)Game1.ScreenSize.X;
+            // High score reading
+            bool clear = false;
+            string[] scoreLines = new string[10];
+            int index = 0;
+
+            // Read score lines into array
+            StreamReader reader = null;
+            try
+            {
+                reader = new(Game1.Path);
+                while (!reader.EndOfStream)
+                {
+                    scoreLines[index] = reader.ReadLine();
+                    index++;
+                }
+            }
+            catch
+            {
+                clear = true;
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+
+            if (index < 9)
+                clear = true;
+
+            scores = "";
+
+            // If requried, clear the scores file
+            if (clear)
+            {
+                string text = "";
+                for (int i = 0; i < 9; i++)
+                    text += "###: 000000000\n";
+                text += "###: 000000000";
+                StreamWriter writer = null;
+                try
+                {
+                    writer = new(Game1.Path);
+                    writer.Write(text);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("highScores.scores couldn't be reset!");
+                }
+                finally
+                {
+                    if (writer != null)
+                        writer.Close();
+                }
+            }
+
+            // Preparing for printing
+            else
+            {
+                foreach (string line in scoreLines)
+                    if (line.Split(' ')[0] != "###:")
+                        scores += line + '\n';
+            }
+
+            if (scores == "")
+                scores = "No saved scores.";
         }
 
         public override State CustomUpdate(GameTime gameTime)
@@ -69,6 +140,9 @@ namespace MakeEveryDay.States
             debugButton.Draw(sb);
             quitButton.Draw(sb);
             titleScreen.Draw(sb);
+
+            sb.DrawString(titleFont, "High Scores:", new Vector2(15, 15), Color.Black, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
+            sb.DrawString(titleFont, scores, new Vector2(15, 15 + titleFont.MeasureString("High Scores:").Y * 1.5f), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
         }
     }
 }

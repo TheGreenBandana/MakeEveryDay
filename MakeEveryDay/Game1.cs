@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
+using System;
 
 namespace MakeEveryDay
 {
@@ -16,6 +18,8 @@ namespace MakeEveryDay
         public static int Width;
 
         public static bool toggleKyle;
+
+        public static string Path;
 
         private static Texture2D paper;
 
@@ -46,6 +50,9 @@ namespace MakeEveryDay
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            // This is the path to the HIGH SCORE FILE
+            Path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "highScores.scores");
 
             currentState = new MenuState();
 
@@ -111,6 +118,9 @@ namespace MakeEveryDay
             // Gameplay-state content intitialization
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
 
+            // Game-Over-State content initialization
+            GameOverState.arrowButtonTexture = Content.Load<Texture2D>("ArrowBlock");
+
             // Player class content initialization
             Player.Running = new AnimationState(Content.Load<Texture2D>("LilGuyRun"), 6, true, 12);
             Player.Fall = Content.Load<Texture2D>("LilGuyGoDeath");
@@ -124,7 +134,6 @@ namespace MakeEveryDay
 
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
-
         }
 
         protected override void Update(GameTime gameTime)
