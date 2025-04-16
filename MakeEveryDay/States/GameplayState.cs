@@ -27,7 +27,7 @@ namespace MakeEveryDay.States
 
         private static float lineSpeed;
 
-        private List<List<Block>> allBlocks;
+        internal static List<List<Block>> allBlocks = new List<List<Block>>();
         private List<Block> activeBlocks;
         private List<BlockGroup> activeGroups;
         private List<BlockType> theLine;
@@ -81,11 +81,12 @@ namespace MakeEveryDay.States
 
             theLine = new List<BlockType>();
             activeBlocks = new List<Block>();
-            allBlocks = new List<List<Block>>();
+            
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
 
             // Reading in blocks
+            allBlocks.Clear();
             StreamReader reader = null;
             try
             {
@@ -204,7 +205,7 @@ namespace MakeEveryDay.States
                 }
                 if (MouseUtils.KeyJustPressed(Keys.B))
                 {
-                    activeGroups.Add(new BlockGroup("Group", new Vector2(500, 500)));
+                    return new GroupMakerState(player);
                 }
 
                 Vector2 adjustVector = new Vector2(-lineSpeed, 0);
@@ -396,12 +397,7 @@ namespace MakeEveryDay.States
                 bool success = true;
                 foreach (Block block in blockList)
                 {
-                    if (!(block.HealthRange.IsInRange(player.Health)
-                        && block.WealthRange.IsInRange(player.Wealth)
-                        && block.HappyRange.IsInRange(player.Happiness)
-                        && block.EducationRange.IsInRange(player.Education)
-                        && block.AgeRange.IsInRange(player.Age)
-                        ))
+                    if (!block.CheckAgainstPlayerStats(player))
                     {
                         success = false;
                         break;
