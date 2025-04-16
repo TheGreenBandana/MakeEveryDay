@@ -48,7 +48,7 @@ namespace MakeEveryDay
             sb.DrawString(
                 nameFont,
                 name,
-                base.Position + Microsoft.Xna.Framework.Vector2.One * 5,
+                Position + Microsoft.Xna.Framework.Vector2.One * 5,
                 Color.White,
                 0,
                 Microsoft.Xna.Framework.Vector2.Zero,
@@ -61,6 +61,7 @@ namespace MakeEveryDay
                 ((GameObject) block).Draw(sb);
             }
         }
+
     /// <summary>
     /// Gets the mods for which block we're currently above
     /// </summary>

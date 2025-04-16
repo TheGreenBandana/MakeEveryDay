@@ -85,6 +85,9 @@ namespace MakeEveryDay
             // GameObject class content initialization
             GameObject.gameObjectDefaultTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
+            // BlockGroup content init
+            BlockGroup.blockGroupSprite = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
+
             // Block class content initialization
             Block.baseBlockTexture = Content.Load<Texture2D>("Block");
             Block.nameFont = Content.Load<SpriteFont>("Times24");

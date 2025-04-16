@@ -29,14 +29,13 @@ namespace MakeEveryDay.States
 
         private List<List<Block>> allBlocks;
         private List<Block> activeBlocks;
-        private List<Block> theLine;
+        private List<BlockGroup> activeGroups;
+        private List<BlockType> theLine;
 
-        private Block testBlock1;
+        //private Block testBlock1;
         private Player player;
         private StatusBar[] statusBars;
         private GameObject[] statIcons;
-
-        private List<Block> loadedBlocks;
 
         private bool debug;
         private float totalWidth;
@@ -52,7 +51,9 @@ namespace MakeEveryDay.States
 
         private float positionToCheckStats;
 
-        private Block LastBlockOnLine
+        //private List<BlockGroup> blockGroups;
+
+        private BlockType LastBlockOnLine
         {
             get { return theLine[theLine.Count - 1]; }
         }
@@ -78,9 +79,10 @@ namespace MakeEveryDay.States
             Game1.Width = 1000;
             targetWidth = 1000;
 
-            theLine = new List<Block>();
+            theLine = new List<BlockType>();
             activeBlocks = new List<Block>();
             allBlocks = new List<List<Block>>();
+            activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
 
             // Reading in blocks
@@ -200,6 +202,10 @@ namespace MakeEveryDay.States
                 {
                     TrySpawnBlock();
                 }
+                if (MouseUtils.KeyJustPressed(Keys.B))
+                {
+                    activeGroups.Add(new BlockGroup("Group", new Vector2(500, 500)));
+                }
 
                 Vector2 adjustVector = new Vector2(-lineSpeed, 0);
                 for (int i = 0; i < theLine.Count; i++)
@@ -299,6 +305,10 @@ namespace MakeEveryDay.States
             foreach (StatusBar bar in statusBars)
             {
                 bar.DrawUnscaled(sb);
+            }
+            foreach(BlockGroup group in activeGroups)
+            {
+                group.Draw(sb);
             }
 
             foreach (GameObject icon in statIcons)
