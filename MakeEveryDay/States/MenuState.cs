@@ -50,20 +50,14 @@ namespace MakeEveryDay.States
 
             // High score reading
             bool clear = false;
-            StreamReader reader = null;
             string[] scoreLines = new string[10];
             int index = 0;
 
-            // Finding/creating the high score file
-            // Path cannot be directly in the content folder: Content manager loads a copy, making writing impossible
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "highScores.scores");
-            if (!File.Exists(path))
-                File.Create(path);
-
             // Read score lines into array
+            StreamReader reader = null;
             try
             {
-                reader = new(path);
+                reader = new(Game1.Path);
                 while (!reader.EndOfStream)
                 {
                     scoreLines[index] = reader.ReadLine();
@@ -89,17 +83,18 @@ namespace MakeEveryDay.States
             if (clear)
             {
                 string text = "";
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 9; i++)
                     text += "###: 000000000\n";
+                text += "###: 000000000";
                 StreamWriter writer = null;
                 try
                 {
-                    writer = new(path);
+                    writer = new(Game1.Path);
                     writer.Write(text);
                 }
-                catch
+                catch (Exception e)
                 {
-                    throw new Exception("highScores.Scores couldn't be overwritten!");
+                    throw new Exception("highScores.scores couldn't be reset!");
                 }
                 finally
                 {
@@ -112,14 +107,12 @@ namespace MakeEveryDay.States
             else
             {
                 foreach (string line in scoreLines)
-                    if (line.Split(' ')[1] != "000000000")
+                    if (line.Split(' ')[0] != "###:")
                         scores += line + '\n';
             }
 
             if (scores == "")
                 scores = "No saved scores.";
-
-            scores = path;
         }
 
         public override State CustomUpdate(GameTime gameTime)
