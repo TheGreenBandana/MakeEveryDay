@@ -204,7 +204,12 @@ namespace MakeEveryDay.States
                 }
                 if (MouseUtils.KeyJustPressed(Keys.B))
                 {
-                    activeGroups.Add(new BlockGroup("Group", new Vector2(500, 500)));
+                    BlockGroup toAdd = new BlockGroup("Group", new Vector2(500, 500));
+                    for(int i = 0; i < 3; i++)
+                    {
+                        toAdd.Add(GenerateNewBlocks()[0]);
+                    }
+                    activeGroups.Add(toAdd);
                 }
 
                 Vector2 adjustVector = new Vector2(-lineSpeed, 0);
@@ -281,6 +286,11 @@ namespace MakeEveryDay.States
             foreach (StatusBar bar in statusBars)
             {
                 bar.Update();
+            }
+
+            foreach(BlockGroup group in activeGroups)
+            {
+                group.Update(gameTime);
             }
 
             return null;

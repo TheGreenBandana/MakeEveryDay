@@ -41,32 +41,52 @@ namespace MakeEveryDay
             blocks.Add(block);
         }
 
+
+        
         internal override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
+            Vector2 e1 = new Vector2(0, 1);
+            int currentXPosition = 0;
+
+            base.DrawUnscaled(sb);
 
             sb.DrawString(
                 nameFont,
                 name,
-                Position + Microsoft.Xna.Framework.Vector2.One * 5,
-                Color.White,
+                Position + e1 * 50,
+                Color.DarkRed, //NEEDS TO BE CHANGED BACK TO WHITE
                 0,
                 Microsoft.Xna.Framework.Vector2.Zero,
-                Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height - 10) / nameFont.MeasureString(name).Y),
+                Math.Clamp((Width - 10) / nameFont.MeasureString(name).X, 0, (Height / 2) / nameFont.MeasureString(name).Y),
                 SpriteEffects.None,
                 1);
+            
+            foreach(BlockType block in blocks)
+            {
+                block.Position = new Vector2(base.AsRectangle.X + currentXPosition, base.AsRectangle.Y);
+                currentXPosition += block.Width;
+                ((GameObject) block).Draw(sb);
+            }
+            
+        }
+
+        internal override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            base.Width = 0;
 
             foreach(BlockType block in blocks)
             {
-                ((GameObject) block).Draw(sb);
+                base.Width += block.Width;
             }
         }
 
-    /// <summary>
-    /// Gets the mods for which block we're currently above
-    /// </summary>
-    /// <param name="playerXPosition">current horizontal position of the player</param>
-    /// <returns>a set of mods in a list in the following format: health, education, happiness, wealth</returns>
+        /// <summary>
+        /// Gets the mods for which block we're currently above
+        /// </summary>
+        /// <param name="playerXPosition">current horizontal position of the player</param>
+        /// <returns>a set of mods in a list in the following format: health, education, happiness, wealth</returns>
         public override List<int>? GetCurrentMods(float playerXPosition)
         {
             foreach (BlockType block in blocks)
