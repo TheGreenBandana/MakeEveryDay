@@ -354,6 +354,9 @@ namespace MakeEveryDay.States
             Color binColor = new Color(1, 1, 1, (garbageCooldown == 0) ? 1 : garbageCooldown / garbageCooldownMax / 1.5f);
             garbageBin.Draw(sb, binColor, 0, Vector2.Zero, SpriteEffects.None, 1);
 
+            if (garbageCooldown != 0)
+                sb.DrawString(defaultText, ((garbageCooldownMax - garbageCooldown) / 1000).ToString().Substring(0, 3), new Vector2(Game1.ScreenSize.X - 120, 150), Color.Black);
+
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);
             sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.Black);
 
