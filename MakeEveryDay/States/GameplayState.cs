@@ -229,7 +229,7 @@ namespace MakeEveryDay.States
             }
             if (player.Animation.Texture != Player.Fall && !debug)
             {
-                Vector2 adjustVector = new Vector2(-lineSpeed * gameTime.ElapsedGameTime.Milliseconds / (150 - (player.Age + 1) * 5), 0);
+                Vector2 adjustVector = new Vector2(-lineSpeed * gameTime.ElapsedGameTime.Milliseconds / 150 + (player.Age + 1) / 50, 0);
                 for (int i = 0; i < theLine.Count; i++)
                 {
                     theLine[i].Position += adjustVector;

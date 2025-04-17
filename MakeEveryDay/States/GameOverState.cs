@@ -63,37 +63,37 @@ namespace MakeEveryDay.States
             }
 
             // Letters for score
-            if (upArrowChar1.IsPressed())
+            if (downArrowChar1.IsPressed())
             {
                 letter1++;
                 if (letter1 > 90)
                     letter1 = 65;
             }
-            else if (upArrowChar2.IsPressed())
+            else if (downArrowChar2.IsPressed())
             {
                 letter2++;
                 if (letter2 > 90)
                     letter2 = 65;
             }
-            else if (upArrowChar3.IsPressed())
+            else if (downArrowChar3.IsPressed())
             {
                 letter3++;
                 if (letter3 > 90)
                     letter3 = 65;
             }
-            else if (downArrowChar1.IsPressed())
+            else if (upArrowChar1.IsPressed())
             {
                 letter1--;
                 if (letter1 < 65)
                     letter1 = 90;
             }
-            else if (downArrowChar2.IsPressed())
+            else if (upArrowChar2.IsPressed())
             {
                 letter2--;
                 if (letter2 < 65)
                     letter2 = 90;
             }
-            else if (downArrowChar3.IsPressed())
+            else if (upArrowChar3.IsPressed())
             {
                 letter3--;
                 if (letter3 < 65)
@@ -115,7 +115,7 @@ namespace MakeEveryDay.States
                 Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 3, SpriteEffects.None, 0);
             exitButton.DrawUnscaled(sb);
 
-            upArrowChar1.DrawUnscaled(sb);
+            // Drawing buttons - mostly the same thing with different positions and rotations
             sb.Draw(arrowButtonTexture, upArrowChar1.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
             sb.Draw(arrowButtonTexture, upArrowChar2.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
             sb.Draw(arrowButtonTexture, upArrowChar3.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
@@ -123,6 +123,7 @@ namespace MakeEveryDay.States
             sb.Draw(arrowButtonTexture, downArrowChar2.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
             sb.Draw(arrowButtonTexture, downArrowChar3.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
 
+            // Drawing the letters, which correspond to the buttons
             sb.DrawString(GameplayState.defaultText, ((char)letter1).ToString(), upArrowChar1.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter1).ToString()).Y, SpriteEffects.None, 0);
             sb.DrawString(GameplayState.defaultText, ((char)letter2).ToString(), upArrowChar2.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter2).ToString()).Y, SpriteEffects.None, 0);
             sb.DrawString(GameplayState.defaultText, ((char)letter3).ToString(), upArrowChar3.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter3).ToString()).Y, SpriteEffects.None, 0);

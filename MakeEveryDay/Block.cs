@@ -183,12 +183,35 @@ namespace MakeEveryDay
                 float scaleFactor = Game1.Width / Game1.ScreenSize.X * 1.5f;
                 int totalIcons = 0;
                 foreach (int value in statArrows)
-                    totalIcons += Math.Abs(value);
-                while (storedIconSize.X * totalIcons + IconSize.X * 4 > Width && storedIconSize.X >= 2)
+                    totalIcons += Math.Abs(value) + 1;
+                while (storedIconSize.X * totalIcons > Width / scaleFactor * 1.5f && storedIconSize.X >= 5)
                     storedIconSize.X--;
                 return mouseHovering ? new Point((int)(storedIconSize.X * (scaleFactor > 1 ? scaleFactor : 1)), (int)(storedIconSize.Y * (scaleFactor > 1 ? scaleFactor : 1))) : storedIconSize;
             }
         }
+
+        public float TotalInfoSize
+        {
+            get
+            {
+                float scaleFactor = Game1.Width / Game1.ScreenSize.X;
+                float totalSize = 0;
+                int count = 0;
+                foreach (int value in statArrows)
+                {
+                    totalSize += Math.Abs(value) * ArrowSize.X;
+                    if (value != 0)
+                    {
+                        totalSize += iconSize.X;
+                        count++;
+                        if (count > 1)
+                            totalSize += iconSize.X;
+                    }
+                }
+                return totalSize;
+            }
+        }
+
         // Constructors
 
         /// <summary>
@@ -384,7 +407,7 @@ namespace MakeEveryDay
 
             // Draw the icons
 
-            float nextX = 0;
+            float nextX = (Width - TotalInfoSize) / 2 / (mouseHovering && scaleFactor > 2f/3f ? 2f/3f : scaleFactor);
 
             for (int i = 0; i < statIcons.Length; i++)
             {
@@ -495,7 +518,8 @@ namespace MakeEveryDay
                     }
                     break;
             }
-            
+            nextX += IconSize.X;
+
         }
 
         /// <summary>

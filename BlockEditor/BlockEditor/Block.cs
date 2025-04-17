@@ -62,7 +62,7 @@ namespace BlockEditor
         /// <returns>The string of the block.</returns>
         public override string ToString()
         {
-            return $"{name}|{width}|{color.ToArgb()}|{healthMod}|{eduMod}|{happyMod}|{wealthMod}|" +
+            return $"{name}|{width}|{color.ToArgb()}|{healthMod}|{happyMod}|{eduMod}|{wealthMod}|" +
                 $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}";
         }
     }

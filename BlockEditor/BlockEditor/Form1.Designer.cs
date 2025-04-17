@@ -233,7 +233,7 @@
             label17.AutoSize = true;
             label17.Location = new Point(261, 186);
             label17.Name = "label17";
-            label17.Size = new Size(54, 15);
+            label17.Size = new Size(53, 15);
             label17.TabIndex = 33;
             label17.Text = "Age Max";
             // 
@@ -279,7 +279,7 @@
             label13.AutoSize = true;
             label13.Location = new Point(253, 150);
             label13.Name = "label13";
-            label13.Size = new Size(70, 15);
+            label13.Size = new Size(69, 15);
             label13.TabIndex = 29;
             label13.Text = "Wealth Max";
             // 
@@ -297,7 +297,7 @@
             label14.AutoSize = true;
             label14.Location = new Point(254, 114);
             label14.Name = "label14";
-            label14.Size = new Size(68, 15);
+            label14.Size = new Size(67, 15);
             label14.TabIndex = 27;
             label14.Text = "Happy Max";
             // 
@@ -351,7 +351,7 @@
             label9.AutoSize = true;
             label9.Location = new Point(261, 76);
             label9.Name = "label9";
-            label9.Size = new Size(53, 15);
+            label9.Size = new Size(52, 15);
             label9.TabIndex = 21;
             label9.Text = "Edu Max";
             // 
@@ -369,7 +369,7 @@
             label10.AutoSize = true;
             label10.Location = new Point(254, 38);
             label10.Name = "label10";
-            label10.Size = new Size(68, 15);
+            label10.Size = new Size(67, 15);
             label10.TabIndex = 19;
             label10.Text = "Health Max";
             // 
