@@ -53,6 +53,9 @@ namespace MakeEveryDay.States
 
         private float positionToCheckStats;
 
+        private float garbageCooldown;
+        private float garbageCooldownMax;
+
         private GameObject garbageBin;
 
         //private List<BlockGroup> blockGroups;
@@ -159,6 +162,9 @@ namespace MakeEveryDay.States
 
             garbageBin = new(garbageTexture, new Rectangle(Point.Zero, new Point(100, 100)));
 
+            // 10000 milliseconds == 10 seconds
+            garbageCooldownMax = 10000;
+            garbageCooldown = 0;
             spawnTimer = 0;
         }
 
@@ -270,10 +276,12 @@ namespace MakeEveryDay.States
                         }
                         else if (activeBlocks[i].ScaledRectangle.X + activeBlocks[i].ScaledRectangle.Width >= garbageBin.ScaledRectangle.X
                             && activeBlocks[i].ScaledRectangle.Y <= garbageBin.ScaledRectangle.Y + garbageBin.ScaledRectangle.Height
-                            && activeBlocks[i].WasJustHeld)
+                            && activeBlocks[i].WasJustHeld
+                            && garbageCooldown == 0)
                         {
                             activeBlocks.RemoveAt(i);
                             grabbingBlock = false;
+                            garbageCooldown = 1;
                             i--;
                         }
                     }
@@ -290,6 +298,13 @@ namespace MakeEveryDay.States
                 garbageBin.Position = new Vector2(Game1.Width - garbageBin.Size.X * 1.5f,
                     garbageBin.Size.Y * 1.25f - .75f * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X)
                     );
+
+                if (garbageCooldown != 0)
+                {
+                    garbageCooldown += gameTime.ElapsedGameTime.Milliseconds;
+                    if (garbageCooldown >= garbageCooldownMax)
+                        garbageCooldown = 0;
+                }
             }
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)
@@ -336,7 +351,8 @@ namespace MakeEveryDay.States
                 icon.DrawUnscaled(sb);
             }
 
-            garbageBin.Draw(sb);
+            Color binColor = new Color(1, 1, 1, (garbageCooldown == 0) ? 1 : garbageCooldown / garbageCooldownMax / 1.5f);
+            garbageBin.Draw(sb, binColor, 0, Vector2.Zero, SpriteEffects.None, 1);
 
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);
             sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.Black);
