@@ -19,6 +19,8 @@ namespace MakeEveryDay.States
     {
         internal static SpriteFont defaultText = default;
 
+        internal static Texture2D garbageTexture;
+
         private static Vector2 defaultPlayerPosition = new Vector2(100, 100);
 
         private static Texture2D defaultImage;
@@ -50,6 +52,8 @@ namespace MakeEveryDay.States
         private static bool grabbingBlock;
 
         private float positionToCheckStats;
+
+        private GameObject garbageBin;
 
         //private List<BlockGroup> blockGroups;
 
@@ -152,6 +156,8 @@ namespace MakeEveryDay.States
                 + new Point(statusBars[2].Width + 7, statusBars[2].Height / 4), new Point(statusBars[2].Height / 2, statusBars[2].Height / 2)));
             statIcons[3] = new GameObject(Block.statIcons[3], new Rectangle(statusBars[3].Position.ToPoint()
                 + new Point(statusBars[3].Width + 7, statusBars[3].Height / 4), new Point(statusBars[3].Height / 2, statusBars[3].Height / 2)));
+
+            garbageBin = new(garbageTexture, new Rectangle(Point.Zero, new Point(100, 100)));
 
             spawnTimer = 0;
         }
@@ -262,6 +268,14 @@ namespace MakeEveryDay.States
                             grabbingBlock = false;
                             i--;
                         }
+                        else if (activeBlocks[i].ScaledRectangle.X + activeBlocks[i].ScaledRectangle.Width >= garbageBin.ScaledRectangle.X
+                            && activeBlocks[i].ScaledRectangle.Y <= garbageBin.ScaledRectangle.Y + garbageBin.ScaledRectangle.Height
+                            && activeBlocks[i].WasJustHeld)
+                        {
+                            activeBlocks.RemoveAt(i);
+                            grabbingBlock = false;
+                            i--;
+                        }
                     }
                 }
 
@@ -271,6 +285,11 @@ namespace MakeEveryDay.States
                     Game1.Width = Math.Clamp(Game1.Width - 1, 100, 3500);
 
                 positionToCheckStats = 80 + (Game1.Width - 1000) * .0675f;
+
+                garbageBin.Size = new((int)(100 * scaleFactor), (int)(100 * scaleFactor));
+                garbageBin.Position = new Vector2(Game1.Width - garbageBin.Size.X * 1.5f,
+                    garbageBin.Size.Y * 1.25f - .75f * (Game1.Width - Game1.ScreenSize.X) * (Game1.ScreenSize.Y / Game1.ScreenSize.X)
+                    );
             }
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)
@@ -316,6 +335,8 @@ namespace MakeEveryDay.States
             {
                 icon.DrawUnscaled(sb);
             }
+
+            garbageBin.Draw(sb);
 
             sb.DrawString(defaultText, "Age: " + player.Age.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.2f), Color.Black);
             sb.DrawString(defaultText, "Score: " + score.ToString(), new Vector2(Game1.ScreenSize.X - 50 - defaultText.MeasureString("Score: " + score.ToString()).X, 50), Color.Black);

@@ -117,6 +117,7 @@ namespace MakeEveryDay
 
             // Gameplay-state content intitialization
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
+            GameplayState.garbageTexture = Content.Load<Texture2D>("GarbageCan");
 
             // Game-Over-State content initialization
             GameOverState.arrowButtonTexture = Content.Load<Texture2D>("ArrowBlock");
