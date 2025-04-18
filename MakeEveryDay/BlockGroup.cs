@@ -15,6 +15,10 @@ namespace MakeEveryDay
 
         private string name;
         private List<BlockType> blocks;
+        private int healthMod;
+        private int eduMod;
+        private int moneyMod;
+        private int happyMod;
 
         //Properties
         public List<BlockType> Blocks
@@ -36,11 +40,14 @@ namespace MakeEveryDay
         /// Add a block to the block group
         /// </summary>
         /// <param name="block"></param>
-        public void Add(BlockType block)
+        public void Add(Block block)
         {
             blocks.Add(block);
+            healthMod += block.HealthMod;
+            eduMod += block.EducationMod;
+            moneyMod += block.WealthMod;
+            happyMod += block.HappyMod;
         }
-
 
         
         internal override void Draw(SpriteBatch sb)
@@ -111,5 +118,10 @@ namespace MakeEveryDay
             }
             return null;
         }
+
+
+
+        //Code stolen from Block below:
+
     }
 }
