@@ -244,6 +244,42 @@
 /processorParam:TextureFormat=Color
 /build:Quitbutton.png
 
+#begin Sounds/CanoeSongBackupCut.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/CanoeSongBackupCut.wav
+
+#begin Sounds/MouseClick1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MouseClick1.wav
+
+#begin Sounds/MouseClick2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MouseClick2.wav
+
+#begin Sounds/Thud.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Thud.wav
+
+#begin Sounds/WilhelmScream.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/WilhelmScream.wav
+
+#begin Sounds/WilhelmScreamSlower.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/WilhelmScreamSlower.wav
+
 #begin Status Bar.png
 /importer:TextureImporter
 /processor:TextureProcessor

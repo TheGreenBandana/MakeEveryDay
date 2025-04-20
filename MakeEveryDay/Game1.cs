@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using SharpDX.Direct3D9;
 
 namespace MakeEveryDay
 {
@@ -133,6 +136,15 @@ namespace MakeEveryDay
             // Block Group class content initialization
             BlockGroup.nameFont = Content.Load<SpriteFont>("Times24");
 
+            // Sound Effect initialization
+            SoundsUtils.clickedBlockSound = Content.Load<SoundEffect>("Sounds/MouseClick1");
+            SoundsUtils.connectedBlockSound = Content.Load<SoundEffect>("Sounds/MouseClick2");
+
+            SoundsUtils.screamSound = Content.Load<SoundEffect>("Sounds/WilhelmScreamSlower");
+            SoundsUtils.thudSound = Content.Load<SoundEffect>("Sounds/Thud");
+
+            SoundsUtils.backgroundMusic = Content.Load<SoundEffect>("Sounds/CanoeSongBackupCut").CreateInstance();
+
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();
         }
@@ -158,6 +170,9 @@ namespace MakeEveryDay
             {
                 toggleKyle = !toggleKyle;
             }
+
+            // This just plays the click/unclick sounds as necessary
+            MouseUtils.Update();
 
             // DON'T DELETE THESE DON'T DELETE THESE
             MouseUtils.PreviousState = MouseUtils.CurrentState;

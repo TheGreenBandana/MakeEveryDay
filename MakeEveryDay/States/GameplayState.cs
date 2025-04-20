@@ -92,6 +92,8 @@ namespace MakeEveryDay.States
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
 
+            SoundsUtils.InitializeBackgroundMusic();
+
             // Reading in blocks
             allBlocks.Clear();
             StreamReader reader = null;
@@ -170,6 +172,7 @@ namespace MakeEveryDay.States
 
         public override void Exit()
         {
+            SoundsUtils.backgroundMusic.Stop();
             base.Exit();
         }
 

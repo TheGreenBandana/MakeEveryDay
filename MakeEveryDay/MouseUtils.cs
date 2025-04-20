@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MakeEveryDay.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -102,5 +103,13 @@ namespace MakeEveryDay
         {
             return realMousePositon + new Point(0, Cursors.Arrow.Size.Height / 4);
         }
+
+
+        public static void Update()
+        {
+            if (IsJustPressed()) SoundsUtils.clickedBlockSound.Play();
+            if (IsJustReleased()) SoundsUtils.connectedBlockSound.Play();
+        }
+
     }
 }
