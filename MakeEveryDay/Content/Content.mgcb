@@ -280,6 +280,18 @@
 /processorParam:Quality=Best
 /build:Sounds/MouseClick2.wav
 
+#begin Sounds/PaperCrumple.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PaperCrumple.wav
+
+#begin Sounds/PaperCrumple2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PaperCrumple2.wav
+
 #begin Sounds/Thud.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

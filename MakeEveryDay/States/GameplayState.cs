@@ -356,7 +356,7 @@ namespace MakeEveryDay.States
                             theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
                             grabbingBlock = false;
                             i--;
-                            SoundsUtils.blockSnapSound.Play();
+                            SoundsUtils.blockSnapSound.Play(SoundsUtils.soundEffectsVolume,0,0);
                         }
                         else if (activeBlocks[i].ScaledRectangle.X + activeBlocks[i].ScaledRectangle.Width >= garbageBin.ScaledRectangle.X
                             && activeBlocks[i].ScaledRectangle.Y <= garbageBin.ScaledRectangle.Y + garbageBin.ScaledRectangle.Height
@@ -367,6 +367,7 @@ namespace MakeEveryDay.States
                             grabbingBlock = false;
                             garbageCooldown = 1;
                             i--;
+                            SoundsUtils.paperCrumpleSound.Play((float)Math.Clamp(SoundsUtils.soundEffectsVolume, 0 ,1), 0, 0);
                         }
                     }
                 }
