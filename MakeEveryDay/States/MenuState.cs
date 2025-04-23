@@ -156,7 +156,6 @@ namespace MakeEveryDay.States
                 return new GameplayState(true);
             }
 
-
             { // Volume adjusters
                 if (upMusicVol.IsPressed())
                 {
@@ -184,12 +183,11 @@ namespace MakeEveryDay.States
                 }
             }
 
-
-
-
-
-
-
+            if (MouseUtils.KeyJustPressed(Keys.G))
+            {
+                GameOverState.deathMessage = "DEBUG MODE ACTIVATED. WELCOME TO HELL MORTAL";
+                return new GameOverState(0);
+            }
 
             return null;
         }
@@ -203,9 +201,6 @@ namespace MakeEveryDay.States
             debugButton.Draw(sb);
             quitButton.Draw(sb);
             titleScreen.Draw(sb);
-
-            sb.DrawString(titleFont, "High Scores:", new Vector2(15, 15), Color.Black, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
-            sb.DrawString(titleFont, scores, new Vector2(15, 15 + titleFont.MeasureString("High Scores:").Y * 1.5f), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
             upMusicVol.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
             downMusicVol.Draw(sb);
@@ -246,6 +241,9 @@ namespace MakeEveryDay.States
                 3,
                 SpriteEffects.None,
                 0);
+            sb.DrawString(titleFont, "High Scores:", new Vector2(15, 60), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
+            sb.DrawString(titleFont, scores, new Vector2(15, 60 + titleFont.MeasureString("High Scores:").Y * .45f), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
+
         }
     }
 }

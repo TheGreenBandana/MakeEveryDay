@@ -62,6 +62,14 @@ namespace MakeEveryDay.States
 
         private GameObject garbageBin;
 
+        private Color backgroundColor;
+        private int backgroundTimer;
+        private int backgroundCycle;
+        private int backgroundIndex;
+        private bool[] lowStats;
+        private bool forwardBackground;
+        private int backgroundIntensity;
+
         //private List<BlockGroup> blockGroups;
 
         private BlockType LastBlockOnLine
@@ -80,6 +88,13 @@ namespace MakeEveryDay.States
         public override void Enter()
         {
             gameOver = false;
+
+            backgroundColor = Color.White;
+            backgroundCycle = 500;
+            backgroundIndex = 0;
+            lowStats = new bool[4] { false, false, false, false };
+            backgroundTimer = 0;
+            backgroundIntensity = 65;
 
             positionToCheckStats = 80;
 
@@ -420,35 +435,14 @@ namespace MakeEveryDay.States
                 bar.Update();
             }
 
+            BackgroundHelper(gameTime);
+
             return null;
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            int R = 255;
-            int G = 255;
-            int B = 255;
-            if(player.Health <= 20)
-            {
-                G -= (20 + (20 - player.Health)) * 5;
-                B -= (20 + (20 - player.Health)) * 5;
-            }
-            if (player.Wealth <= 20)
-            {
-                R -= (20 + (20 - player.Wealth)) * 5;
-                B -= (20 + (20 - player.Wealth)) * 5;
-            }
-            if (player.Happiness <= 20)
-            {
-                R -= (20 + (20 - player.Happiness)) * 5;
-                G -= (20 + (20 - player.Happiness)) * 5;
-            }
-            if (player.Education <= 20)
-            {
-                B -= (20 + (20-player.Education)) * 5;
-            }
-
-            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), new Color(R, G, B));
+            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), backgroundColor);
 
             player.Draw(sb);
 
@@ -489,7 +483,7 @@ namespace MakeEveryDay.States
             {
                 sb.DrawString(defaultText, "Width: " + Game1.Width.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.8f), Color.Black);
                 sb.DrawString(defaultText, "Target Width: " + TargetWidth.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.2f), Color.Black);
-                // sb.DrawString(defaultText, current.DeathMessage, statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.6f), Color.Black);
+                sb.DrawString(defaultText, $"{lowStats[0]},{lowStats[1]},{lowStats[2]},{lowStats[3]} || {backgroundTimer}/{backgroundCycle} || {backgroundIndex}", statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.6f), Color.Black);
             }
         }
 
@@ -639,6 +633,98 @@ namespace MakeEveryDay.States
         private void UpdateScore()
         {
             score = (int)(totalWidth / 1000 * (player.Health * 5 + player.Happiness * 3 + player.Education * 3 + player.Wealth * 3));
+        }
+
+        /// <summary>
+        /// Draws the background and how it pulses with low stats.
+        /// </summary>
+        /// <param name="sb">The spritebatch.</param>
+        private void BackgroundHelper(GameTime gameTime)
+        {
+            bool good = true;
+            // Red >> Lower green and blue
+            if (player.Health <= 20)
+            {
+                good = false;
+                lowStats[0] = true;
+            }
+            else
+                lowStats[0] = false;
+            // Blue >> lower red and green
+            if (player.Happiness <= 20)
+            {
+                good = false;
+                lowStats[1] = true;
+            }
+            else
+                lowStats[1] = false;
+            // Yellow >> Lower blue
+            if (player.Education <= 20)
+            {
+                good = false;
+                lowStats[2] = true;
+            }
+            else
+                lowStats[2] = false;
+            // Green >> lower red and blue
+            if (player.Wealth <= 20)
+            {
+                good = false;
+                lowStats[3] = true;
+            }
+            else
+                lowStats[3] = false;
+
+            if (!good)
+            {
+                backgroundTimer += gameTime.ElapsedGameTime.Milliseconds;
+                if (backgroundTimer > backgroundCycle)
+                {
+                    backgroundTimer = 0;
+                    forwardBackground = !forwardBackground;
+                    if (forwardBackground)
+                    {
+                        backgroundIndex++;
+                        if (backgroundIndex > 3)
+                            backgroundIndex = 0;
+                        int count = 0;
+                        while (!lowStats[backgroundIndex] && count < 3)
+                        {
+                            backgroundIndex++;
+                            if (backgroundIndex > 3)
+                                backgroundIndex = 0;
+                            count++;
+                        }
+                    }
+                }
+
+                int rMod = ((lowStats[1] || lowStats[3]) && (backgroundIndex == 1 || backgroundIndex == 3)) ? 1 : 0;
+                int gMod = ((lowStats[0] || lowStats[1]) && (backgroundIndex == 0 || backgroundIndex == 1)) ? 1 : 0;
+                int bMod = ((lowStats[0] || lowStats[2] || lowStats[3]) && backgroundIndex != 1) ? 1 : 0;
+
+                if (forwardBackground)
+                {
+                    backgroundColor = new Color(
+                        255 - (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity * rMod),
+                        255 - (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity * gMod),
+                        255 - (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity * bMod)
+                    );
+                }
+                else
+                {
+                    backgroundColor = new Color(
+                        rMod == 0 ? 255 : 255 - backgroundIntensity + (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity),
+                        gMod == 0 ? 255 : 255 - backgroundIntensity + (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity),
+                        bMod == 0 ? 255 : 255 - backgroundIntensity + (int)(backgroundTimer / (float)backgroundCycle * backgroundIntensity)
+                    );
+                }
+            }
+            else
+            {
+                backgroundColor = Color.White;
+                backgroundTimer = 0;
+                backgroundIndex = 0;
+            }
         }
     }
 }
