@@ -124,15 +124,16 @@ namespace MakeEveryDay.States
             sb.DrawString(GameplayState.defaultText, "Your score: " + score.ToString(), new Vector2(
                 Game1.ScreenSize.X / 3 + 200,
                 Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 3, SpriteEffects.None, 0);
-            exitButton.DrawUnscaled(sb);
+            exitButton.Draw(sb);
 
             // Drawing buttons - mostly the same thing with different positions and rotations
-            sb.Draw(arrowButtonTexture, upArrowChar1.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
-            sb.Draw(arrowButtonTexture, upArrowChar2.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
-            sb.Draw(arrowButtonTexture, upArrowChar3.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
-            sb.Draw(arrowButtonTexture, downArrowChar1.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
-            sb.Draw(arrowButtonTexture, downArrowChar2.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
-            sb.Draw(arrowButtonTexture, downArrowChar3.AsRectangle, new Rectangle(0, 0, arrowButtonTexture.Width, arrowButtonTexture.Height), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+
+            upArrowChar1.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            upArrowChar2.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            upArrowChar3.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            downArrowChar1.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.None, null);
+            downArrowChar2.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.None, null);
+            downArrowChar3.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.None, null);
 
             // Drawing the letters, which correspond to the buttons
             sb.DrawString(GameplayState.defaultText, ((char)letter1).ToString(), upArrowChar1.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter1).ToString()).Y, SpriteEffects.None, 0);

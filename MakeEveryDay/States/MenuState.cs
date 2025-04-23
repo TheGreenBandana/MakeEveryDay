@@ -25,7 +25,7 @@ namespace MakeEveryDay.States
         internal static Texture2D titleTexture;
         internal static Texture2D debugButtonTexture;
 
-        private Button titleScreen;
+        private GameObject titleScreen;
         private Button playButton;
 
         private Button blockMakerButton;
@@ -45,7 +45,7 @@ namespace MakeEveryDay.States
             playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
             debugButton = new Button(debugButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
             quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
-            titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
+            titleScreen = new GameObject(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 600, (int)Game1.ScreenSize.Y / 2 - 500, 1200, 450));
 
             Game1.Width = 1920;
 
