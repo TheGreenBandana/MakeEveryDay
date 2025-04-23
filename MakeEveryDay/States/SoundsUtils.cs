@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 
 namespace MakeEveryDay.States
 {
@@ -19,6 +20,7 @@ namespace MakeEveryDay.States
         public static SoundEffect thudSound;
         public static SoundEffect screamSound;
         public static SoundEffect blockSnapSound;
+        public static SoundEffect paperCrumpleSound;
 
         public static SoundEffectInstance backgroundMusic;
         public static SoundEffectInstance menuMusic;

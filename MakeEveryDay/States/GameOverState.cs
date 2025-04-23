@@ -27,6 +27,7 @@ namespace MakeEveryDay.States
         private Button downArrowChar3;
 
         internal static Texture2D arrowButtonTexture;
+        internal static string deathMessage;
 
         private int letter1;
         private int letter2;
@@ -72,39 +73,39 @@ namespace MakeEveryDay.States
             // Letters for score
             if (downArrowChar1.IsPressed())
             {
-                letter1++;
-                if (letter1 > 90)
-                    letter1 = 65;
-            }
-            else if (downArrowChar2.IsPressed())
-            {
-                letter2++;
-                if (letter2 > 90)
-                    letter2 = 65;
-            }
-            else if (downArrowChar3.IsPressed())
-            {
-                letter3++;
-                if (letter3 > 90)
-                    letter3 = 65;
-            }
-            else if (upArrowChar1.IsPressed())
-            {
                 letter1--;
                 if (letter1 < 65)
                     letter1 = 90;
             }
-            else if (upArrowChar2.IsPressed())
+            else if (downArrowChar2.IsPressed())
             {
                 letter2--;
                 if (letter2 < 65)
                     letter2 = 90;
             }
-            else if (upArrowChar3.IsPressed())
+            else if (downArrowChar3.IsPressed())
             {
                 letter3--;
                 if (letter3 < 65)
                     letter3 = 90;
+            }
+            else if (upArrowChar1.IsPressed())
+            {
+                letter1++;
+                if (letter1 > 90)
+                    letter1 = 65;
+            }
+            else if (upArrowChar2.IsPressed())
+            {
+                letter2++;
+                if (letter2 > 90)
+                    letter2 = 65;
+            }
+            else if (upArrowChar3.IsPressed())
+            {
+                letter3++;
+                if (letter3 > 90)
+                    letter3 = 65;
             }
 
             return null;
@@ -116,7 +117,10 @@ namespace MakeEveryDay.States
 
             sb.DrawString(GameplayState.defaultText, "GAME OVER", new Vector2(
                 Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString("GAME OVER").X * 2.5f,
-                Game1.ScreenSize.Y / 5), Color.White, 0, Vector2.Zero, 5, SpriteEffects.None, 0);
+                Game1.ScreenSize.Y / 10), Color.White, 0, Vector2.Zero, 5, SpriteEffects.None, 0);
+            sb.DrawString(GameplayState.defaultText, deathMessage, new Vector2(
+                Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString(deathMessage).X,
+                Game1.ScreenSize.Y / 3), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
             sb.DrawString(GameplayState.defaultText, "Your score: " + score.ToString(), new Vector2(
                 Game1.ScreenSize.X / 3 + 200,
                 Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 3, SpriteEffects.None, 0);

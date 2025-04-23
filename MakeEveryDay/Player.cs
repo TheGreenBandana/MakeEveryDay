@@ -46,7 +46,6 @@ namespace MakeEveryDay
         {
             Animation = new AnimationState(Trip, 18, false, 12);
             SoundsUtils.thudSound.Play(volume:SoundsUtils.soundEffectsVolume, 0,0);
-            //will eventually switch the animation being used to a tripping and falling animation
         }
 
         internal override void Update(GameTime gameTime)
