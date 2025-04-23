@@ -56,14 +56,16 @@ namespace MakeEveryDay.States
             quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
             titleScreen = new GameObject(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 600, (int)Game1.ScreenSize.Y / 2 - 500, 1200, 450));
 
-            int hOffset = 6;
+            int hOffset = 10;
+            int vOffset = 200;
             int buttonSize = 50;
-            upMusicVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset ), (int)(2 * Game1.ScreenSize.Y / 3), buttonSize, buttonSize));
-            downMusicVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 +5), buttonSize, buttonSize));
-            upSFXVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
-            downSFXVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
-            upClickVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
-            downClickVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
+
+            upMusicVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize) - vOffset,        buttonSize, buttonSize));
+            downMusicVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*2) - vOffset,      buttonSize, buttonSize));
+            upSFXVol =      new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*3.5) - vOffset,    buttonSize, buttonSize));
+            downSFXVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*4.5) - vOffset,    buttonSize, buttonSize));
+            upClickVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*6) - vOffset,      buttonSize, buttonSize));
+            downClickVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*7) - vOffset,      buttonSize, buttonSize));
 
             Game1.Width = 1920;
 
@@ -153,6 +155,42 @@ namespace MakeEveryDay.States
             {
                 return new GameplayState(true);
             }
+
+
+            { // Volume adjusters
+                if (upMusicVol.IsPressed())
+                {
+                    SoundsUtils.MusicVolume += .1f;
+                }
+                if (downMusicVol.IsPressed())
+                {
+                    SoundsUtils.MusicVolume -= .1f;
+                }
+                if (upSFXVol.IsPressed())
+                {
+                    SoundsUtils.SFXVolume += .1f;
+                }
+                if (downSFXVol.IsPressed())
+                {
+                    SoundsUtils.SFXVolume -= .1f;
+                }
+                if (upClickVol.IsPressed())
+                {
+                    SoundsUtils.ClickVolume += .1f;
+                }
+                if (downClickVol.IsPressed())
+                {
+                    SoundsUtils.ClickVolume -= .1f;
+                }
+            }
+
+
+
+
+
+
+
+
             return null;
         }
 
@@ -168,6 +206,46 @@ namespace MakeEveryDay.States
 
             sb.DrawString(titleFont, "High Scores:", new Vector2(15, 15), Color.Black, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
             sb.DrawString(titleFont, scores, new Vector2(15, 15 + titleFont.MeasureString("High Scores:").Y * 1.5f), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+
+            upMusicVol.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            downMusicVol.Draw(sb);
+            upSFXVol.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            downSFXVol.Draw(sb);
+            upClickVol.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.FlipVertically, null);
+            downClickVol.Draw(sb);
+
+            sb.DrawString(
+                DefaultGameFont,
+                ((int)((SoundsUtils.MusicVolume * 10))).ToString(),
+                new Vector2(upMusicVol.Right + upMusicVol.Size.X, upMusicVol.Top),
+                Color.Black,
+                0,
+                Vector2.Zero,
+                3,
+                SpriteEffects.None,
+                0);
+
+            sb.DrawString(
+                DefaultGameFont,
+                ((int)((SoundsUtils.SFXVolume * 10))).ToString(),
+                new Vector2(upSFXVol.Right + upMusicVol.Size.X, upSFXVol.Top),
+                Color.Black,
+                0,
+                Vector2.Zero,
+                3,
+                SpriteEffects.None,
+                0);
+
+            sb.DrawString(
+                DefaultGameFont,
+                ((int)((SoundsUtils.ClickVolume * 10))).ToString(),
+                new Vector2(upClickVol.Right + upMusicVol.Size.X, upClickVol.Top),
+                Color.Black,
+                0,
+                Vector2.Zero,
+                3,
+                SpriteEffects.None,
+                0);
         }
     }
 }

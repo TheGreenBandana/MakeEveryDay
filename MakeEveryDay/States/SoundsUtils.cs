@@ -34,8 +34,24 @@ namespace MakeEveryDay.States
         {
             get { return musicVolume; }
             set { 
-                musicVolume = value;
+                musicVolume = Math.Clamp(value, 0f, 1f);
                 InitializeBackgroundMusic();
+            }
+        }
+        public static float SFXVolume
+        {
+            get { return soundEffectsVolume; }
+            set
+            {
+                soundEffectsVolume = Math.Clamp(value, 0f, 1f);
+            }
+        }
+        public static float ClickVolume
+        {
+            get { return mouseClickVolume; }
+            set
+            {
+                mouseClickVolume = Math.Clamp(value, 0f, 1f);
             }
         }
 
