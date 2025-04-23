@@ -27,6 +27,8 @@ namespace MakeEveryDay.States
         private Button downArrowChar3;
 
         internal static Texture2D arrowButtonTexture;
+        public static SpriteFont gameOverFont;
+        public static SpriteFont gameOverSubFont;
         public static string deathMessage;
 
         private int letter1;
@@ -115,15 +117,15 @@ namespace MakeEveryDay.States
         {
             sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.PaleVioletRed);
 
-            sb.DrawString(GameplayState.defaultText, "GAME OVER", new Vector2(
-                Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString("GAME OVER").X * 2.5f,
-                Game1.ScreenSize.Y / 10), Color.White, 0, Vector2.Zero, 5, SpriteEffects.None, 0);
-            sb.DrawString(GameplayState.defaultText, deathMessage, new Vector2(
-                Game1.ScreenSize.X / 2 - GameplayState.defaultText.MeasureString(deathMessage).X,
-                Game1.ScreenSize.Y / 3), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
-            sb.DrawString(GameplayState.defaultText, "Your score: " + score.ToString(), new Vector2(
-                Game1.ScreenSize.X / 3 + 200,
-                Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 3, SpriteEffects.None, 0);
+            sb.DrawString(gameOverFont, "GAME OVER", new Vector2(
+                Game1.ScreenSize.X / 2 - gameOverFont.MeasureString("GAME OVER").X / 2,
+                Game1.ScreenSize.Y / 10), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.DrawString(gameOverSubFont, deathMessage, new Vector2(
+                Game1.ScreenSize.X / 2 - gameOverSubFont.MeasureString(deathMessage).X / 2,
+                Game1.ScreenSize.Y / 4), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.DrawString(gameOverSubFont, "Your score: " + score.ToString(), new Vector2(
+                Game1.ScreenSize.X / 2 + 200,
+                Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             exitButton.Draw(sb);
 
             // Drawing buttons - mostly the same thing with different positions and rotations
@@ -136,9 +138,17 @@ namespace MakeEveryDay.States
             downArrowChar3.Draw(sb, null, 0, Vector2.Zero, SpriteEffects.None, null);
 
             // Drawing the letters, which correspond to the buttons
-            sb.DrawString(GameplayState.defaultText, ((char)letter1).ToString(), upArrowChar1.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter1).ToString()).Y, SpriteEffects.None, 0);
-            sb.DrawString(GameplayState.defaultText, ((char)letter2).ToString(), upArrowChar2.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter2).ToString()).Y, SpriteEffects.None, 0);
-            sb.DrawString(GameplayState.defaultText, ((char)letter3).ToString(), upArrowChar3.Position + new Vector2(15, 100), Color.White, 0, Vector2.Zero, 100 / GameplayState.defaultText.MeasureString(((char)letter3).ToString()).Y, SpriteEffects.None, 0);
+            sb.DrawString(gameOverSubFont, ((char)letter1).ToString(), 
+                upArrowChar1.Position + new Vector2(15, 100), Color.White, 0, 
+                Vector2.Zero, 100 / gameOverSubFont.MeasureString(((char)letter1).ToString()).Y, SpriteEffects.None, 0);
+
+            sb.DrawString(gameOverSubFont, ((char)letter2).ToString(), 
+                upArrowChar2.Position + new Vector2(15, 100), Color.White, 0, 
+                Vector2.Zero, 100 / gameOverSubFont.MeasureString(((char)letter2).ToString()).Y, SpriteEffects.None, 0);
+
+            sb.DrawString(gameOverSubFont, ((char)letter3).ToString(), 
+                upArrowChar3.Position + new Vector2(15, 100), Color.White, 0, 
+                Vector2.Zero, 100 / gameOverSubFont.MeasureString(((char)letter3).ToString()).Y, SpriteEffects.None, 0);
         }
 
         /// <summary>
