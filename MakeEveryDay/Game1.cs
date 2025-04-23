@@ -142,9 +142,11 @@ namespace MakeEveryDay
 
             SoundsUtils.screamSound = Content.Load<SoundEffect>("Sounds/WilhelmScreamSlower");
             SoundsUtils.thudSound = Content.Load<SoundEffect>("Sounds/Thud");
+            SoundsUtils.blockSnapSound = Content.Load<SoundEffect>("Sounds/BlockSnap");
 
             SoundsUtils.backgroundMusic = Content.Load<SoundEffect>("Sounds/CanoeSongBackupCut").CreateInstance();
             SoundsUtils.menuMusic = Content.Load<SoundEffect>("MenuMusic").CreateInstance();
+            SoundsUtils.deathMusic = Content.Load<SoundEffect>("Sounds/DeathMusic").CreateInstance();
 
             SoundsUtils.InitializeBackgroundMusic();
 

@@ -18,13 +18,15 @@ namespace MakeEveryDay.States
         public static SoundEffect stepSound;
         public static SoundEffect thudSound;
         public static SoundEffect screamSound;
+        public static SoundEffect blockSnapSound;
 
         public static SoundEffectInstance backgroundMusic;
         public static SoundEffectInstance menuMusic;
+        public static SoundEffectInstance deathMusic;
 
-        public static float mouseClickVolume = .5f;
+        public static float mouseClickVolume = .4f;
         private static float musicVolume = .5f;
-        public static float soundEffectsVolume = .5f;
+        public static float soundEffectsVolume = .75f;
 
         public static float MusicVolume
         {
@@ -37,11 +39,14 @@ namespace MakeEveryDay.States
 
         public static void InitializeBackgroundMusic()
         {
-            backgroundMusic.IsLooped = true;
-            backgroundMusic.Volume = .2f * musicVolume;
-
             menuMusic.IsLooped = true;
-            menuMusic.Volume = .2f * musicVolume;
+            menuMusic.Volume = .7f * musicVolume;
+
+            backgroundMusic.IsLooped = true;
+            backgroundMusic.Volume = .5f * musicVolume;
+
+            deathMusic.IsLooped = true;
+            deathMusic.Volume = .8f * musicVolume;
 
         }
     }
