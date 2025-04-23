@@ -104,11 +104,13 @@ namespace MakeEveryDay
             return realMousePositon + new Point(0, Cursors.Arrow.Size.Height / 4);
         }
 
-
+        /// <summary>
+        /// Literally just for playing noises, called once in the update function of game1
+        /// </summary>
         public static void Update()
         {
-            if (IsJustPressed()) SoundsUtils.clickedBlockSound.Play();
-            if (IsJustReleased()) SoundsUtils.connectedBlockSound.Play();
+            if (IsJustPressed()) SoundsUtils.clickedBlockSound.Play(volume: SoundsUtils.mouseClickVolume, pitch: 0, 0);
+            if (IsJustReleased()) SoundsUtils.connectedBlockSound.Play(volume:SoundsUtils.mouseClickVolume, pitch: 0, 0);
         }
 
     }

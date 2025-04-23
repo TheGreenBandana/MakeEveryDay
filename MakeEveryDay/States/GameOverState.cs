@@ -52,6 +52,13 @@ namespace MakeEveryDay.States
             letter1 = 65;
             letter2 = 65;
             letter3 = 65;
+
+            SoundsUtils.deathMusic.Play();
+        }
+        public override void Exit()
+        {
+            SoundsUtils.deathMusic.Stop();
+            base.Exit();
         }
 
         public override State CustomUpdate(GameTime gameTime)

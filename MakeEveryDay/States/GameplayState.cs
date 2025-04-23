@@ -92,7 +92,7 @@ namespace MakeEveryDay.States
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
 
-            SoundsUtils.InitializeBackgroundMusic();
+            SoundsUtils.backgroundMusic.Play();
 
             // Reading in blocks
             allBlocks.Clear();
@@ -278,6 +278,7 @@ namespace MakeEveryDay.States
                             theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
                             grabbingBlock = false;
                             i--;
+                            SoundsUtils.blockSnapSound.Play();
                         }
                         else if (activeBlocks[i].ScaledRectangle.X + activeBlocks[i].ScaledRectangle.Width >= garbageBin.ScaledRectangle.X
                             && activeBlocks[i].ScaledRectangle.Y <= garbageBin.ScaledRectangle.Y + garbageBin.ScaledRectangle.Height

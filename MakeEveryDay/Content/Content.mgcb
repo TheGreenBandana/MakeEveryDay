@@ -208,6 +208,12 @@
 /processorParam:TextureFormat=Color
 /build:LilGuyRun.png
 
+#begin MenuMusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:MenuMusic.wav
+
 #begin paper.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -244,11 +250,23 @@
 /processorParam:TextureFormat=Color
 /build:Quitbutton.png
 
+#begin Sounds/BlockSnap.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/BlockSnap.wav
+
 #begin Sounds/CanoeSongBackupCut.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/CanoeSongBackupCut.wav
+
+#begin Sounds/DeathMusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/DeathMusic.wav
 
 #begin Sounds/MouseClick1.wav
 /importer:WavImporter
