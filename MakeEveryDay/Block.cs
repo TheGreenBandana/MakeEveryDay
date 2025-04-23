@@ -66,6 +66,7 @@ namespace MakeEveryDay
         }
         public bool MouseHovering => mouseHovering;
         public bool WasJustHeld => !currentlyHeld && previouslyHeld;
+        public string DeathMessage { get; set; }
 
         //Modifiers
         public int HealthMod

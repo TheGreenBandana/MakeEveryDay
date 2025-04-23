@@ -209,6 +209,84 @@ namespace MakeEveryDay.States
                     statusBars[3].CurrentValue = player.Wealth;
                 }
 
+                if (MouseUtils.KeyJustPressed(Keys.Down))
+                {
+                    player.Health -= 5;
+                    player.Wealth -= 5;
+                    player.Happiness -= 5;
+                    player.Education -= 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
+                }
+
+                if (MouseUtils.KeyJustPressed(Keys.D1))
+                {
+                    player.Health -= 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
+                }
+
+                if (MouseUtils.KeyJustPressed(Keys.D3))
+                {
+                    player.Happiness -= 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
+                }
+
+                if (MouseUtils.KeyJustPressed(Keys.D2))
+                {
+                    player.Education -= 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
+                }
+
+                if (MouseUtils.KeyJustPressed(Keys.D4))
+                {
+                    player.Wealth -= 5;
+
+                    player.Health = Math.Clamp(player.Health, 0, 100);
+                    player.Happiness = Math.Clamp(player.Happiness, 0, 100);
+                    player.Education = Math.Clamp(player.Education, 0, 100);
+                    player.Wealth = Math.Clamp(player.Wealth, 0, 100);
+
+                    statusBars[0].CurrentValue = player.Health;
+                    statusBars[1].CurrentValue = player.Education;
+                    statusBars[2].CurrentValue = player.Happiness;
+                    statusBars[3].CurrentValue = player.Wealth;
+                }
+
                 if (MouseUtils.CurrentKBState.IsKeyDown(Keys.Right))
                     targetWidth = Math.Clamp(targetWidth + 25, 100, 3500);
 
@@ -328,7 +406,30 @@ namespace MakeEveryDay.States
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.White);
+            int R = 255;
+            int G = 255;
+            int B = 255;
+            if(player.Health <= 20)
+            {
+                G -= (20 + (20 - player.Health)) * 5;
+                B -= (20 + (20 - player.Health)) * 5;
+            }
+            if (player.Wealth <= 20)
+            {
+                R -= (20 + (20 - player.Wealth)) * 5;
+                B -= (20 + (20 - player.Wealth)) * 5;
+            }
+            if (player.Happiness <= 20)
+            {
+                R -= (20 + (20 - player.Happiness)) * 5;
+                G -= (20 + (20 - player.Happiness)) * 5;
+            }
+            if (player.Education <= 20)
+            {
+                B -= (20 + (20-player.Education)) * 5;
+            }
+
+            sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), new Color(R, G, B));
 
             player.Draw(sb);
 
@@ -379,6 +480,8 @@ namespace MakeEveryDay.States
         {
             player.Update(gameTime);
 
+            Block current = null!;
+
             foreach (Block block in theLine)
             {
                 if (block.Left <= positionToCheckStats && block.Checked == false) //This is the block currently being stood on
@@ -407,6 +510,8 @@ namespace MakeEveryDay.States
 
                     block.Checked = true; //Ensures the block isn't checked again
 
+                    current = block;
+
                     UpdateScore();
                     break;
                 }
@@ -416,6 +521,8 @@ namespace MakeEveryDay.States
             {
                 if (LastBlockOnLine.Right <= positionToCheckStats) //Goes off if there is no block under the player
                 {
+
+                    GameOverState.deathMessage = "You fell off the edge of existence";
                     player.StartFalling();
                     if (!debug)
                         gameOver = true;
@@ -423,6 +530,8 @@ namespace MakeEveryDay.States
 
                 if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Wealth <= 0) //Kills the player if their stats get too low. Can be updated to include more values
                 {
+
+                    GameOverState.deathMessage = current.DeathMessage;
                     player.Die();
                     if(!debug)
                         gameOver = true;
