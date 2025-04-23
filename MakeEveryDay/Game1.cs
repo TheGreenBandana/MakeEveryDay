@@ -118,6 +118,8 @@ namespace MakeEveryDay
 
             MenuState.blockTexture = Content.Load<Texture2D>("WIN_20191225_10_46_57_Pro (2)");
 
+            MenuState.arrowButtonTexture = Content.Load<Texture2D>("ArrowBlock");
+
             // Gameplay-state content intitialization
             GameplayState.defaultText = Content.Load<SpriteFont>("Times24");
             GameplayState.garbageTexture = Content.Load<Texture2D>("GarbageCan");

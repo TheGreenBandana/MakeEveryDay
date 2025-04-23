@@ -331,6 +331,20 @@
 /processorParam:TextureFormat=Compressed
 /build:SpriteFonts/Sans48.spritefont
 
+#begin SpriteFonts/Sans72.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/Sans72.spritefont
+
+#begin SpriteFonts/Sans96.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/Sans96.spritefont
+
 #begin Status Bar.png
 /importer:TextureImporter
 /processor:TextureProcessor
