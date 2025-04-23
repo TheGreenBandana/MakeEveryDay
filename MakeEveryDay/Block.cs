@@ -149,7 +149,7 @@ namespace MakeEveryDay
         }
         // Misc.
 
-        public int NumSpawns { get => numSpawns == 0 ? -1 : numSpawns; set => numSpawns = value; }
+        public int NumSpawns { get => numSpawns; set => numSpawns = value; }
 
         public bool IsClicked { get => currentlyHeld; set => currentlyHeld = value; }
 
@@ -266,7 +266,7 @@ namespace MakeEveryDay
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
 
-            this.numSpawns = numSpawns;
+            this.numSpawns = numSpawns <= 0 ? -1 : numSpawns;
 
             statArrows = new int[4];
             for(int i = 0; i < statArrows.Length; i++)
