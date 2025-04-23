@@ -18,8 +18,8 @@ namespace BlockEditor
             textBoxes = new TextBox[]
             {
                 textBox_healthChange,
-                textBox_happyChange,
                 textBox_educationChange,
+                textBox_happyChange,
                 textBox_wealthChange,
                 textBox_healthMin,
                 textBox_healthMax,
@@ -244,8 +244,8 @@ namespace BlockEditor
                         int.Parse(blockData[1]),
                         Color.FromArgb(int.Parse(blockData[2])),
                         int.Parse(blockData[3]),
-                        int.Parse(blockData[5]),
                         int.Parse(blockData[4]),
+                        int.Parse(blockData[5]),
                         int.Parse(blockData[6]),
                         new CustomRange(int.Parse(blockData[7].Split(',')[0]), int.Parse(blockData[7].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
