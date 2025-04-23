@@ -123,7 +123,8 @@ namespace MakeEveryDay.States
                         new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
-                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
+                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
+                        int.Parse(blockData[12])
                     ) });
                 }
             }
@@ -441,7 +442,7 @@ namespace MakeEveryDay.States
                 bool success = true;
                 foreach (Block block in blockList)
                 {
-                    if (!block.CheckAgainstPlayerStats(player))
+                    if (!block.CheckAgainstPlayerStats(player) || !(block.NumSpawns == -1 || block.NumSpawns > 0))
                     {
                         success = false;
                         break;
@@ -456,7 +457,11 @@ namespace MakeEveryDay.States
                 int index = rand.Next(0, potentialBlocks.Count);
                 List<Block> newBlockList = new List<Block>(potentialBlocks[index].Count);
                 foreach (Block block in potentialBlocks[index])
+                {
+                    if (block.NumSpawns > 0)
+                        block.NumSpawns--;
                     newBlockList.Add(Block.CloneBlock(block));
+                }
                 return newBlockList;
             }
             return new List<Block>(1);

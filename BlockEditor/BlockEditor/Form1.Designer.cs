@@ -80,6 +80,8 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
+            label19 = new Label();
+            textBox_spawns = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -200,11 +202,13 @@
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(label19);
+            groupBox6.Controls.Add(textBox_spawns);
             groupBox6.Controls.Add(label17);
+            groupBox6.Controls.Add(button_reset);
             groupBox6.Controls.Add(textBox_ageMax);
             groupBox6.Controls.Add(label18);
             groupBox6.Controls.Add(textBox_ageMin);
-            groupBox6.Controls.Add(button_reset);
             groupBox6.Controls.Add(label13);
             groupBox6.Controls.Add(textBox_wealthMax);
             groupBox6.Controls.Add(label14);
@@ -221,9 +225,9 @@
             groupBox6.Controls.Add(textBox_educationMin);
             groupBox6.Controls.Add(label12);
             groupBox6.Controls.Add(textBox_healthMin);
-            groupBox6.Location = new Point(10, 267);
+            groupBox6.Location = new Point(10, 277);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(506, 261);
+            groupBox6.Size = new Size(506, 248);
             groupBox6.TabIndex = 22;
             groupBox6.TabStop = false;
             groupBox6.Text = "Stat Spawn Prerequisites";
@@ -266,9 +270,9 @@
             // 
             // button_reset
             // 
-            button_reset.Location = new Point(196, 221);
+            button_reset.Location = new Point(324, 219);
             button_reset.Name = "button_reset";
-            button_reset.Size = new Size(113, 31);
+            button_reset.Size = new Size(169, 22);
             button_reset.TabIndex = 2;
             button_reset.Text = "Reset Values";
             button_reset.UseVisualStyleBackColor = true;
@@ -428,7 +432,7 @@
             groupBox5.Controls.Add(textBox_educationChange);
             groupBox5.Controls.Add(label5);
             groupBox5.Controls.Add(textBox_healthChange);
-            groupBox5.Location = new Point(10, 160);
+            groupBox5.Location = new Point(10, 164);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(506, 101);
             groupBox5.TabIndex = 13;
@@ -621,6 +625,24 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(4, 222);
+            label19.Name = "label19";
+            label19.Size = new Size(73, 15);
+            label19.TabIndex = 35;
+            label19.Text = "# Of Spawns";
+            // 
+            // textBox_spawns
+            // 
+            textBox_spawns.Location = new Point(79, 218);
+            textBox_spawns.Name = "textBox_spawns";
+            textBox_spawns.PlaceholderText = "Leave blank for infinite spawns...";
+            textBox_spawns.Size = new Size(242, 23);
+            textBox_spawns.TabIndex = 34;
+            textBox_spawns.Tag = "Number of spawns";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -699,5 +721,7 @@
         private TextBox textBox_ageMax;
         private Label label18;
         private TextBox textBox_ageMin;
+        private Label label19;
+        private TextBox textBox_spawns;
     }
 }

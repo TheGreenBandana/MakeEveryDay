@@ -21,6 +21,7 @@ namespace BlockEditor
         private CustomRange happyRange;
         private CustomRange wealthRange;
         private CustomRange ageRange;
+        private int numSpawns;
 
         // Properties
         public string Name { get => name; set => name = value; }
@@ -35,12 +36,13 @@ namespace BlockEditor
         public CustomRange HappyRange { get => happyRange; set => happyRange = value; }
         public CustomRange WealthRange { get => wealthRange; set => wealthRange = value; }
         public CustomRange AgeRange { get => ageRange; set => ageRange = value; }
+        public int NumSpawns { get => numSpawns; set => numSpawns = value; }
 
         /// <summary>
         /// Creates a block with given values.
         /// </summary>
         public Block(string name, int width, Color color, int healthMod, int eduMod, int happyMod, int wealthMod,
-            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange)
+            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange, int numSpawns)
         {
             this.name = name;
             this.width = width;
@@ -54,6 +56,7 @@ namespace BlockEditor
             this.happyRange = happyRange;
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
+            this.numSpawns = numSpawns;
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace BlockEditor
         public override string ToString()
         {
             return $"{name}|{width}|{color.ToArgb()}|{healthMod}|{happyMod}|{eduMod}|{wealthMod}|" +
-                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}";
+                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}|{numSpawns.ToString()}";
         }
     }
 }

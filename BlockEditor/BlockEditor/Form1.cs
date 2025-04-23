@@ -30,7 +30,8 @@ namespace BlockEditor
                 textBox_wealthMin,
                 textBox_wealthMax,
                 textBox_ageMin,
-                textBox_ageMax
+                textBox_ageMax,
+                textBox_spawns
             };
             // Make empty block list and make width bar value reflect visual bar
             blocks = new List<Block>();
@@ -86,7 +87,8 @@ namespace BlockEditor
                 new CustomRange(data[6], data[7]),
                 new CustomRange(data[8], data[9]),
                 new CustomRange(data[10], data[11]),
-                new CustomRange(data[12], data[13]));
+                new CustomRange(data[12], data[13]),
+                data[14]);
         }
 
         /// <summary>
@@ -154,6 +156,7 @@ namespace BlockEditor
                 textBox_wealthMax.Text = block.WealthRange.Max.ToString();
                 textBox_ageMin.Text = block.AgeRange.Min.ToString();
                 textBox_ageMax.Text = block.AgeRange.Max.ToString();
+                textBox_spawns.Text = block.NumSpawns.ToString();
             }
         }
 
@@ -251,7 +254,8 @@ namespace BlockEditor
                         new CustomRange(int.Parse(blockData[8].Split(',')[0]), int.Parse(blockData[8].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
-                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1]))
+                        new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
+                        int.Parse(blockData[12])
                     ));
                 }
                 success = true;

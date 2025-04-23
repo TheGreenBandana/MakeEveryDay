@@ -46,6 +46,7 @@ namespace MakeEveryDay
         private CustomRange wealthRange;
         private CustomRange ageRange;
 
+        private int numSpawns;
 
         private Microsoft.Xna.Framework.Vector2 positionToClick;
         private Microsoft.Xna.Framework.Vector2 previousPosition;
@@ -147,6 +148,9 @@ namespace MakeEveryDay
             set { ageRange = value; }
         }
         // Misc.
+
+        public int NumSpawns { get => numSpawns == 0 ? -1 : numSpawns; set => numSpawns = value; }
+
         public bool IsClicked { get => currentlyHeld; set => currentlyHeld = value; }
 
         public Rectangle HoveredRectangle
@@ -230,6 +234,7 @@ namespace MakeEveryDay
         /// <param name="happyRange">Range of the "Happiness" stat required for the block to appear</param>
         /// <param name="wealthRange">Range of the "Wealth" stat required for the block to appear</param>
         /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
+        /// <param name="numSpawns">Number of times this block can spawn (0 == infinite)</param>
         public Block(
             string name,
             Microsoft.Xna.Framework.Vector2 position,
@@ -243,7 +248,8 @@ namespace MakeEveryDay
             CustomRange educationRange,
             CustomRange happyRange,
             CustomRange wealthRange,
-            CustomRange ageRange)
+            CustomRange ageRange,
+            int numSpawns)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width,presetHeight), color, blockDrawLayer)
         {
             this.Name = name;
@@ -260,6 +266,8 @@ namespace MakeEveryDay
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
 
+            this.numSpawns = numSpawns;
+
             statArrows = new int[4];
             for(int i = 0; i < statArrows.Length; i++)
             {
@@ -275,7 +283,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
             : this(name, position, width, Microsoft.Xna.Framework.Color.White, 
                   0, 0, 0, 0, 
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite){}
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0){}
 
 
         /// <summary>
@@ -292,7 +300,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
             : this(name, position, width, color,
                   healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite) {}
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0) {}
 
         /// <summary>
         /// Constructor that takes ONLY an Age Range
@@ -310,7 +318,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
             : this(name, position, width, color,
                   healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange) { }
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange, 0) { }
 
 
         // Methods
@@ -542,7 +550,8 @@ namespace MakeEveryDay
                 block.educationRange, 
                 block.happyRange, 
                 block.wealthRange, 
-                block.ageRange);
+                block.ageRange,
+                block.numSpawns);
         }
 
         public bool CheckAgainstPlayerStats(Player player)
