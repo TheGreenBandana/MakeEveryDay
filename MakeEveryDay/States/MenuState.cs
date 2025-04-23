@@ -212,7 +212,7 @@ namespace MakeEveryDay.States
             sb.DrawString(
                 DefaultGameFont,
                 ((int)((SoundsUtils.MusicVolume * 10))).ToString(),
-                new Vector2(upMusicVol.Right + upMusicVol.Size.X, upMusicVol.Top),
+                new Vector2(upMusicVol.Right + upMusicVol.Size.X, upMusicVol.Top - 10),
                 Color.Black,
                 0,
                 Vector2.Zero,
@@ -223,7 +223,7 @@ namespace MakeEveryDay.States
             sb.DrawString(
                 DefaultGameFont,
                 ((int)((SoundsUtils.SFXVolume * 10))).ToString(),
-                new Vector2(upSFXVol.Right + upMusicVol.Size.X, upSFXVol.Top),
+                new Vector2(upSFXVol.Right + upMusicVol.Size.X, upSFXVol.Top - 10),
                 Color.Black,
                 0,
                 Vector2.Zero,
@@ -234,13 +234,19 @@ namespace MakeEveryDay.States
             sb.DrawString(
                 DefaultGameFont,
                 ((int)((SoundsUtils.ClickVolume * 10))).ToString(),
-                new Vector2(upClickVol.Right + upMusicVol.Size.X, upClickVol.Top),
+                new Vector2(upClickVol.Right + upMusicVol.Size.X, upClickVol.Top - 10),
                 Color.Black,
                 0,
                 Vector2.Zero,
                 3,
                 SpriteEffects.None,
                 0);
+
+            sb.DrawString(DefaultGameFont, "Music\nVolume", upMusicVol.Position - DefaultGameFont.MeasureString("Music\nVolume") * new Vector2(1.25f, 0), Color.Black);
+            sb.DrawString(DefaultGameFont, "SFX\nVolume", upSFXVol.Position - DefaultGameFont.MeasureString("SFX\nVolume") * new Vector2(1.25f, 0), Color.Black);
+            sb.DrawString(DefaultGameFont, "Click\nVolume", upClickVol.Position - DefaultGameFont.MeasureString("Click\nVolume") * new Vector2(1.25f, 0), Color.Black);
+
+
             sb.DrawString(titleFont, "High Scores:", new Vector2(15, 60), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
             sb.DrawString(titleFont, scores, new Vector2(15, 60 + titleFont.MeasureString("High Scores:").Y * .45f), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
 
