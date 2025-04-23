@@ -22,6 +22,7 @@ namespace BlockEditor
         private CustomRange wealthRange;
         private CustomRange ageRange;
         private int numSpawns;
+        private int[] dependencies;
 
         // Properties
         public string Name { get => name; set => name = value; }
@@ -37,12 +38,13 @@ namespace BlockEditor
         public CustomRange WealthRange { get => wealthRange; set => wealthRange = value; }
         public CustomRange AgeRange { get => ageRange; set => ageRange = value; }
         public int NumSpawns { get => numSpawns; set => numSpawns = value; }
+        public int[] Dependencies { get => dependencies; set => dependencies = value; }
 
         /// <summary>
         /// Creates a block with given values.
         /// </summary>
         public Block(string name, int width, Color color, int healthMod, int eduMod, int happyMod, int wealthMod,
-            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange, int numSpawns)
+            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange, int numSpawns, int[] dependencies)
         {
             this.name = name;
             this.width = width;
@@ -57,6 +59,7 @@ namespace BlockEditor
             this.wealthRange = wealthRange;
             this.ageRange = ageRange;
             this.numSpawns = numSpawns;
+            this.dependencies = dependencies;
         }
 
         /// <summary>
@@ -65,8 +68,17 @@ namespace BlockEditor
         /// <returns>The string of the block.</returns>
         public override string ToString()
         {
+            string dependencyString = "";
+            for (int i = 0; i < dependencies.Length; i++)
+            {
+                dependencyString += dependencies[i];
+                if (i != dependencies.Length - 1)
+                    dependencyString += ',';
+            }
+            if (dependencyString == "")
+                dependencyString = "-1";
             return $"{name}|{width}|{color.ToArgb()}|{healthMod}|{happyMod}|{eduMod}|{wealthMod}|" +
-                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}|{numSpawns.ToString()}";
+                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}|{numSpawns.ToString()}|{dependencyString}";
         }
     }
 }

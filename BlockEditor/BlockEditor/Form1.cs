@@ -6,6 +6,7 @@ namespace BlockEditor
     {
         // List of current saved boxes
         private List<Block> blocks;
+        private List<int> currentDependencyInts;
 
         // Array of text boxes for making data validation easier
         private TextBox[] textBoxes;
@@ -35,6 +36,7 @@ namespace BlockEditor
             };
             // Make empty block list and make width bar value reflect visual bar
             blocks = new List<Block>();
+            currentDependencyInts = new List<int>();
             ResetValues();
         }
 
@@ -60,7 +62,8 @@ namespace BlockEditor
         /// </summary>
         private void button_makeBlock_Click(object sender, EventArgs e)
         {
-            blocks.Add(GetBlockFromValues());
+            Block block = GetBlockFromValues();
+            blocks.Add(block);
             UpdateList();
         }
 
@@ -81,6 +84,9 @@ namespace BlockEditor
             }
             // Return the new block
             string name = textBox_name.Text.Length > 0 ? textBox_name.Text : $"Block {blocks.Count + 1}";
+            int[] dependencies = new int[currentDependencyInts.Count];
+            for (int i = 0; i < dependencies.Length; i++)
+                dependencies[i] = currentDependencyInts[i];
             return new(name, trackBar_width.Value, pictureBox_colorPreview.BackColor,
                 data[0], data[1], data[2], data[3],
                 new CustomRange(data[4], data[5]),
@@ -88,7 +94,7 @@ namespace BlockEditor
                 new CustomRange(data[8], data[9]),
                 new CustomRange(data[10], data[11]),
                 new CustomRange(data[12], data[13]),
-                data[14]);
+                data[14], dependencies);
         }
 
         /// <summary>
@@ -106,15 +112,33 @@ namespace BlockEditor
         }
 
         /// <summary>
+        /// Update the list on the right side of the screen.
+        /// </summary>
+        private void UpdateDependencies()
+        {
+            listBox_dependencies.BeginUpdate();
+
+            listBox_dependencies.Items.Clear();
+            foreach (int index in currentDependencyInts)
+            {
+                if (index != -1)
+                    listBox_dependencies.Items.Add(blocks[index].Name);
+            }
+
+            listBox_dependencies.EndUpdate();
+        }
+
+        /// <summary>
         /// Deletes the selected blocks, if they exists.
         /// </summary>
         private void button_deleteBlock_Click(object sender, EventArgs e)
         {
             if (listBox_blockList.SelectedItems.Count > 0)
             {
-                int itemCount = listBox_blockList.SelectedItems.Count;
-                for (int i = 0; i < itemCount; i++)
-                    blocks.RemoveAt(listBox_blockList.SelectedIndices[0]);
+                int num = listBox_blockList.SelectedIndices.Count;
+                int index = listBox_blockList.SelectedIndices[0];
+                for (int i = 0; i < num; i++)
+                    blocks.RemoveAt(index);
                 UpdateList();
             }
             else
@@ -157,6 +181,12 @@ namespace BlockEditor
                 textBox_ageMin.Text = block.AgeRange.Min.ToString();
                 textBox_ageMax.Text = block.AgeRange.Max.ToString();
                 textBox_spawns.Text = block.NumSpawns.ToString();
+
+                currentDependencyInts.Clear();
+                foreach (int value in block.Dependencies)
+                    currentDependencyInts.Add(value);
+
+                UpdateDependencies();
             }
         }
 
@@ -171,6 +201,7 @@ namespace BlockEditor
                 int itemCount = listBox_blockList.SelectedItems.Count;
                 for (int i = 0; i < itemCount; i++)
                 {
+                    block.Dependencies = AdjustArray(block.Dependencies, listBox_blockList.SelectedIndices[i]);
                     blocks.Insert(listBox_blockList.SelectedIndices[i], block);
                     blocks.RemoveAt(listBox_blockList.SelectedIndices[i] + 1);
                 }
@@ -198,6 +229,8 @@ namespace BlockEditor
             textBox_name.Text = "";
             pictureBox_colorPreview.BackColor = Color.Green;
             trackBar_width.Value = (trackBar_width.Maximum + trackBar_width.Minimum) / 2;
+            currentDependencyInts.Clear();
+            UpdateDependencies();
         }
 
         /// <summary>
@@ -240,7 +273,7 @@ namespace BlockEditor
                 reader = new("..\\..\\..\\..\\..\\MakeEveryDay\\Content\\gameBlocks.blocks");
                 while (!reader.EndOfStream)
                 {
-                    string[] blockData = reader.ReadLine().Split('|');
+                    string[] blockData = reader.ReadLine()!.Split('|');
                     // Splitting line into data that fits the block's constructor
                     loadedBlocks.Add(new Block(
                         blockData[0],
@@ -255,7 +288,8 @@ namespace BlockEditor
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
-                        int.Parse(blockData[12])
+                        int.Parse(blockData[12]),
+                        ReadDependencyString(blockData[13])
                     ));
                 }
                 success = true;
@@ -298,6 +332,82 @@ namespace BlockEditor
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Reads the dependency string and turns it into an array.
+        /// </summary>
+        /// <param name="theString">The dependency string.</param>
+        /// <returns>The array of dependencies.</returns>
+        private int[] ReadDependencyString(string theString)
+        {
+            string[] values = theString.Split(',');
+            int[] array = new int[values.Length];
+            for (int i = 0; i < values.Length; i++)
+                array[i] = int.Parse(values[i]);
+            return array;
+        }
+
+        /// <summary>
+        /// Add a dependency from the overall blocks list.
+        /// </summary>
+        private void button_addDependency_Click(object sender, EventArgs e)
+        {
+            // Ensure only 1 block is selected
+            if (listBox_blockList.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("No block is selected.", "Error adding dependency!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (listBox_blockList.SelectedItems.Count > 1)
+            {
+                MessageBox.Show("Only one block can be selected.", "Error adding dependency!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (!currentDependencyInts.Contains(listBox_blockList.SelectedIndex))
+                {
+                    currentDependencyInts.Add(listBox_blockList.SelectedIndex);
+                    UpdateDependencies();
+                }
+                else
+                    MessageBox.Show("This block is already a dependency.", "Error adding dependency!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Delete the selected block from the dependency list.
+        /// </summary>
+        private void button_deleteDependency_Click(object sender, EventArgs e)
+        {
+            if (listBox_dependencies.SelectedItems.Count > 0)
+            {
+                int num = listBox_dependencies.SelectedIndices.Count;
+                int index = listBox_dependencies.SelectedIndices[0];
+                if (currentDependencyInts[0] == -1)
+                    index++;
+                for (int i = 0; i < num; i++)
+                    currentDependencyInts.RemoveAt(index);
+                UpdateDependencies();
+            }
+            else
+                MessageBox.Show("No blocks are selected.", "Error removing dependencies!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// Removes the given value from the given array and adjusts dependency values.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="index">The value to remove.</param>
+        /// <returns>The adjusted array.</returns>
+        private int[] AdjustArray(int[] array, int value)
+        {
+            int[] newArray = new int[array.Contains(value) ? array.Length - 1 : array.Length];
+            for (int i = 0; i < newArray.Length; i++)
+            {
+                if (array[i] != value)
+                    newArray[i] = array[i];
+            }
+            return newArray;
         }
     }
 }

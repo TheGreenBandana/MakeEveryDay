@@ -48,7 +48,8 @@ namespace MakeEveryDay.States
                             block.HappyRange,
                             block.WealthRange,
                             block.AgeRange,
-                            block.NumSpawns);
+                            block.NumSpawns,
+                            block.Dependencies);
                     }
                     else
                     {
@@ -67,7 +68,8 @@ namespace MakeEveryDay.States
                             block.HappyRange,
                             block.WealthRange,
                             block.AgeRange,
-                            block.NumSpawns);
+                            block.NumSpawns,
+                            block.Dependencies);
                     }
                     
                     do

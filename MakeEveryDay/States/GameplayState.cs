@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
@@ -33,6 +34,7 @@ namespace MakeEveryDay.States
         private List<Block> activeBlocks;
         private List<BlockGroup> activeGroups;
         private List<BlockType> theLine;
+        private List<bool> checkingPlacement;
 
         //private Block testBlock1;
         private Player player;
@@ -88,6 +90,7 @@ namespace MakeEveryDay.States
 
             theLine = new List<BlockType>();
             activeBlocks = new List<Block>();
+            checkingPlacement = new List<bool>();
             
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
@@ -124,8 +127,10 @@ namespace MakeEveryDay.States
                         new CustomRange(int.Parse(blockData[9].Split(',')[0]), int.Parse(blockData[9].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
-                        int.Parse(blockData[12])
+                        int.Parse(blockData[12]),
+                        Block.ReadDependencyString(blockData[13])
                     ) });
+                    checkingPlacement.Add(false);
                 }
             }
             catch
@@ -245,7 +250,7 @@ namespace MakeEveryDay.States
             }
             if (player.Animation.Texture != Player.Fall && !debug)
             {
-                lineSpeed = 6.5f + player.Age / 2.5f;
+                lineSpeed = 8 + player.Age / 2.5f;
                 Vector2 adjustVector = new Vector2((-lineSpeed * gameTime.ElapsedGameTime.Milliseconds) / 250 * (LastBlockOnLine.Right > Game1.Width ? 25 : 1), 0);
                 for (int i = 0; i < theLine.Count; i++)
                 {
@@ -273,6 +278,14 @@ namespace MakeEveryDay.States
                             LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
                             activeBlocks[i].WasJustHeld)
                         {
+                            for (int j = 0; j < allBlocks.Count; j++)
+                            {
+                                if (activeBlocks[i].Equals(allBlocks[j]))
+                                {
+                                    checkingPlacement[j] = true;
+                                    break;
+                                }
+                            }
                             theLine.Add(activeBlocks[i]);
                             activeBlocks.RemoveAt(i);
                             theLine[theLine.Count - 1].Position = new Vector2(theLine[theLine.Count - 2].Right, theLine[theLine.Count - 2].Top);
@@ -442,6 +455,17 @@ namespace MakeEveryDay.States
                 bool success = true;
                 foreach (Block block in blockList)
                 {
+                    foreach (int index in block.Dependencies)
+                    {
+                        if (index != -1)
+                        {
+                            if (!checkingPlacement[index])
+                            {
+                                success = false;
+                                break;
+                            }
+                        }
+                    }
                     if (!block.CheckAgainstPlayerStats(player) || !(block.NumSpawns == -1 || block.NumSpawns > 0))
                     {
                         success = false;
