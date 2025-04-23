@@ -48,6 +48,7 @@ namespace MakeEveryDay
 
         private int numSpawns;
         private int[] dependencies;
+        private string deathMessage;
 
         private Microsoft.Xna.Framework.Vector2 positionToClick;
         private Microsoft.Xna.Framework.Vector2 previousPosition;
@@ -67,7 +68,7 @@ namespace MakeEveryDay
         }
         public bool MouseHovering => mouseHovering;
         public bool WasJustHeld => !currentlyHeld && previouslyHeld;
-        public string DeathMessage { get; set; }
+        public string DeathMessage => deathMessage;
 
         //Modifiers
         public int HealthMod
@@ -238,6 +239,8 @@ namespace MakeEveryDay
         /// <param name="wealthRange">Range of the "Wealth" stat required for the block to appear</param>
         /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
         /// <param name="numSpawns">Number of times this block can spawn (0 == infinite)</param>
+        /// <param name="dependencies">The array of block index values required for this block to spawn</param>
+        /// <param name="deathMessage">The message to show when this block causes a game over</param>
         public Block(
             string name,
             Microsoft.Xna.Framework.Vector2 position,
@@ -253,7 +256,8 @@ namespace MakeEveryDay
             CustomRange wealthRange,
             CustomRange ageRange,
             int numSpawns,
-             int[] dependencies)
+             int[] dependencies,
+             string deathMessage)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width,presetHeight), color, blockDrawLayer)
         {
             this.Name = name;
@@ -272,6 +276,7 @@ namespace MakeEveryDay
 
             this.numSpawns = numSpawns <= 0 ? -1 : numSpawns;
             this.dependencies = dependencies;
+            this.deathMessage = deathMessage;
 
             statArrows = new int[4];
             for(int i = 0; i < statArrows.Length; i++)
@@ -288,43 +293,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
             : this(name, position, width, Microsoft.Xna.Framework.Color.White, 
                   0, 0, 0, 0, 
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0, new int[1] {-1}){}
-
-
-        /// <summary>
-        /// Constructor for block that takes only mods and no ranges
-        /// </summary>
-        /// <param name="name">Name of the block</param>
-        /// <param name="position">Position of the block on the screen</param>
-        /// <param name="width">Width of the block</param>
-        /// <param name="color">Color of the block</param>
-        /// <param name="healthMod">Amount block changes the "Health" stat</param>
-        /// <param name="educationMod">Amount block changes the "Education" stat</param>
-        /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
-        /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
-        public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
-            : this(name, position, width, color,
-                  healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0, new int[1] { -1 }) {}
-
-        /// <summary>
-        /// Constructor that takes ONLY an Age Range
-        /// Figured we'd use age exclusively more than the others
-        /// </summary>
-        /// <param name="name">Name of the block</param>
-        /// <param name="position">Position of the block on the screen</param>
-        /// <param name="width">Width of the block</param>
-        /// <param name="color">Color of the block</param>
-        /// <param name="healthMod">Amount block changes the "Health" stat</param>
-        /// <param name="educationMod">Amount block changes the "Education" stat</param>
-        /// <param name="happyMod">Amount block changes the "Happiness" stat</param>
-        /// <param name="wealthMod">Amount block changes the "Wealth" stat</param>
-        /// <param name="ageRange">Range of the "Age" stat required for the block to appear</param>
-        public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
-            : this(name, position, width, color,
-                  healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange, 0, new int[1] { -1 }) { }
-
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0, new int[1] {-1}, ""){}
 
         // Methods
 
@@ -557,7 +526,8 @@ namespace MakeEveryDay
                 block.wealthRange, 
                 block.ageRange,
                 block.numSpawns,
-                block.dependencies);
+                block.dependencies,
+                block.deathMessage);
         }
 
         public bool CheckAgainstPlayerStats(Player player)

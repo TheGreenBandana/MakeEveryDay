@@ -27,7 +27,7 @@ namespace MakeEveryDay.States
         private Button downArrowChar3;
 
         internal static Texture2D arrowButtonTexture;
-        internal static string deathMessage;
+        public static string deathMessage;
 
         private int letter1;
         private int letter2;

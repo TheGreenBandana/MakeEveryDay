@@ -18,6 +18,8 @@ namespace MakeEveryDay.States
 {
     internal class GameplayState : State
     {
+        public static string currentDeathMessage;
+
         internal static SpriteFont defaultText = default;
 
         internal static Texture2D garbageTexture;
@@ -127,7 +129,8 @@ namespace MakeEveryDay.States
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
                         int.Parse(blockData[12]),
-                        Block.ReadDependencyString(blockData[13])
+                        Block.ReadDependencyString(blockData[13]),
+                        blockData[14]
                     ) });
                 }
                 checkingPlacement = new List<bool>(allBlocks.Count);
@@ -486,6 +489,7 @@ namespace MakeEveryDay.States
             {
                 sb.DrawString(defaultText, "Width: " + Game1.Width.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 1.8f), Color.Black);
                 sb.DrawString(defaultText, "Target Width: " + TargetWidth.ToString(), statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.2f), Color.Black);
+                // sb.DrawString(defaultText, current.DeathMessage, statusBars[statusBars.Length - 1].Position + new Vector2(6, statusBars[statusBars.Length - 1].Height * 2.6f), Color.Black);
             }
         }
 
@@ -495,8 +499,6 @@ namespace MakeEveryDay.States
         private void UpdatePlayer(GameTime gameTime)
         {
             player.Update(gameTime);
-
-            Block current = null!;
 
             foreach (Block block in theLine)
             {
@@ -526,7 +528,7 @@ namespace MakeEveryDay.States
 
                     block.Checked = true; //Ensures the block isn't checked again
 
-                    current = block;
+                    currentDeathMessage = block.DeathMessage;
 
                     UpdateScore();
                     break;
@@ -537,8 +539,7 @@ namespace MakeEveryDay.States
             {
                 if (LastBlockOnLine.Right <= positionToCheckStats) //Goes off if there is no block under the player
                 {
-
-                    GameOverState.deathMessage = "You fell off the edge of existence";
+                    GameOverState.deathMessage = "You fell off the edge of existence.";
                     player.StartFalling();
                     if (!debug)
                         gameOver = true;
@@ -547,7 +548,7 @@ namespace MakeEveryDay.States
                 if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Wealth <= 0) //Kills the player if their stats get too low. Can be updated to include more values
                 {
 
-                    GameOverState.deathMessage = current.DeathMessage;
+                    GameOverState.deathMessage = currentDeathMessage;
                     player.Die();
                     if(!debug)
                         gameOver = true;
