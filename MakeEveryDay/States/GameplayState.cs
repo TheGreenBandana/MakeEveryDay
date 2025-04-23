@@ -90,7 +90,6 @@ namespace MakeEveryDay.States
 
             theLine = new List<BlockType>();
             activeBlocks = new List<Block>();
-            checkingPlacement = new List<bool>();
             
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
@@ -130,8 +129,10 @@ namespace MakeEveryDay.States
                         int.Parse(blockData[12]),
                         Block.ReadDependencyString(blockData[13])
                     ) });
-                    checkingPlacement.Add(false);
                 }
+                checkingPlacement = new List<bool>(allBlocks.Count);
+                for (int i = 0; i < allBlocks.Count; i++)
+                    checkingPlacement.Add(false);
             }
             catch
             {
@@ -280,7 +281,7 @@ namespace MakeEveryDay.States
                         {
                             for (int j = 0; j < allBlocks.Count; j++)
                             {
-                                if (activeBlocks[i].Equals(allBlocks[j]))
+                                if (activeBlocks[i].EqualsOther(allBlocks[j]))
                                 {
                                     checkingPlacement[j] = true;
                                     break;
@@ -457,7 +458,7 @@ namespace MakeEveryDay.States
                 {
                     foreach (int index in block.Dependencies)
                     {
-                        if (index != -1)
+                        if (index > -1)
                         {
                             if (!checkingPlacement[index])
                             {

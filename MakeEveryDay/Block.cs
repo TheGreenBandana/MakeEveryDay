@@ -584,20 +584,21 @@ namespace MakeEveryDay
         }
 
         /// <summary>
-        /// Check to see if 2 blocks have the same values.
+        /// Check to see if 2 blocks (or more) have the same values.
         /// </summary>
         /// <param name="other">The other block to check.</param>
         /// <returns>Whether or not the 2 blocks are the same.</returns>
-        public bool Equals(Block other)
+        public bool EqualsOther(List<Block> list)
         {
-            if (Name != other.Name ||
-                Width != other.Width ||
-                PresetColor != other.PresetColor ||
+            foreach (Block other in list)
+            {
+                if (Name != other.Name ||
                 HealthMod != other.HealthMod ||
                 EducationMod != other.EducationMod ||
                 HappyMod != other.HappyMod ||
                 WealthMod != other.WealthMod)
-                return false;
+                    return false;
+            }
             return true;
         }
     }
