@@ -32,7 +32,8 @@ namespace BlockEditor
                 textBox_wealthMax,
                 textBox_ageMin,
                 textBox_ageMax,
-                textBox_spawns
+                textBox_spawns,
+                textBox_deathMessage
             };
             // Make empty block list and make width bar value reflect visual bar
             blocks = new List<Block>();
@@ -94,7 +95,7 @@ namespace BlockEditor
                 new CustomRange(data[8], data[9]),
                 new CustomRange(data[10], data[11]),
                 new CustomRange(data[12], data[13]),
-                data[14], dependencies);
+                data[14], dependencies, textBox_deathMessage.Text);
         }
 
         /// <summary>
@@ -181,6 +182,7 @@ namespace BlockEditor
                 textBox_ageMin.Text = block.AgeRange.Min.ToString();
                 textBox_ageMax.Text = block.AgeRange.Max.ToString();
                 textBox_spawns.Text = block.NumSpawns.ToString();
+                textBox_deathMessage.Text = block.DeathMessage;
 
                 currentDependencyInts.Clear();
                 foreach (int value in block.Dependencies)
@@ -243,8 +245,12 @@ namespace BlockEditor
             try
             {
                 writer = new("..\\..\\..\\..\\..\\MakeEveryDay\\Content\\gameBlocks.blocks");
-                foreach (Block block in blocks)
-                    writer.WriteLine(block.ToString());
+                for (int i = 0; i < blocks.Count; i++)
+                {
+                    writer.Write(blocks[i].ToString());
+                    if (i != blocks.Count - 1)
+                        writer.WriteLine();
+                }
             }
             catch
             {
@@ -289,7 +295,8 @@ namespace BlockEditor
                         new CustomRange(int.Parse(blockData[10].Split(',')[0]), int.Parse(blockData[10].Split(',')[1])),
                         new CustomRange(int.Parse(blockData[11].Split(',')[0]), int.Parse(blockData[11].Split(',')[1])),
                         int.Parse(blockData[12]),
-                        ReadDependencyString(blockData[13])
+                        ReadDependencyString(blockData[13]),
+                        blockData[14]
                     ));
                 }
                 success = true;

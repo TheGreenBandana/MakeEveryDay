@@ -38,6 +38,11 @@
             button_makeBlock = new Button();
             button_deleteBlock = new Button();
             groupBox3 = new GroupBox();
+            groupBox7 = new GroupBox();
+            button_addDependency = new Button();
+            button_deleteDependency = new Button();
+            label21 = new Label();
+            listBox_dependencies = new ListBox();
             groupBox6 = new GroupBox();
             label19 = new Label();
             textBox_spawns = new TextBox();
@@ -64,7 +69,6 @@
             textBox_healthMin = new TextBox();
             groupBox5 = new GroupBox();
             label7 = new Label();
-            listBox_dependencies = new ListBox();
             textBox_wealthChange = new TextBox();
             label8 = new Label();
             textBox_happyChange = new TextBox();
@@ -73,6 +77,7 @@
             label5 = new Label();
             textBox_healthChange = new TextBox();
             groupBox4 = new GroupBox();
+            textBox_deathMessage = new TextBox();
             label_width = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -83,19 +88,16 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
-            label21 = new Label();
-            groupBox7 = new GroupBox();
-            button_deleteDependency = new Button();
-            button_addDependency = new Button();
+            label_deathMessage = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_colorPreview).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar_width).BeginInit();
-            groupBox7.SuspendLayout();
             SuspendLayout();
             // 
             // button_load
@@ -206,6 +208,60 @@
             groupBox3.TabIndex = 6;
             groupBox3.TabStop = false;
             groupBox3.Text = "Block Values";
+            // 
+            // groupBox7
+            // 
+            groupBox7.Controls.Add(button_addDependency);
+            groupBox7.Controls.Add(button_deleteDependency);
+            groupBox7.Controls.Add(label21);
+            groupBox7.Controls.Add(listBox_dependencies);
+            groupBox7.Location = new Point(536, 22);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(245, 506);
+            groupBox7.TabIndex = 15;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "Block Dependence";
+            // 
+            // button_addDependency
+            // 
+            button_addDependency.Location = new Point(6, 22);
+            button_addDependency.Name = "button_addDependency";
+            button_addDependency.Size = new Size(113, 60);
+            button_addDependency.TabIndex = 14;
+            button_addDependency.Text = "Add Selected Block From Right Side List";
+            button_addDependency.UseVisualStyleBackColor = true;
+            button_addDependency.Click += button_addDependency_Click;
+            // 
+            // button_deleteDependency
+            // 
+            button_deleteDependency.Location = new Point(125, 22);
+            button_deleteDependency.Name = "button_deleteDependency";
+            button_deleteDependency.Size = new Size(113, 60);
+            button_deleteDependency.TabIndex = 8;
+            button_deleteDependency.Text = "Delete Selected Block";
+            button_deleteDependency.UseVisualStyleBackColor = true;
+            button_deleteDependency.Click += button_deleteDependency_Click;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(382, 103);
+            label21.Name = "label21";
+            label21.Size = new Size(25, 15);
+            label21.TabIndex = 13;
+            label21.Text = "600";
+            label21.TextAlign = ContentAlignment.TopRight;
+            // 
+            // listBox_dependencies
+            // 
+            listBox_dependencies.FormattingEnabled = true;
+            listBox_dependencies.ItemHeight = 15;
+            listBox_dependencies.Location = new Point(6, 88);
+            listBox_dependencies.Name = "listBox_dependencies";
+            listBox_dependencies.ScrollAlwaysVisible = true;
+            listBox_dependencies.SelectionMode = SelectionMode.MultiExtended;
+            listBox_dependencies.Size = new Size(232, 394);
+            listBox_dependencies.TabIndex = 8;
             // 
             // groupBox6
             // 
@@ -457,7 +513,7 @@
             groupBox5.Controls.Add(textBox_educationChange);
             groupBox5.Controls.Add(label5);
             groupBox5.Controls.Add(textBox_healthChange);
-            groupBox5.Location = new Point(10, 164);
+            groupBox5.Location = new Point(10, 172);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(506, 99);
             groupBox5.TabIndex = 13;
@@ -472,17 +528,6 @@
             label7.Size = new Size(44, 15);
             label7.TabIndex = 21;
             label7.Text = "Wealth";
-            // 
-            // listBox_dependencies
-            // 
-            listBox_dependencies.FormattingEnabled = true;
-            listBox_dependencies.ItemHeight = 15;
-            listBox_dependencies.Location = new Point(6, 88);
-            listBox_dependencies.Name = "listBox_dependencies";
-            listBox_dependencies.ScrollAlwaysVisible = true;
-            listBox_dependencies.SelectionMode = SelectionMode.MultiExtended;
-            listBox_dependencies.Size = new Size(232, 394);
-            listBox_dependencies.TabIndex = 8;
             // 
             // textBox_wealthChange
             // 
@@ -549,6 +594,8 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(label_deathMessage);
+            groupBox4.Controls.Add(textBox_deathMessage);
             groupBox4.Controls.Add(label_width);
             groupBox4.Controls.Add(label4);
             groupBox4.Controls.Add(label3);
@@ -560,15 +607,24 @@
             groupBox4.Controls.Add(label2);
             groupBox4.Location = new Point(10, 21);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(506, 133);
+            groupBox4.Size = new Size(506, 145);
             groupBox4.TabIndex = 12;
             groupBox4.TabStop = false;
             groupBox4.Text = "Visuals";
             // 
+            // textBox_deathMessage
+            // 
+            textBox_deathMessage.Location = new Point(316, 89);
+            textBox_deathMessage.Multiline = true;
+            textBox_deathMessage.Name = "textBox_deathMessage";
+            textBox_deathMessage.PlaceholderText = "Enter death message...";
+            textBox_deathMessage.Size = new Size(178, 38);
+            textBox_deathMessage.TabIndex = 15;
+            // 
             // label_width
             // 
             label_width.AutoSize = true;
-            label_width.Location = new Point(424, 92);
+            label_width.Location = new Point(142, 111);
             label_width.Name = "label_width";
             label_width.Size = new Size(62, 15);
             label_width.TabIndex = 14;
@@ -578,7 +634,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(382, 103);
+            label4.Location = new Point(261, 103);
             label4.Name = "label4";
             label4.Size = new Size(25, 15);
             label4.TabIndex = 13;
@@ -631,7 +687,7 @@
             trackBar_width.Maximum = 600;
             trackBar_width.Minimum = 100;
             trackBar_width.Name = "trackBar_width";
-            trackBar_width.Size = new Size(350, 45);
+            trackBar_width.Size = new Size(229, 45);
             trackBar_width.SmallChange = 5;
             trackBar_width.TabIndex = 5;
             trackBar_width.TickFrequency = 5;
@@ -661,48 +717,15 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
-            // label21
+            // label_deathMessage
             // 
-            label21.AutoSize = true;
-            label21.Location = new Point(382, 103);
-            label21.Name = "label21";
-            label21.Size = new Size(25, 15);
-            label21.TabIndex = 13;
-            label21.Text = "600";
-            label21.TextAlign = ContentAlignment.TopRight;
-            // 
-            // groupBox7
-            // 
-            groupBox7.Controls.Add(button_addDependency);
-            groupBox7.Controls.Add(button_deleteDependency);
-            groupBox7.Controls.Add(label21);
-            groupBox7.Controls.Add(listBox_dependencies);
-            groupBox7.Location = new Point(536, 22);
-            groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(245, 506);
-            groupBox7.TabIndex = 15;
-            groupBox7.TabStop = false;
-            groupBox7.Text = "Block Dependence";
-            // 
-            // button_deleteDependency
-            // 
-            button_deleteDependency.Location = new Point(125, 22);
-            button_deleteDependency.Name = "button_deleteDependency";
-            button_deleteDependency.Size = new Size(113, 60);
-            button_deleteDependency.TabIndex = 8;
-            button_deleteDependency.Text = "Delete Selected Block";
-            button_deleteDependency.UseVisualStyleBackColor = true;
-            button_deleteDependency.Click += button_deleteDependency_Click;
-            // 
-            // button_addDependency
-            // 
-            button_addDependency.Location = new Point(6, 22);
-            button_addDependency.Name = "button_addDependency";
-            button_addDependency.Size = new Size(113, 60);
-            button_addDependency.TabIndex = 14;
-            button_addDependency.Text = "Add Selected Block From Right Side List";
-            button_addDependency.UseVisualStyleBackColor = true;
-            button_addDependency.Click += button_addDependency_Click;
+            label_deathMessage.AutoSize = true;
+            label_deathMessage.Location = new Point(316, 73);
+            label_deathMessage.Name = "label_deathMessage";
+            label_deathMessage.Size = new Size(87, 15);
+            label_deathMessage.TabIndex = 16;
+            label_deathMessage.Text = "Death Message";
+            label_deathMessage.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -717,6 +740,8 @@
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
@@ -725,8 +750,6 @@
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_colorPreview).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar_width).EndInit();
-            groupBox7.ResumeLayout(false);
-            groupBox7.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -791,5 +814,7 @@
         private Label label21;
         private Button button_addDependency;
         private Button button_deleteDependency;
+        private TextBox textBox_deathMessage;
+        private Label label_deathMessage;
     }
 }

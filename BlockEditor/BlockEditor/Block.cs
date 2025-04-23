@@ -23,6 +23,7 @@ namespace BlockEditor
         private CustomRange ageRange;
         private int numSpawns;
         private int[] dependencies;
+        private string deathMessage;
 
         // Properties
         public string Name { get => name; set => name = value; }
@@ -39,12 +40,13 @@ namespace BlockEditor
         public CustomRange AgeRange { get => ageRange; set => ageRange = value; }
         public int NumSpawns { get => numSpawns; set => numSpawns = value; }
         public int[] Dependencies { get => dependencies; set => dependencies = value; }
+        public string DeathMessage { get => deathMessage; set => deathMessage = value; }
 
         /// <summary>
         /// Creates a block with given values.
         /// </summary>
         public Block(string name, int width, Color color, int healthMod, int eduMod, int happyMod, int wealthMod,
-            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange, int numSpawns, int[] dependencies)
+            CustomRange healthRange, CustomRange eduRange, CustomRange happyRange, CustomRange wealthRange, CustomRange ageRange, int numSpawns, int[] dependencies, string deathMessage)
         {
             this.name = name;
             this.width = width;
@@ -60,6 +62,7 @@ namespace BlockEditor
             this.ageRange = ageRange;
             this.numSpawns = numSpawns;
             this.dependencies = dependencies;
+            this.deathMessage = deathMessage.Length > 0 ? deathMessage : $"\"{name}\" killed you.";
         }
 
         /// <summary>
@@ -78,7 +81,8 @@ namespace BlockEditor
             if (dependencyString == "")
                 dependencyString = "-1";
             return $"{name}|{width}|{color.ToArgb()}|{healthMod}|{happyMod}|{eduMod}|{wealthMod}|" +
-                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|{ageRange.ToString()}|{numSpawns.ToString()}|{dependencyString}";
+                $"{healthRange.ToString()}|{eduRange.ToString()}|{happyRange.ToString()}|{wealthRange.ToString()}|" +
+                $"{ageRange.ToString()}|{numSpawns.ToString()}|{dependencyString}|{deathMessage}";
         }
     }
 }
