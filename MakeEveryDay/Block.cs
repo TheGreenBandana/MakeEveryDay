@@ -47,6 +47,7 @@ namespace MakeEveryDay
         private CustomRange ageRange;
 
         private int numSpawns;
+        private int[] dependencies;
 
         private Microsoft.Xna.Framework.Vector2 positionToClick;
         private Microsoft.Xna.Framework.Vector2 previousPosition;
@@ -151,6 +152,7 @@ namespace MakeEveryDay
         // Misc.
 
         public int NumSpawns { get => numSpawns; set => numSpawns = value; }
+        public int[] Dependencies { get => dependencies; set => dependencies = value; }
 
         public bool IsClicked { get => currentlyHeld; set => currentlyHeld = value; }
 
@@ -250,7 +252,8 @@ namespace MakeEveryDay
             CustomRange happyRange,
             CustomRange wealthRange,
             CustomRange ageRange,
-            int numSpawns)
+            int numSpawns,
+             int[] dependencies)
             : base(baseBlockTexture, position, new Microsoft.Xna.Framework.Vector2(width,presetHeight), color, blockDrawLayer)
         {
             this.Name = name;
@@ -268,6 +271,7 @@ namespace MakeEveryDay
             this.ageRange = ageRange;
 
             this.numSpawns = numSpawns <= 0 ? -1 : numSpawns;
+            this.dependencies = dependencies;
 
             statArrows = new int[4];
             for(int i = 0; i < statArrows.Length; i++)
@@ -284,7 +288,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width)
             : this(name, position, width, Microsoft.Xna.Framework.Color.White, 
                   0, 0, 0, 0, 
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0){}
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0, new int[1] {-1}){}
 
 
         /// <summary>
@@ -301,7 +305,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod)
             : this(name, position, width, color,
                   healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0) {}
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, 0, new int[1] { -1 }) {}
 
         /// <summary>
         /// Constructor that takes ONLY an Age Range
@@ -319,7 +323,7 @@ namespace MakeEveryDay
         public Block(string name, Microsoft.Xna.Framework.Vector2 position, int width, Microsoft.Xna.Framework.Color color, int healthMod, int educationMod, int happyMod, int wealthMod, CustomRange ageRange)
             : this(name, position, width, color,
                   healthMod, educationMod, happyMod, wealthMod,
-                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange, 0) { }
+                  CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, CustomRange.Infinite, ageRange, 0, new int[1] { -1 }) { }
 
 
         // Methods
@@ -552,7 +556,8 @@ namespace MakeEveryDay
                 block.happyRange, 
                 block.wealthRange, 
                 block.ageRange,
-                block.numSpawns);
+                block.numSpawns,
+                block.dependencies);
         }
 
         public bool CheckAgainstPlayerStats(Player player)
@@ -563,6 +568,39 @@ namespace MakeEveryDay
                 && HappyRange.IsInRange(player.Happiness)
                 && EducationRange.IsInRange(player.Education)
                 && AgeRange.IsInRange(player.Age);
+        }
+
+        /// <summary>
+        /// Reads the dependency string and turns it into an array.
+        /// </summary>
+        /// <param name="theString">The dependency string.</param>
+        /// <returns>The array of dependencies.</returns>
+        public static int[] ReadDependencyString(string theString)
+        {
+            string[] values = theString.Split(',');
+            int[] array = new int[values.Length];
+            for (int i = 0; i < values.Length; i++)
+                array[i] = int.Parse(values[i]);
+            return array;
+        }
+
+        /// <summary>
+        /// Check to see if 2 blocks (or more) have the same values.
+        /// </summary>
+        /// <param name="other">The other block to check.</param>
+        /// <returns>Whether or not the 2 blocks are the same.</returns>
+        public bool EqualsOther(List<Block> list)
+        {
+            foreach (Block other in list)
+            {
+                if (Name != other.Name ||
+                HealthMod != other.HealthMod ||
+                EducationMod != other.EducationMod ||
+                HappyMod != other.HappyMod ||
+                WealthMod != other.WealthMod)
+                    return false;
+            }
+            return true;
         }
     }
 }

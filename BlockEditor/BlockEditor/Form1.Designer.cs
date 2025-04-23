@@ -39,11 +39,13 @@
             button_deleteBlock = new Button();
             groupBox3 = new GroupBox();
             groupBox6 = new GroupBox();
+            label19 = new Label();
+            textBox_spawns = new TextBox();
             label17 = new Label();
+            button_reset = new Button();
             textBox_ageMax = new TextBox();
             label18 = new Label();
             textBox_ageMin = new TextBox();
-            button_reset = new Button();
             label13 = new Label();
             textBox_wealthMax = new TextBox();
             label14 = new Label();
@@ -62,6 +64,7 @@
             textBox_healthMin = new TextBox();
             groupBox5 = new GroupBox();
             label7 = new Label();
+            listBox_dependencies = new ListBox();
             textBox_wealthChange = new TextBox();
             label8 = new Label();
             textBox_happyChange = new TextBox();
@@ -80,8 +83,10 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
-            label19 = new Label();
-            textBox_spawns = new TextBox();
+            label21 = new Label();
+            groupBox7 = new GroupBox();
+            button_deleteDependency = new Button();
+            button_addDependency = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -90,6 +95,7 @@
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_colorPreview).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar_width).BeginInit();
+            groupBox7.SuspendLayout();
             SuspendLayout();
             // 
             // button_load
@@ -190,12 +196,13 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(groupBox7);
             groupBox3.Controls.Add(groupBox6);
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Controls.Add(groupBox4);
             groupBox3.Location = new Point(266, 12);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(534, 543);
+            groupBox3.Size = new Size(791, 543);
             groupBox3.TabIndex = 6;
             groupBox3.TabStop = false;
             groupBox3.Text = "Block Values";
@@ -232,14 +239,42 @@
             groupBox6.TabStop = false;
             groupBox6.Text = "Stat Spawn Prerequisites";
             // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(4, 222);
+            label19.Name = "label19";
+            label19.Size = new Size(73, 15);
+            label19.TabIndex = 35;
+            label19.Text = "# Of Spawns";
+            // 
+            // textBox_spawns
+            // 
+            textBox_spawns.Location = new Point(79, 218);
+            textBox_spawns.Name = "textBox_spawns";
+            textBox_spawns.PlaceholderText = "Leave blank for infinite spawns...";
+            textBox_spawns.Size = new Size(242, 23);
+            textBox_spawns.TabIndex = 34;
+            textBox_spawns.Tag = "Number of spawns";
+            // 
             // label17
             // 
             label17.AutoSize = true;
             label17.Location = new Point(261, 186);
             label17.Name = "label17";
-            label17.Size = new Size(53, 15);
+            label17.Size = new Size(54, 15);
             label17.TabIndex = 33;
             label17.Text = "Age Max";
+            // 
+            // button_reset
+            // 
+            button_reset.Location = new Point(324, 219);
+            button_reset.Name = "button_reset";
+            button_reset.Size = new Size(169, 22);
+            button_reset.TabIndex = 2;
+            button_reset.Text = "Reset Values";
+            button_reset.UseVisualStyleBackColor = true;
+            button_reset.Click += button_reset_Click;
             // 
             // textBox_ageMax
             // 
@@ -268,22 +303,12 @@
             textBox_ageMin.TabIndex = 30;
             textBox_ageMin.Tag = "Age minimum spawn value";
             // 
-            // button_reset
-            // 
-            button_reset.Location = new Point(324, 219);
-            button_reset.Name = "button_reset";
-            button_reset.Size = new Size(169, 22);
-            button_reset.TabIndex = 2;
-            button_reset.Text = "Reset Values";
-            button_reset.UseVisualStyleBackColor = true;
-            button_reset.Click += button_reset_Click;
-            // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Location = new Point(253, 150);
             label13.Name = "label13";
-            label13.Size = new Size(69, 15);
+            label13.Size = new Size(70, 15);
             label13.TabIndex = 29;
             label13.Text = "Wealth Max";
             // 
@@ -301,7 +326,7 @@
             label14.AutoSize = true;
             label14.Location = new Point(254, 114);
             label14.Name = "label14";
-            label14.Size = new Size(67, 15);
+            label14.Size = new Size(68, 15);
             label14.TabIndex = 27;
             label14.Text = "Happy Max";
             // 
@@ -355,7 +380,7 @@
             label9.AutoSize = true;
             label9.Location = new Point(261, 76);
             label9.Name = "label9";
-            label9.Size = new Size(52, 15);
+            label9.Size = new Size(53, 15);
             label9.TabIndex = 21;
             label9.Text = "Edu Max";
             // 
@@ -373,7 +398,7 @@
             label10.AutoSize = true;
             label10.Location = new Point(254, 38);
             label10.Name = "label10";
-            label10.Size = new Size(67, 15);
+            label10.Size = new Size(68, 15);
             label10.TabIndex = 19;
             label10.Text = "Health Max";
             // 
@@ -434,7 +459,7 @@
             groupBox5.Controls.Add(textBox_healthChange);
             groupBox5.Location = new Point(10, 164);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(506, 101);
+            groupBox5.Size = new Size(506, 99);
             groupBox5.TabIndex = 13;
             groupBox5.TabStop = false;
             groupBox5.Text = "Stat Changes";
@@ -447,6 +472,17 @@
             label7.Size = new Size(44, 15);
             label7.TabIndex = 21;
             label7.Text = "Wealth";
+            // 
+            // listBox_dependencies
+            // 
+            listBox_dependencies.FormattingEnabled = true;
+            listBox_dependencies.ItemHeight = 15;
+            listBox_dependencies.Location = new Point(6, 88);
+            listBox_dependencies.Name = "listBox_dependencies";
+            listBox_dependencies.ScrollAlwaysVisible = true;
+            listBox_dependencies.SelectionMode = SelectionMode.MultiExtended;
+            listBox_dependencies.Size = new Size(232, 394);
+            listBox_dependencies.TabIndex = 8;
             // 
             // textBox_wealthChange
             // 
@@ -625,29 +661,54 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
-            // label19
+            // label21
             // 
-            label19.AutoSize = true;
-            label19.Location = new Point(4, 222);
-            label19.Name = "label19";
-            label19.Size = new Size(73, 15);
-            label19.TabIndex = 35;
-            label19.Text = "# Of Spawns";
+            label21.AutoSize = true;
+            label21.Location = new Point(382, 103);
+            label21.Name = "label21";
+            label21.Size = new Size(25, 15);
+            label21.TabIndex = 13;
+            label21.Text = "600";
+            label21.TextAlign = ContentAlignment.TopRight;
             // 
-            // textBox_spawns
+            // groupBox7
             // 
-            textBox_spawns.Location = new Point(79, 218);
-            textBox_spawns.Name = "textBox_spawns";
-            textBox_spawns.PlaceholderText = "Leave blank for infinite spawns...";
-            textBox_spawns.Size = new Size(242, 23);
-            textBox_spawns.TabIndex = 34;
-            textBox_spawns.Tag = "Number of spawns";
+            groupBox7.Controls.Add(button_addDependency);
+            groupBox7.Controls.Add(button_deleteDependency);
+            groupBox7.Controls.Add(label21);
+            groupBox7.Controls.Add(listBox_dependencies);
+            groupBox7.Location = new Point(536, 22);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(245, 506);
+            groupBox7.TabIndex = 15;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "Block Dependence";
+            // 
+            // button_deleteDependency
+            // 
+            button_deleteDependency.Location = new Point(125, 22);
+            button_deleteDependency.Name = "button_deleteDependency";
+            button_deleteDependency.Size = new Size(113, 60);
+            button_deleteDependency.TabIndex = 8;
+            button_deleteDependency.Text = "Delete Selected Block";
+            button_deleteDependency.UseVisualStyleBackColor = true;
+            button_deleteDependency.Click += button_deleteDependency_Click;
+            // 
+            // button_addDependency
+            // 
+            button_addDependency.Location = new Point(6, 22);
+            button_addDependency.Name = "button_addDependency";
+            button_addDependency.Size = new Size(113, 60);
+            button_addDependency.TabIndex = 14;
+            button_addDependency.Text = "Add Selected Block From Right Side List";
+            button_addDependency.UseVisualStyleBackColor = true;
+            button_addDependency.Click += button_addDependency_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(812, 567);
+            ClientSize = new Size(1068, 567);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -664,6 +725,8 @@
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_colorPreview).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar_width).EndInit();
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -723,5 +786,10 @@
         private TextBox textBox_ageMin;
         private Label label19;
         private TextBox textBox_spawns;
+        private ListBox listBox_dependencies;
+        private GroupBox groupBox7;
+        private Label label21;
+        private Button button_addDependency;
+        private Button button_deleteDependency;
     }
 }
