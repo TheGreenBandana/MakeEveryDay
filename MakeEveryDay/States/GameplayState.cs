@@ -81,7 +81,7 @@ namespace MakeEveryDay.States
 
             score = 0;
 
-            lineSpeed = 6.5f;
+            lineSpeed = 8f;
 
             Game1.Width = 1000;
             targetWidth = 1000;
@@ -245,8 +245,8 @@ namespace MakeEveryDay.States
             }
             if (player.Animation.Texture != Player.Fall && !debug)
             {
-                lineSpeed = 6.5f + player.Age / 3f;
-                Vector2 adjustVector = new Vector2((-lineSpeed * gameTime.ElapsedGameTime.Milliseconds) / 250, 0);
+                lineSpeed = 6.5f + player.Age / 2.5f;
+                Vector2 adjustVector = new Vector2((-lineSpeed * gameTime.ElapsedGameTime.Milliseconds) / 250 * (LastBlockOnLine.Right > Game1.Width ? 25 : 1), 0);
                 for (int i = 0; i < theLine.Count; i++)
                 {
                     theLine[i].Position += adjustVector;
@@ -268,7 +268,7 @@ namespace MakeEveryDay.States
                     }
                     for (int i = 0; i < activeBlocks.Count; i++)
                     {
-                        if (LastBlockOnLine.Right > activeBlocks[i].Left &&
+                        if (LastBlockOnLine.Right + 100 * scaleFactor > activeBlocks[i].Left &&
                             LastBlockOnLine.Right <= Game1.Width &&
                             LastBlockOnLine.Top - LastBlockOnLine.Height < activeBlocks[i].Top &&
                             activeBlocks[i].WasJustHeld)

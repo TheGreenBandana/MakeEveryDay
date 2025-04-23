@@ -48,8 +48,8 @@ namespace BlockEditor
             this.width = width;
             this.color = color;
             this.healthMod = healthMod;
-            this.eduMod = eduMod;
             this.happyMod = happyMod;
+            this.eduMod = eduMod;
             this.wealthMod = wealthMod;
             this.healthRange = healthRange;
             this.eduRange = eduRange;
