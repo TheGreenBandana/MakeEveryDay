@@ -25,7 +25,7 @@ namespace MakeEveryDay.States
         internal static Texture2D titleTexture;
         internal static Texture2D debugButtonTexture;
 
-        private Button titleScreen;
+        private GameObject titleScreen;
         private Button playButton;
 
         private Button blockMakerButton;
@@ -34,6 +34,15 @@ namespace MakeEveryDay.States
         private Button quitButton;
 
         private string scores;
+
+
+        internal static Texture2D arrowButtonTexture;
+        private Button upMusicVol;
+        private Button downMusicVol;
+        private Button upSFXVol;
+        private Button downSFXVol;
+        private Button upClickVol;
+        private Button downClickVol;
 
         public MenuState() { }
 
@@ -45,7 +54,16 @@ namespace MakeEveryDay.States
             playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
             debugButton = new Button(debugButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
             quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
-            titleScreen = new Button(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 400, (int)Game1.ScreenSize.Y / 2 - 500, 800, 300));
+            titleScreen = new GameObject(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 600, (int)Game1.ScreenSize.Y / 2 - 500, 1200, 450));
+
+            int hOffset = 6;
+            int buttonSize = 50;
+            upMusicVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset ), (int)(2 * Game1.ScreenSize.Y / 3), buttonSize, buttonSize));
+            downMusicVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 +5), buttonSize, buttonSize));
+            upSFXVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
+            downSFXVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
+            upClickVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
+            downClickVol = new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 - 75), buttonSize, buttonSize));
 
             Game1.Width = 1920;
 
@@ -135,6 +153,11 @@ namespace MakeEveryDay.States
             {
                 return new GameplayState(true);
             }
+            if (MouseUtils.KeyJustPressed(Keys.G))
+            {
+                GameOverState.deathMessage = "DEBUG MODE ACTIVATED. WELCOME TO HELL MORTAL";
+                return new GameOverState(0);
+            }
             return null;
         }
 
@@ -148,8 +171,8 @@ namespace MakeEveryDay.States
             quitButton.Draw(sb);
             titleScreen.Draw(sb);
 
-            sb.DrawString(titleFont, "High Scores:", new Vector2(15, 15), Color.Black, 0, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
-            sb.DrawString(titleFont, scores, new Vector2(15, 15 + titleFont.MeasureString("High Scores:").Y * 1.5f), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.DrawString(titleFont, "High Scores:", new Vector2(15, 60), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
+            sb.DrawString(titleFont, scores, new Vector2(15, 60 + titleFont.MeasureString("High Scores:").Y * .45f), Color.Black, 0, Vector2.Zero, .45f, SpriteEffects.None, 0);
         }
     }
 }

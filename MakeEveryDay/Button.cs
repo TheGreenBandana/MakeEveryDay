@@ -26,9 +26,29 @@ namespace MakeEveryDay
         {
             if (!IsPressed()) 
             {
-                sb.Draw(Sprite,AsRectangle,Color.White);
+                if (AsRectangle.Contains(MouseUtils.CurrentState.Position))
+                {
+                    sb.Draw(Sprite, AsRectangle, Color.LightGray);
+                }
+                else
+                {
+                    sb.Draw(Sprite, AsRectangle, Color.White);
+                }
             }
         }
-
+        internal override void Draw(SpriteBatch sb, Color? colorOverwrite, float rotation, Vector2 origin, SpriteEffects effects, float? layerDepthOverwrite)
+        {
+            if (!IsPressed())
+            {
+                if (AsRectangle.Contains(MouseUtils.CurrentState.Position))
+                {
+                    base.Draw(sb, Color.LightGray, rotation, origin, effects, layerDepthOverwrite);
+                }
+                else
+                {
+                    base.Draw(sb, colorOverwrite, rotation, origin, effects, layerDepthOverwrite);
+                }
+            }
+        }
     }
 }

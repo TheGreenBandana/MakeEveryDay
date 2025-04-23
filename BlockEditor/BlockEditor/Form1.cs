@@ -240,7 +240,7 @@ namespace BlockEditor
         /// </summary>
         private void SaveFile(object sender, EventArgs e)
         {
-            StreamWriter writer = null;
+            StreamWriter writer = null!;
             // Save blocks to the file using the blocks' ToString method
             try
             {
