@@ -144,6 +144,9 @@ namespace MakeEveryDay
             SoundsUtils.thudSound = Content.Load<SoundEffect>("Sounds/Thud");
 
             SoundsUtils.backgroundMusic = Content.Load<SoundEffect>("Sounds/CanoeSongBackupCut").CreateInstance();
+            SoundsUtils.menuMusic = Content.Load<SoundEffect>("MenuMusic").CreateInstance();
+
+            SoundsUtils.InitializeBackgroundMusic();
 
             // Note: requires content to be loaded, cannot be done in Initialize()
             currentState.Enter();

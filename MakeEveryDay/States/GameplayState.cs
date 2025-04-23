@@ -92,7 +92,7 @@ namespace MakeEveryDay.States
             activeGroups = new List<BlockGroup>();
             statusBars = new StatusBar[4];
 
-            SoundsUtils.InitializeBackgroundMusic();
+            SoundsUtils.backgroundMusic.Play();
 
             // Reading in blocks
             allBlocks.Clear();

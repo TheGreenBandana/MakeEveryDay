@@ -208,6 +208,12 @@
 /processorParam:TextureFormat=Color
 /build:LilGuyRun.png
 
+#begin MenuMusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:MenuMusic.wav
+
 #begin paper.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

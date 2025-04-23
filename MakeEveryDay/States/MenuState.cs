@@ -39,6 +39,8 @@ namespace MakeEveryDay.States
 
         public override void Enter()
         {
+            SoundsUtils.menuMusic.Play();
+
 
             playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
             debugButton = new Button(debugButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
@@ -112,6 +114,11 @@ namespace MakeEveryDay.States
 
             if (scores == "")
                 scores = "No saved scores.";
+        }
+        public override void Exit()
+        {
+            SoundsUtils.menuMusic.Stop();
+            base.Exit();
         }
 
         public override State CustomUpdate(GameTime gameTime)
