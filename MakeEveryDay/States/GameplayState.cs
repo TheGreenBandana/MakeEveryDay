@@ -499,7 +499,7 @@ namespace MakeEveryDay.States
                 if (block.Left <= positionToCheckStats && block.Checked == false) //This is the block currently being stood on
                 {
                     //Edit stats
-                    player.Health += block.HealthMod;
+                    player.Health += block.HealthMod - (player.Age >= 80 ? 1 : 0);
                     player.Happiness += block.HappyMod;
                     player.Education += block.EducationMod;
                     player.Wealth += block.WealthMod;
