@@ -70,6 +70,8 @@ namespace MakeEveryDay.States
         private bool forwardBackground;
         private int backgroundIntensity;
 
+        
+
         //private List<BlockGroup> blockGroups;
 
         private BlockType LastBlockOnLine
@@ -682,6 +684,10 @@ namespace MakeEveryDay.States
                 {
                     backgroundTimer = 0;
                     forwardBackground = !forwardBackground;
+                    if (forwardBackground == true)
+                    {
+                        SoundsUtils.statsLowWarning.Play(SoundsUtils.SFXVolume, 0, 0);
+                    }
                     if (forwardBackground)
                     {
                         backgroundIndex++;

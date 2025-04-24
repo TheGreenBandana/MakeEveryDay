@@ -21,6 +21,7 @@ namespace MakeEveryDay.States
         public static SoundEffect screamSound;
         public static SoundEffect blockSnapSound;
         public static SoundEffect paperCrumpleSound;
+        public static SoundEffect statsLowWarning;
 
         public static SoundEffectInstance backgroundMusic;
         public static SoundEffectInstance menuMusic;
