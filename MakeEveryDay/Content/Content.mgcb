@@ -292,6 +292,12 @@
 /processorParam:Quality=Best
 /build:Sounds/PaperCrumple2.wav
 
+#begin Sounds/StatsLowWarning.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/StatsLowWarning.wav
+
 #begin Sounds/Thud.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
