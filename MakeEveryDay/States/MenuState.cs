@@ -51,21 +51,24 @@ namespace MakeEveryDay.States
             SoundsUtils.menuMusic.Play();
 
 
-            playButton = new Button(playButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
-            debugButton = new Button(debugButtonTexture, new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
-            quitButton = new Button(quitButtonTexture, new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
-            titleScreen = new GameObject(titleTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - 600, (int)Game1.ScreenSize.Y / 2 - 500, 1200, 450));
+            playButton =    new Button(playButtonTexture,   new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2, 400, 200));
+            debugButton =   new Button(debugButtonTexture,  new Rectangle((int)Game1.ScreenSize.X - 165, 30, 100, 50));
+            quitButton =    new Button(quitButtonTexture,   new Rectangle((int)Game1.ScreenSize.X/2-200, (int)Game1.ScreenSize.Y/2 +300, 400, 200));
+
+
+            Point titleSize = new Point(1200, 450);
+            titleScreen =   new GameObject(titleTexture, new Rectangle((int)Game1.ScreenSize.X/2 - titleSize.X/2, (int)Game1.ScreenSize.Y / 2 - titleSize.Y, titleSize.X, titleSize.Y));
 
             int hOffset =       (int) (Game1.ScreenSize.X) / 192;
             int vOffset =       (int) (Game1.ScreenSize.Y) / 6;
             int buttonSize =    (int) (Game1.ScreenSize.X) / (192/5);
 
-            upMusicVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize)       - vOffset,      buttonSize, buttonSize));
-            downMusicVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*2)     - vOffset,      buttonSize, buttonSize));
-            upSFXVol =      new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*3.5)   - vOffset,      buttonSize, buttonSize));
-            downSFXVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*4.5)   - vOffset,      buttonSize, buttonSize));
-            upClickVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*6)     - vOffset,      buttonSize, buttonSize));
-            downClickVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*7)     - vOffset,      buttonSize, buttonSize));
+            upMusicVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize)       - vOffset,  buttonSize, buttonSize));
+            downMusicVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*2)     - vOffset,  buttonSize, buttonSize));
+            upSFXVol =      new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*3.5)   - vOffset,  buttonSize, buttonSize));
+            downSFXVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*4.5)   - vOffset,  buttonSize, buttonSize));
+            upClickVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*6)     - vOffset,  buttonSize, buttonSize));
+            downClickVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*7)     - vOffset,  buttonSize, buttonSize));
 
             Game1.Width = 1920;
 

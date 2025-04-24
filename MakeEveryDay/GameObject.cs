@@ -63,7 +63,8 @@ namespace MakeEveryDay
         /// </summary>
         public Microsoft.Xna.Framework.Rectangle AsRectangle
         {
-            get {
+            get 
+            {
                 return new Microsoft.Xna.Framework.Rectangle(position.ToPoint(), size);
             }
             set
@@ -247,7 +248,6 @@ namespace MakeEveryDay
         internal virtual void Draw(SpriteBatch sb)
         {
             Microsoft.Xna.Framework.Rectangle drawingRectangle = ScaledRectangle;
-            bool hovering = false;
             if (this is Block)
             {
                 Block block = (Block)this;
