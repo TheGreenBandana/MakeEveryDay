@@ -116,7 +116,7 @@ namespace MakeEveryDay.States
                     writer = new(Game1.Path);
                     writer.Write(text);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw new Exception("highScores.scores couldn't be reset!");
                 }

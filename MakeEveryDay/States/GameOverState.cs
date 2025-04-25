@@ -33,6 +33,7 @@ namespace MakeEveryDay.States
         public static string deathMessage;
         public static List<Block> blocks;
         public static int length;
+        private int age;
         
         private int letter1;
         private int letter2;
@@ -40,9 +41,10 @@ namespace MakeEveryDay.States
         private Dictionary<string, float> summaryDict;
         private string summaryString;
 
-        public GameOverState(int score)
+        public GameOverState(int score, int age)
         {
             this.score = score;
+            this.age = age;
         }
 
         public override void Enter()
@@ -164,6 +166,12 @@ namespace MakeEveryDay.States
             sb.DrawString(gameOverSubFont, "Your score: " + score.ToString(), new Vector2(
                 Game1.ScreenSize.X / 2 + 200,
                 Game1.ScreenSize.Y / 1.95f - 100), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.DrawString(
+                gameOverSubFont,
+                $"Age: {age}",
+                new Vector2(Game1.ScreenSize.X / 2 - gameOverSubFont.MeasureString($"Age: {age}").X/2, Game1.ScreenSize.Y / 3),
+                Color.White
+                );
             sb.DrawString(gameOverSubFont, summaryString, new Vector2(
                 Game1.ScreenSize.X / 2 + 250,
                 Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, .5f, SpriteEffects.None, 0);
@@ -190,6 +198,8 @@ namespace MakeEveryDay.States
             sb.DrawString(gameOverSubFont, ((char)letter3).ToString(), 
                 upArrowChar3.Position + new Vector2(15, 100), Color.White, 0, 
                 Vector2.Zero, 100 / gameOverSubFont.MeasureString(((char)letter3).ToString()).Y, SpriteEffects.None, 0);
+
+
         }
 
         /// <summary>
