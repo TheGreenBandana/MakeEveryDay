@@ -30,10 +30,14 @@ namespace MakeEveryDay.States
         public static SpriteFont gameOverFont;
         public static SpriteFont gameOverSubFont;
         public static string deathMessage;
-
+        public static List<Block> blocks;
+        public static int length;
+        
         private int letter1;
         private int letter2;
         private int letter3;
+        private Dictionary<string, float> summaryDict;
+        private string summaryString;
 
         public GameOverState(int score)
         {
@@ -55,6 +59,40 @@ namespace MakeEveryDay.States
             letter1 = 65;
             letter2 = 65;
             letter3 = 65;
+
+            summaryDict = new Dictionary<string, float>();
+
+            foreach(Block block in blocks)
+            {
+                if (summaryDict.ContainsKey(block.Name))
+                {
+                    summaryDict[block.Name] += ((float)block.Width / (float)length);
+                }
+                else
+                {
+                    summaryDict.Add(block.Name, ((float)block.Width / (float)length));
+                }
+            }
+
+            summaryString = "The five things you\ndid most in life were:\n";
+            for(int i = 0; i < 5; i++)
+            {
+                float smallestNum = -1;
+                string smallestName = "";
+                foreach(string key in summaryDict.Keys)
+                {
+                    if (summaryDict[key] > smallestNum)
+                    {
+                        smallestName = key;
+                        smallestNum = summaryDict[key];
+                    }
+                }
+                if(summaryDict.Count != 0)
+                {
+                    summaryString += $"{smallestName}: {Math.Round(summaryDict[smallestName] * 100, 2)}%\n";
+                summaryDict.Remove(smallestName);
+                }
+            }
 
             SoundsUtils.deathMusic.Play();
         }
@@ -125,7 +163,10 @@ namespace MakeEveryDay.States
                 Game1.ScreenSize.Y / 4), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             sb.DrawString(gameOverSubFont, "Your score: " + score.ToString(), new Vector2(
                 Game1.ScreenSize.X / 2 + 200,
-                Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                Game1.ScreenSize.Y / 1.95f - 100), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.DrawString(gameOverSubFont, summaryString, new Vector2(
+                Game1.ScreenSize.X / 2 + 250,
+                Game1.ScreenSize.Y / 1.95f), Color.White, 0, Vector2.Zero, .5f, SpriteEffects.None, 0);
             exitButton.Draw(sb);
 
             // Drawing buttons - mostly the same thing with different positions and rotations
