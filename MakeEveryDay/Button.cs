@@ -40,11 +40,11 @@ namespace MakeEveryDay
             {
                 if (AsRectangle.Contains(MouseUtils.CurrentState.Position))
                 {
-                    base.Draw(sb, Color.LightGray, rotation, origin, effects, layerDepthOverwrite);
+                    sb.Draw(Sprite, AsRectangle, new Rectangle(0, 0, Sprite.Width, Sprite.Height), Color.LightGray, rotation, origin, effects, 1);
                 }
                 else
                 {
-                    base.Draw(sb, colorOverwrite, rotation, origin, effects, layerDepthOverwrite);
+                    sb.Draw(Sprite, AsRectangle, new Rectangle(0, 0, Sprite.Width, Sprite.Height), Color.White, rotation, origin, effects, 1);
                 }
             }
         }

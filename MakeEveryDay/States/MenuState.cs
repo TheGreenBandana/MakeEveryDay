@@ -70,7 +70,7 @@ namespace MakeEveryDay.States
             upClickVol =    new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*6)     - vOffset,  buttonSize, buttonSize));
             downClickVol =  new(arrowButtonTexture, new Rectangle((int)(Game1.ScreenSize.X / hOffset), (int)(2 * Game1.ScreenSize.Y / 3 + buttonSize*7)     - vOffset,  buttonSize, buttonSize));
 
-            Game1.Width = 1920;
+            Game1.Width = (int)Game1.ScreenSize.X;
 
             // High score reading
             bool clear = false;
