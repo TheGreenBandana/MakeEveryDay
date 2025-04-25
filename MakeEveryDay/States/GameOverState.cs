@@ -27,6 +27,7 @@ namespace MakeEveryDay.States
         private Button downArrowChar3;
 
         internal static Texture2D arrowButtonTexture;
+        internal static Texture2D gameOverTexture;
         public static SpriteFont gameOverFont;
         public static SpriteFont gameOverSubFont;
         public static string deathMessage;
@@ -155,9 +156,8 @@ namespace MakeEveryDay.States
         {
             sb.Draw(Game1.Paper, new Rectangle(Point.Zero, Game1.ScreenSize.ToPoint()), Color.PaleVioletRed);
 
-            sb.DrawString(gameOverFont, "GAME OVER", new Vector2(
-                Game1.ScreenSize.X / 2 - gameOverFont.MeasureString("GAME OVER").X / 2,
-                Game1.ScreenSize.Y / 10), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            sb.Draw(gameOverTexture, new Rectangle((int)Game1.ScreenSize.X / 2 - gameOverTexture.Width / 2, (int)Game1.ScreenSize.Y / 6 - gameOverTexture.Height / 2, gameOverTexture.Width, gameOverTexture.Height), Color.White);
+
             sb.DrawString(gameOverSubFont, deathMessage, new Vector2(
                 Game1.ScreenSize.X / 2 - gameOverSubFont.MeasureString(deathMessage).X / 2,
                 Game1.ScreenSize.Y / 4), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);

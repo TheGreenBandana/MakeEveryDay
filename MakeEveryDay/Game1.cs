@@ -126,6 +126,7 @@ namespace MakeEveryDay
 
             // Game-Over-State content initialization
             GameOverState.arrowButtonTexture = Content.Load<Texture2D>("ArrowBlock");
+            GameOverState.gameOverTexture = Content.Load<Texture2D>("GameOverScreen");
             GameOverState.gameOverFont = Content.Load<SpriteFont>("Spritefonts/Sans72");
             GameOverState.gameOverSubFont = Content.Load<SpriteFont>("Spritefonts/Sans48");
 
