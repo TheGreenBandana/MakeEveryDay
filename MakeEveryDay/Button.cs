@@ -14,7 +14,7 @@ namespace MakeEveryDay
         public Button(Texture2D texture, Rectangle collision) : base(texture, collision) { }
         public bool IsPressed()
         {
-            if (MouseUtils.IsJustReleased() && AsRectangle.Contains(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position)))
+            if (MouseUtils.IsJustReleased() && AsRectangle.Contains(MouseUtils.CurrentState.Position))
             {
                 return true;
             }

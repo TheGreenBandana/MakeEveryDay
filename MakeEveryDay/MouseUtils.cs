@@ -95,16 +95,6 @@ namespace MakeEveryDay
         }
 
         /// <summary>
-        /// Offset's the given point by the cursor's height.
-        /// </summary>
-        /// <param name="realMousePositon">The point to offset.</param>
-        /// <returns>The offset point.</returns>
-        public static Point OffsetMousePosition(Point realMousePositon)
-        {
-            return realMousePositon + new Point(0, Cursors.Arrow.Size.Height / 4);
-        }
-
-        /// <summary>
         /// Literally just for playing noises, called once in the update function of game1
         /// </summary>
         public static void Update()

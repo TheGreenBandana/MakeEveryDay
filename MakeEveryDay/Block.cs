@@ -303,8 +303,8 @@ namespace MakeEveryDay
            
             base.Update(gameTime);
 
-            Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position));
-            Point realMousePosition = MouseUtils.OffsetMousePosition(MouseUtils.CurrentState.Position);
+            Point realMousePosition = MouseUtils.CurrentState.Position;
+            Point currentScaledMousePosition = MouseUtils.ScaleMousePosition(realMousePosition);
 
             // Mouse hovering scaling
             mouseHoveringReal = ScaledRectangle.Contains(realMousePosition);
