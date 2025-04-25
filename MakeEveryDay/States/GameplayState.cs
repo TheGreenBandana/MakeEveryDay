@@ -327,6 +327,12 @@ namespace MakeEveryDay.States
                 {
                     return new GroupMakerState(player);
                 }
+                if (MouseUtils.KeyJustPressed(Keys.G))
+                {
+                    GameOverState.deathMessage = "DEBUG MODE ACTIVATED. WELCOME TO HELL MORTAL";
+                    SummarizeLife();
+                    return new GameOverState(score);
+                }
 
                 Vector2 adjustVector = new Vector2(-lineSpeed, 0);
                 for (int i = 0; i < theLine.Count; i++)
@@ -538,7 +544,10 @@ namespace MakeEveryDay.States
                     GameOverState.deathMessage = "You fell off the edge of existence.";
                     player.StartFalling();
                     if (!debug)
+                    {
+                        SummarizeLife();
                         gameOver = true;
+                    }
                 }
 
                 if (player.Health <= 0 || player.Happiness <= 0 || player.Education <= 0 || player.Wealth <= 0) //Kills the player if their stats get too low. Can be updated to include more values
@@ -546,8 +555,28 @@ namespace MakeEveryDay.States
 
                     GameOverState.deathMessage = currentDeathMessage;
                     player.Die();
-                    if(!debug)
+                    if (!debug)
+                    {
+                        SummarizeLife();
                         gameOver = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Summarizes your life for the GameOver state
+        /// </summary>
+        private void SummarizeLife()
+        {
+            GameOverState.length = 0;
+            GameOverState.blocks = new List<Block>();
+            foreach(Block block in theLine)
+            {
+                if(block.Checked == true && block.Name != "start")
+                {
+                    GameOverState.length += block.Width;
+                    GameOverState.blocks.Add(block);
                 }
             }
         }

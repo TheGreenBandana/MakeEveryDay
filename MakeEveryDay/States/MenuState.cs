@@ -186,12 +186,6 @@ namespace MakeEveryDay.States
                 }
             }
 
-            if (MouseUtils.KeyJustPressed(Keys.G))
-            {
-                GameOverState.deathMessage = "DEBUG MODE ACTIVATED. WELCOME TO HELL MORTAL";
-                return new GameOverState(0);
-            }
-
             return null;
         }
 
