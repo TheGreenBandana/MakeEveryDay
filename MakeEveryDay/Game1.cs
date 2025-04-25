@@ -77,7 +77,7 @@ namespace MakeEveryDay
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             // LEAVE FALSE WHILE DEVELOPING - UNHANDLED EXCEPTIONS WHILE FULLSCREENED CAUSE FLASHBANG
-            _graphics.IsFullScreen = false;
+            _graphics.IsFullScreen = true;
             // LEAVE FALSE WHILE DEVELOPING - UNHANDLED EXCEPTIONS WHILE FULLSCREENED CAUSE FLASHBANG
 
             _graphics.ApplyChanges();
