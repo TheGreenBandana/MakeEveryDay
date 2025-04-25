@@ -331,7 +331,7 @@ namespace MakeEveryDay.States
                 {
                     GameOverState.deathMessage = "DEBUG MODE ACTIVATED. WELCOME TO HELL MORTAL";
                     SummarizeLife();
-                    return new GameOverState(score);
+                    return new GameOverState(score, player.Age);
                 }
 
                 Vector2 adjustVector = new Vector2(-lineSpeed, 0);
@@ -434,7 +434,7 @@ namespace MakeEveryDay.States
             // When game over occurs, wait for animation to play before going to game over screen
             if (gameOver)
                 if (player.Animation.Ended)
-                    return new GameOverState(score);
+                    return new GameOverState(score, player.Age);
 
             UpdatePlayer(gameTime);
 
