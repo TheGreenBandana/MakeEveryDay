@@ -77,6 +77,7 @@
             label5 = new Label();
             textBox_healthChange = new TextBox();
             groupBox4 = new GroupBox();
+            label_deathMessage = new Label();
             textBox_deathMessage = new TextBox();
             label_width = new Label();
             label4 = new Label();
@@ -88,7 +89,6 @@
             textBox_name = new TextBox();
             label2 = new Label();
             colorDialog = new ColorDialog();
-            label_deathMessage = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -612,6 +612,16 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Visuals";
             // 
+            // label_deathMessage
+            // 
+            label_deathMessage.AutoSize = true;
+            label_deathMessage.Location = new Point(316, 73);
+            label_deathMessage.Name = "label_deathMessage";
+            label_deathMessage.Size = new Size(87, 15);
+            label_deathMessage.TabIndex = 16;
+            label_deathMessage.Text = "Death Message";
+            label_deathMessage.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // textBox_deathMessage
             // 
             textBox_deathMessage.Location = new Point(316, 89);
@@ -717,16 +727,6 @@
             colorDialog.Color = Color.Red;
             colorDialog.SolidColorOnly = true;
             // 
-            // label_deathMessage
-            // 
-            label_deathMessage.AutoSize = true;
-            label_deathMessage.Location = new Point(316, 73);
-            label_deathMessage.Name = "label_deathMessage";
-            label_deathMessage.Size = new Size(87, 15);
-            label_deathMessage.TabIndex = 16;
-            label_deathMessage.Text = "Death Message";
-            label_deathMessage.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -736,7 +736,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Block Editor";
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
