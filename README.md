@@ -15,3 +15,4 @@ Debug mode controls:
 - Enter: Spawn a block
 - G: Go to game over screen
 - B: Group maker function (adbandoned feature)
+- K: "Kyle mode" (works outside of debug mode)
